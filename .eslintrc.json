@@ -46,7 +46,7 @@
       0
     ],
     "no-console": [
-      "error"
+      "warn"
     ],
     "no-else-return": "error",
     "no-multiple-empty-lines": [

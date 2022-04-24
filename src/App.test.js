@@ -1,6 +1,6 @@
 import { getGameNumber, getWordOfTheDay } from './App';
-
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
+
 const mockDate = new Date('April 23, 2022 01:00:00').valueOf();
 const getRandomIndex = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
