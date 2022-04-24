@@ -1,15 +1,18 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "extends": [
+    "react-app",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime"
   ],
   "plugins": [
-    "react"
+    "react",
+    "jest"
   ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
