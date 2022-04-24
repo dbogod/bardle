@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import useBardle from './hooks/useBardle';
+import './App.scss';
 
-function App() {
+const App = () => {
+  const { gameNumber, solution } = useBardle();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Bardle</h1>
+      <p>
+        This is game number {gameNumber}
+      </p>
+      <p>
+        The solution is {solution}
+      </p>
+    </>
   );
-}
+};
 
 export default App;
