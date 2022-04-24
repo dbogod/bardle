@@ -1,4 +1,4 @@
-﻿// 2897
+// 2897
 export const DAILY_WORD_ARRAY = [
   'usury',
   'kingly',

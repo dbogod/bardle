@@ -1,17 +1,34 @@
-import useBardle from './hooks/useBardle';
+import { useState, useEffect } from 'react';
+
+import Game from './components/Game';
+import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
 import './App.scss';
 
+export const getGameNumber = date => {
+  const epoch = new Date(2022, 2, 11).valueOf();
+  return Math.floor((date - epoch) / 86400000);
+};
+
+export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
+
 const App = () => {
-  const { gameNumber, solution } = useBardle();
+  const [gameNumber, setGameNumber] = useState(null);
+  const [solution, setSolution] = useState(null);
+
+  useEffect(() => {
+    const gameNum = getGameNumber(Date.now());
+    setGameNumber(gameNum);
+    setSolution(getWordOfTheDay(gameNum));
+  }, []);
+  
   return (
     <>
-      <h1>Bardle</h1>
-      <p>
-        This is game number {gameNumber}
-      </p>
-      <p>
-        The solution is {solution}
-      </p>
+      {
+        gameNumber && solution &&
+        <Game
+          solution={solution}
+          gameNumber={gameNumber}/>
+      }
     </>
   );
 };

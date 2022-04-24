@@ -1,25 +1,21 @@
-import { useState, useEffect } from 'react';
+const useBardle = solution => {
+  if (!solution) {
+    return;
+  }
 
-import { DAILY_WORD_ARRAY } from '../constants/solutions/solutions_daily';
+  const isValidKey = value => /^[A-Za-z']^/.test(value);
 
-const useBardle = () => {
-  const [gameNumber, setGameNumber] = useState(null);
-  const [solution, setSolution] = useState(null);
+  const keyHandler = key => {
+    if (key === 'Backspace') {
+      // Remove last character
+    }
 
-  const getGameNumber = () => {
-    const epoch = new Date(2022, 2, 11).valueOf();
-    return Math.floor((Date.now() - epoch) / 86400000);
+    if (!isValidKey(key)) {
+      return;
+    }
   };
 
-  const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
-
-  useEffect(() => {
-    const gameNum = getGameNumber(Date.now());
-    setGameNumber(gameNum);
-    setSolution(getWordOfTheDay(gameNum));
-  }, []);
-
-  return { getGameNumber, gameNumber, getWordOfTheDay, solution };
+  return { keyHandler };
 };
 
 export default useBardle;
