@@ -15,14 +15,14 @@ const useBardle = solution => {
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
   // Add letter hints 
-  const markUpGuess = () => {
+  const markUpGuess = rawGuess => {
     const solutionArray = solution.split('');
-    const guess = currentGuess.split('').map(char => {
+    const guess = rawGuess.split('').map(char => {
       return { char, status: ABSENT_STATUS };
     });
     
     // Find the letters that are present AND in the right position
-    for (let i = 0; i < currentGuess.length; i++) {
+    for (let i = 0; i < rawGuess.length; i++) {
       if (guess[i].char === solutionArray[i]) {
         guess[i].status = CORRECT_STATUS;
         solutionArray[i] = null;
@@ -30,7 +30,7 @@ const useBardle = solution => {
     }
     
     // Find the letters that are present BUT NOT in the right position
-    for (let i = 0; i < currentGuess.length; i++) {
+    for (let i = 0; i < rawGuess.length; i++) {
       const { char, status } = guess[i];
       if (solutionArray.includes(char) && status !== CORRECT_STATUS) {
         guess[i].status = PRESENT_STATUS;
@@ -92,6 +92,7 @@ const useBardle = solution => {
 
   return { 
     isValidKey,
+    markUpGuess,
     keyHandler,
     currentGuess,
     isWinningGuess,
