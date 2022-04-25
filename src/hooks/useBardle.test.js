@@ -199,3 +199,155 @@ test('Guess is correctly marked up: TATTY vs TENET', () => {
     { char: 'y', status: ABSENT_STATUS }
   ]);
 });
+
+test('Guess history updates as expected', () => {
+  const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
+  
+  act(() => {
+    result.current.addGuess([
+      { char: 'l', status: ABSENT_STATUS },
+      { char: 'o', status: PRESENT_STATUS },
+      { char: 'r', status: ABSENT_STATUS },
+      { char: 'r', status: ABSENT_STATUS },
+      { char: 'y', status: ABSENT_STATUS }
+    ]);
+  });
+
+  expect(result.current.guessHistory).toEqual([
+    [
+      { char: 'l', status: ABSENT_STATUS },
+      { char: 'o', status: PRESENT_STATUS },
+      { char: 'r', status: ABSENT_STATUS },
+      { char: 'r', status: ABSENT_STATUS },
+      { char: 'y', status: ABSENT_STATUS }
+    ]
+  ]);
+
+  act(() => {
+    result.current.addGuess([
+      { char: 'a', status: CORRECT_STATUS },
+      { char: 'v', status: ABSENT_STATUS },
+      { char: 'o', status: CORRECT_STATUS },
+      { char: 'i', status: ABSENT_STATUS },
+      { char: 'd', status: PRESENT_STATUS }
+    ]);
+  });
+
+  expect(result.current.guessHistory).toEqual([
+    [
+      { char: 'l', status: ABSENT_STATUS },
+      { char: 'o', status: PRESENT_STATUS },
+      { char: 'r', status: ABSENT_STATUS },
+      { char: 'r', status: ABSENT_STATUS },
+      { char: 'y', status: ABSENT_STATUS }
+    ],
+    [
+      { char: 'a', status: CORRECT_STATUS },
+      { char: 'v', status: ABSENT_STATUS },
+      { char: 'o', status: CORRECT_STATUS },
+      { char: 'i', status: ABSENT_STATUS },
+      { char: 'd', status: PRESENT_STATUS }
+    ]
+  ]);
+});
+
+test('Submitting a VALID guess is handled as expected', () => {
+  const { result } = renderHook(() => useBardle(TEST_SOLUTION_2));
+  
+  expect(result.current.guessHistory.length).toBe(0);
+  expect(result.current.goNumber).toBe(0);
+  expect(result.current.currentGuess).toBe('');
+  expect(result.current.isWinningGuess).toBe(false);
+  
+  act(() => {
+    result.current.keyHandler({ key: 'a' });
+    result.current.keyHandler({ key: 'b' });
+    result.current.keyHandler({ key: 'o' });
+    result.current.keyHandler({ key: 'd' });
+    result.current.keyHandler({ key: 'e' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(0);
+  expect(result.current.goNumber).toBe(0);
+  expect(result.current.currentGuess).toBe('abode');
+  expect(result.current.isWinningGuess).toBe(false);
+
+  act(() => {
+    result.current.keyHandler({ key: 'Enter' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(1);
+  expect(result.current.goNumber).toBe(1);
+  expect(result.current.currentGuess).toBe('');
+  expect(result.current.isWinningGuess).toBe(false);
+
+  act(() => {
+    result.current.keyHandler({ key: 'f' });
+    result.current.keyHandler({ key: 'a' });
+    result.current.keyHandler({ key: 'b' });
+    result.current.keyHandler({ key: 'l' });
+    result.current.keyHandler({ key: 'e' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(1);
+  expect(result.current.goNumber).toBe(1);
+  expect(result.current.currentGuess).toBe('fable');
+  expect(result.current.isWinningGuess).toBe(false);
+
+  act(() => {
+    result.current.keyHandler({ key: 'Enter' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(2);
+  expect(result.current.goNumber).toBe(2);
+  expect(result.current.currentGuess).toBe('');
+  expect(result.current.isWinningGuess).toBe(false);
+
+  act(() => {
+    result.current.keyHandler({ key: 'r' });
+    result.current.keyHandler({ key: 'u' });
+    result.current.keyHandler({ key: 'r' });
+    result.current.keyHandler({ key: 'a' });
+    result.current.keyHandler({ key: 'l' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(2);
+  expect(result.current.goNumber).toBe(2);
+  expect(result.current.currentGuess).toBe('rural');
+  expect(result.current.isWinningGuess).toBe(false);
+
+  act(() => {
+    result.current.keyHandler({ key: 'Enter' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(3);
+  expect(result.current.goNumber).toBe(3);
+  expect(result.current.currentGuess).toBe('');
+  expect(result.current.isWinningGuess).toBe(true);
+
+});
+
+test('Submitting an INVALID guess is handled as expected', () => {
+  const { result } = renderHook(() => useBardle(TEST_SOLUTION_2));
+
+  act(() => {
+    result.current.keyHandler({ key: 'a' });
+    result.current.keyHandler({ key: 'b' });
+    result.current.keyHandler({ key: 'o' });
+    result.current.keyHandler({ key: 'd' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(0);
+  expect(result.current.goNumber).toBe(0);
+  expect(result.current.currentGuess).toBe('abod');
+  expect(result.current.isWinningGuess).toBe(false);
+
+  act(() => {
+    result.current.keyHandler({ key: 'Enter' });
+  });
+
+  expect(result.current.guessHistory.length).toBe(0);
+  expect(result.current.goNumber).toBe(0);
+  expect(result.current.currentGuess).toBe('abod');
+  expect(result.current.isWinningGuess).toBe(false);
+});

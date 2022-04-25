@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   CORRECT_STATUS,
   PRESENT_STATUS,
@@ -8,7 +8,6 @@ import {
 const useBardle = solution => {
   const [currentGuess, setCurrentGuess] = useState('');
   const [guessHistory, setGuessHistory] = useState([]);
-  const [guessNumber, setGuessNumber] = useState(0);
   const [goNumber, setGoNumber] = useState(0);
   const [isWinningGuess, setIsWinningGuess] = useState(false);
 
@@ -92,9 +91,12 @@ const useBardle = solution => {
 
   return { 
     isValidKey,
+    addGuess,
     markUpGuess,
     keyHandler,
     currentGuess,
+    guessHistory,
+    goNumber,
     isWinningGuess,
     solution
   };
