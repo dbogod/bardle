@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  DEFAULT_STATUS,
   CORRECT_STATUS,
   PRESENT_STATUS,
   ABSENT_STATUS
@@ -8,9 +9,9 @@ import { KEY_ROWS } from '../constants/keys';
 
 const useBardle = solution => {
   const [keyboardKeys, setKeyboardKeys] = useState([
-    ...KEY_ROWS[0].map(key => ({ char: key.toLowerCase(), status: 'default' })),
-    ...KEY_ROWS[1].map(key => ({ char: key.toLowerCase(), status: 'default' })),
-    ...KEY_ROWS[2].map(key => ({ char: key.toLowerCase(), status: 'default' }))
+    ...KEY_ROWS[0].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
+    ...KEY_ROWS[1].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
+    ...KEY_ROWS[2].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS }))
   ]);
   const [currentGuess, setCurrentGuess] = useState('');
   const [guessHistory, setGuessHistory] = useState([]);

@@ -2,6 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import useBardle from './useBardle';
 
 import {
+  DEFAULT_STATUS,
   CORRECT_STATUS,
   PRESENT_STATUS,
   ABSENT_STATUS
@@ -356,4 +357,100 @@ test('Submitting an INVALID guess is handled as expected', () => {
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('abod');
   expect(result.current.isWinningGuess).toBe(false);
+});
+
+test('Keyboard updates as expected', () => {
+  const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
+  
+  act(() => {
+    result.current.keyHandler({ key: 'a' });
+    result.current.keyHandler({ key: 'd' });
+    result.current.keyHandler({ key: 'e' });
+    result.current.keyHandler({ key: 'p' });
+    result.current.keyHandler({ key: 't' });
+  });
+
+  expect(result.current.currentGuess).toBe('adept');
+
+  act(() => {
+    result.current.keyHandler({ key: 'Enter' });
+  });
+
+  expect(result.current.keyboardKeys).toEqual([
+    { 'char': 'q', 'status': DEFAULT_STATUS },
+    { 'char': 'w', 'status': DEFAULT_STATUS },
+    { 'char': 'e', 'status': PRESENT_STATUS },
+    { 'char': 'r', 'status': DEFAULT_STATUS },
+    { 'char': 't', 'status': ABSENT_STATUS },
+    { 'char': 'y', 'status': DEFAULT_STATUS },
+    { 'char': 'u', 'status': DEFAULT_STATUS },
+    { 'char': 'i', 'status': DEFAULT_STATUS },
+    { 'char': 'o', 'status': DEFAULT_STATUS },
+    { 'char': 'p', 'status': ABSENT_STATUS },
+    { 'char': 'a', 'status': CORRECT_STATUS },
+    { 'char': 's', 'status': DEFAULT_STATUS },
+    { 'char': 'd', 'status': PRESENT_STATUS },
+    { 'char': 'f', 'status': DEFAULT_STATUS },
+    { 'char': 'g', 'status': DEFAULT_STATUS },
+    { 'char': 'h', 'status': DEFAULT_STATUS },
+    { 'char': 'j', 'status': DEFAULT_STATUS },
+    { 'char': 'k', 'status': DEFAULT_STATUS },
+    { 'char': 'l', 'status': DEFAULT_STATUS },
+    { 'char': "'", 'status': DEFAULT_STATUS },
+    { 'char': 'enter', 'status': DEFAULT_STATUS },
+    { 'char': 'z', 'status': DEFAULT_STATUS },
+    { 'char': 'x', 'status': DEFAULT_STATUS },
+    { 'char': 'c', 'status': DEFAULT_STATUS },
+    { 'char': 'v', 'status': DEFAULT_STATUS },
+    { 'char': 'b', 'status': DEFAULT_STATUS },
+    { 'char': 'n', 'status': DEFAULT_STATUS },
+    { 'char': 'm', 'status': DEFAULT_STATUS },
+    { 'char': 'del', 'status': DEFAULT_STATUS }
+  ]);
+
+  act(() => {
+    result.current.keyHandler({ key: 't' });
+    result.current.keyHandler({ key: 'o' });
+    result.current.keyHandler({ key: 'a' });
+    result.current.keyHandler({ key: 's' });
+    result.current.keyHandler({ key: 't' });
+  });
+
+  expect(result.current.currentGuess).toBe('toast');
+
+  act(() => {
+    result.current.keyHandler({ key: 'Enter' });
+  });
+
+  expect(result.current.keyboardKeys).toEqual([
+    { 'char': 'q', 'status': DEFAULT_STATUS },
+    { 'char': 'w', 'status': DEFAULT_STATUS },
+    { 'char': 'e', 'status': PRESENT_STATUS },
+    { 'char': 'r', 'status': DEFAULT_STATUS },
+    { 'char': 't', 'status': ABSENT_STATUS },
+    { 'char': 'y', 'status': DEFAULT_STATUS },
+    { 'char': 'u', 'status': DEFAULT_STATUS },
+    { 'char': 'i', 'status': DEFAULT_STATUS },
+    { 'char': 'o', 'status': PRESENT_STATUS },
+    { 'char': 'p', 'status': ABSENT_STATUS },
+    { 'char': 'a', 'status': CORRECT_STATUS },
+    { 'char': 's', 'status': ABSENT_STATUS },
+    { 'char': 'd', 'status': PRESENT_STATUS },
+    { 'char': 'f', 'status': DEFAULT_STATUS },
+    { 'char': 'g', 'status': DEFAULT_STATUS },
+    { 'char': 'h', 'status': DEFAULT_STATUS },
+    { 'char': 'j', 'status': DEFAULT_STATUS },
+    { 'char': 'k', 'status': DEFAULT_STATUS },
+    { 'char': 'l', 'status': DEFAULT_STATUS },
+    { 'char': "'", 'status': DEFAULT_STATUS },
+    { 'char': 'enter', 'status': DEFAULT_STATUS },
+    { 'char': 'z', 'status': DEFAULT_STATUS },
+    { 'char': 'x', 'status': DEFAULT_STATUS },
+    { 'char': 'c', 'status': DEFAULT_STATUS },
+    { 'char': 'v', 'status': DEFAULT_STATUS },
+    { 'char': 'b', 'status': DEFAULT_STATUS },
+    { 'char': 'n', 'status': DEFAULT_STATUS },
+    { 'char': 'm', 'status': DEFAULT_STATUS },
+    { 'char': 'del', 'status': DEFAULT_STATUS }
+  ]);
 });
