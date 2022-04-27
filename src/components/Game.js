@@ -14,7 +14,6 @@ const Game = ({ gameNumber, solution }) => {
 
   return (
     <>
-      <h1>Bardle</h1>
       <p>
         This is game number {gameNumber}
       </p>
@@ -24,7 +23,9 @@ const Game = ({ gameNumber, solution }) => {
       <p>
         The current guess is: {currentGuess}
       </p>
-      <Keyboard markedUpKeyboard={keyboardKeys}/>
+      <Keyboard
+        markedUpKeyboard={keyboardKeys}
+        keyHandler={keyHandler}/>
     </>
   );
 };

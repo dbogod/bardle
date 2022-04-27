@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import { KEY_ROWS } from '../constants/keys';
 import styles from '../styles/Keyboard.module.scss';
 
-const Keyboard = ({ markedUpKeyboard }) => {
-  console.log({ markedUpKeyboard });
+const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
   return (
     <>
       {
@@ -11,12 +10,13 @@ const Keyboard = ({ markedUpKeyboard }) => {
           <div key={i}>
             {
               kbRow.map((kbKey, i) => {
-                const markedUpKey = markedUpKeyboard.find(key => key.char === kbKey.toLowerCase());
+                const markedUpKey = markedUpKeyboard.find(key => key.char === kbKey);
                 return (
                   <button
                     key={i}
                     className={styles.key}
                     type="button"
+                    onClick={() => keyHandler({ key: kbKey })}
                     data-status={markedUpKey && markedUpKey.status}>
                     {kbKey}
                   </button>
@@ -31,7 +31,8 @@ const Keyboard = ({ markedUpKeyboard }) => {
 };
 
 Keyboard.propTypes = {
-  markedUpKeyboard: PropTypes.array.isRequired
+  markedUpKeyboard: PropTypes.array.isRequired,
+  keyHandler: PropTypes.func.isRequired
 };
 
 export default Keyboard;

@@ -14,7 +14,7 @@ export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
 const App = () => {
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
-
+  
   useEffect(() => {
     const gameNum = getGameNumber(Date.now());
     setGameNumber(gameNum);

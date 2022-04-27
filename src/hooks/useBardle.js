@@ -102,12 +102,12 @@ const useBardle = solution => {
         console.log('not enough letters');
         return;
       }
-
+      
       const markedUpGuess = markUpGuess(currentGuess);
       addGuess(markedUpGuess);
     }
 
-    if (key === 'Backspace') {
+    if (key === 'Backspace' || key === 'del') {
       setCurrentGuess(prev => prev.slice(0, -1));
       return;
     }

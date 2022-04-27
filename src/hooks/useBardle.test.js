@@ -5,12 +5,11 @@ import {
   DEFAULT_STATUS,
   CORRECT_STATUS,
   PRESENT_STATUS,
-  ABSENT_STATUS
+  ABSENT_STATUS,
+  TEST_SOLUTION_1,
+  TEST_SOLUTION_2,
+  TEST_SOLUTION_3
 } from '../constants/strings';
-
-const TEST_SOLUTION_1 = 'abode';
-const TEST_SOLUTION_2 = 'rural';
-const TEST_SOLUTION_3 = 'tenet';
 
 test('Only certain keys are accepted', () => {
   const { result } = renderHook(() => useBardle());
