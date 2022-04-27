@@ -108,7 +108,7 @@ test('Guess is correctly marked up: ABODE vs ABODE', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
   let guess;
   act(() => {
-    guess = result.current.markUpGuess(TEST_SOLUTION_1);
+    guess = result.current.markUpGuess(TEST_SOLUTION_1).guessWord;
   });
 
   expect(guess).toEqual([
@@ -124,7 +124,7 @@ test('Guess is correctly marked up: SPLIT vs ABODE', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
   let guess;
   act(() => {
-    guess = result.current.markUpGuess('split');
+    guess = result.current.markUpGuess('split').guessWord;
   });
 
   expect(guess).toEqual([
@@ -140,7 +140,7 @@ test('Guess is correctly marked up: AVOID vs ABODE', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
   let guess;
   act(() => {
-    guess = result.current.markUpGuess('avoid');
+    guess = result.current.markUpGuess('avoid').guessWord;
   });
 
   expect(guess).toEqual([
@@ -156,7 +156,7 @@ test('Guess is correctly marked up: BOOKS vs ABODE', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
   let guess;
   act(() => {
-    guess = result.current.markUpGuess('books');
+    guess = result.current.markUpGuess('books').guessWord;
   });
 
   expect(guess).toEqual([
@@ -172,7 +172,7 @@ test('Guess is correctly marked up: LORRY vs RURAL', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_2));
   let guess;
   act(() => {
-    guess = result.current.markUpGuess('lorry');
+    guess = result.current.markUpGuess('lorry').guessWord;
   });
 
   expect(guess).toEqual([
@@ -188,7 +188,7 @@ test('Guess is correctly marked up: TATTY vs TENET', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_3));
   let guess;
   act(() => {
-    guess = result.current.markUpGuess('tatty');
+    guess = result.current.markUpGuess('tatty').guessWord;
   });
 
   expect(guess).toEqual([
@@ -202,15 +202,18 @@ test('Guess is correctly marked up: TATTY vs TENET', () => {
 
 test('Guess history updates as expected', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
-  
+
   act(() => {
-    result.current.addGuess([
-      { char: 'l', status: ABSENT_STATUS },
-      { char: 'o', status: PRESENT_STATUS },
-      { char: 'r', status: ABSENT_STATUS },
-      { char: 'r', status: ABSENT_STATUS },
-      { char: 'y', status: ABSENT_STATUS }
-    ]);
+    result.current.addGuess({
+      guessWord: [
+        { char: 'l', status: ABSENT_STATUS },
+        { char: 'o', status: PRESENT_STATUS },
+        { char: 'r', status: ABSENT_STATUS },
+        { char: 'r', status: ABSENT_STATUS },
+        { char: 'y', status: ABSENT_STATUS }
+      ],
+      keys: result.current.keyboardKeys
+    });
   });
 
   expect(result.current.guessHistory).toEqual([
@@ -224,13 +227,16 @@ test('Guess history updates as expected', () => {
   ]);
 
   act(() => {
-    result.current.addGuess([
-      { char: 'a', status: CORRECT_STATUS },
-      { char: 'v', status: ABSENT_STATUS },
-      { char: 'o', status: CORRECT_STATUS },
-      { char: 'i', status: ABSENT_STATUS },
-      { char: 'd', status: PRESENT_STATUS }
-    ]);
+    result.current.addGuess({
+      guessWord: [
+        { char: 'a', status: CORRECT_STATUS },
+        { char: 'v', status: ABSENT_STATUS },
+        { char: 'o', status: CORRECT_STATUS },
+        { char: 'i', status: ABSENT_STATUS },
+        { char: 'd', status: PRESENT_STATUS }
+      ],
+      keys: result.current.keyboardKeys
+    });
   });
 
   expect(result.current.guessHistory).toEqual([
@@ -253,12 +259,12 @@ test('Guess history updates as expected', () => {
 
 test('Submitting a VALID guess is handled as expected', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_2));
-  
+
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('');
   expect(result.current.isWinningGuess).toBe(false);
-  
+
   act(() => {
     result.current.keyHandler({ key: 'a' });
     result.current.keyHandler({ key: 'b' });

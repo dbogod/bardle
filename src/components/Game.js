@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
-import useBardle from '../hooks/useBardle';
 import PropTypes from 'prop-types';
+import useBardle from '../hooks/useBardle';
+
+import Keyboard from './Keyboard';
 
 const Game = ({ gameNumber, solution }) => {
-  const { keyHandler, currentGuess } = useBardle(solution);
-  
+  const { keyHandler, keyboardKeys, currentGuess } = useBardle(solution);
+
   useEffect(() => {
     window.addEventListener('keyup', keyHandler);
     return () => window.removeEventListener('keyup', keyHandler);
   }, [keyHandler]);
-  
+
   return (
     <>
       <h1>Bardle</h1>
@@ -22,6 +24,7 @@ const Game = ({ gameNumber, solution }) => {
       <p>
         The current guess is: {currentGuess}
       </p>
+      <Keyboard markedUpKeyboard={keyboardKeys}/>
     </>
   );
 };
