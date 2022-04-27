@@ -31,7 +31,7 @@ const useBardle = solution => {
     // Find the letters that are present AND in the right position
     for (let i = 0; i < rawGuess.length; i++) {
       const guessChar = guessWord[i].char;
-      
+
       if (guessChar === solutionArray[i]) {
         guessWord[i].status = CORRECT_STATUS;
         solutionArray[i] = null;
@@ -53,7 +53,7 @@ const useBardle = solution => {
         if (key && key.status !== CORRECT_STATUS) {
           key.status = PRESENT_STATUS;
         }
-      } 
+      }
     }
 
     // Mark up absent keyboard keys
@@ -65,8 +65,8 @@ const useBardle = solution => {
     }
 
     return {
-      guessWord, 
-      keys 
+      guessWord,
+      keys
     };
   };
 
@@ -82,7 +82,7 @@ const useBardle = solution => {
       updatedHistory[goNumber] = guess.guessWord;
       return updatedHistory;
     });
-    
+
     // Update keyboard
     setKeyboardKeys(guess.keys);
 
@@ -95,19 +95,21 @@ const useBardle = solution => {
 
   const keyHandler = e => {
     const { key } = e;
+    const isIntendedAsButtonOrLinkClick = e.target && (e.target.tagName === 'BUTTON' || e.target.tagName === 'A');
+    const isEnterKbButton = isIntendedAsButtonOrLinkClick && e.target.textContent === 'Enter';
 
-    if (key === 'Enter') {
+    if (key === 'Enter' && (!isIntendedAsButtonOrLinkClick || isEnterKbButton)) {
       if (currentGuess.length !== solution.length) {
         // console.log({ currentGuess });
         console.log('not enough letters');
         return;
       }
-      
+
       const markedUpGuess = markUpGuess(currentGuess);
       addGuess(markedUpGuess);
     }
 
-    if (key === 'Backspace' || key === 'del') {
+    if (key === 'Backspace' || key === 'Del') {
       setCurrentGuess(prev => prev.slice(0, -1));
       return;
     }

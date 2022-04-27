@@ -3,6 +3,16 @@ import { KEY_ROWS } from '../constants/keys';
 import styles from '../styles/Keyboard.module.scss';
 
 const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
+  // Prevent event doubling up when pressing 'Enter' on 'Enter'
+  const keyUpHandler = (e, keyboardKey) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (keyboardKey.key !== 'Enter') {
+        keyHandler(keyboardKey);
+      }
+    }
+  };
+  
   return (
     <>
       {
@@ -17,6 +27,8 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
                     className={styles.key}
                     type="button"
                     onClick={() => keyHandler({ key: kbKey })}
+                    onKeyUp={e => e.key === 'Enter' && keyUpHandler(e, { key: kbKey })}
+                    onKeyDown={e => e.key === 'Enter' && e.preventDefault()}
                     data-status={markedUpKey && markedUpKey.status}>
                     {kbKey}
                   </button>

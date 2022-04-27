@@ -26,7 +26,7 @@ const App = () => {
       {
         gameNumber && solution &&
         <Game
-          solution={solution}
+          solution="abode"
           gameNumber={gameNumber}/>
       }
     </>

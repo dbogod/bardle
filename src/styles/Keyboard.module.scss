@@ -5,7 +5,7 @@
  color: var(--colour-kb-text);
  background-color: var(--colour-kb-bg);
  
- &:not([data-status="default"]) {
+ &[data-status]:not([data-status="default"]) {
   --colour-kb-text: #fff;
  }
  
