@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  SAVE_GAME_KEY,
   DEFAULT_STATUS,
   CORRECT_STATUS,
   PRESENT_STATUS,
@@ -7,20 +8,46 @@ import {
 } from '../constants/strings';
 import { KEY_ROWS } from '../constants/keys';
 
-const useBardle = solution => {
-  const [keyboardKeys, setKeyboardKeys] = useState([
+const useBardle = (gameNumber, solution) => {
+  let savedKeyboardKeys;
+  let savedGameHistory;
+  let savedGoNumber;
+  let savedIsGameWon;
+  let savedIsGameLost;
+
+  const loadGame = () => {
+    const savedGame = localStorage?.getItem(SAVE_GAME_KEY);
+
+    if (!savedGame) {
+      return null;
+    }
+
+    const { gameNum, keys, history, goNum, isWon, isLost } = JSON.parse(localStorage.getItem(SAVE_GAME_KEY));
+
+    if (gameNum === gameNumber) {
+      savedKeyboardKeys = keys;
+      savedGameHistory = history;
+      savedGoNumber = goNum;
+      savedIsGameWon = isWon;
+      savedIsGameLost = isLost;
+    }
+  };
+
+  loadGame();
+
+  const [keyboardKeys, setKeyboardKeys] = useState(savedKeyboardKeys ?? [
     ...KEY_ROWS[0].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
     ...KEY_ROWS[1].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
     ...KEY_ROWS[2].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS }))
   ]);
   const [currentGuess, setCurrentGuess] = useState('');
-  const [guessHistory, setGuessHistory] = useState([]);
-  const [goNumber, setGoNumber] = useState(0);
-  const [isWinningGuess, setIsWinningGuess] = useState(false);
+  const [guessHistory, setGuessHistory] = useState(savedGameHistory ?? []);
+  const [goNumber, setGoNumber] = useState(savedGoNumber ?? 0);
+  const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
+  const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
-  // Add letter hints 
   const markUpGuess = rawGuess => {
     const solutionArray = solution.split('');
     const guessWord = rawGuess.split('').map(char => {
@@ -73,7 +100,7 @@ const useBardle = solution => {
   const addGuess = guess => {
     // Check if guess is correct
     if (currentGuess === solution) {
-      setIsWinningGuess(true);
+      setIsGameWon(true);
     }
 
     // Add guess to guesses history
@@ -86,8 +113,12 @@ const useBardle = solution => {
     // Update keyboard
     setKeyboardKeys(guess.keys);
 
-    // Add one to go number
-    setGoNumber(prev => prev + 1);
+    // Add one to go number, unless this was the last guess
+    if (goNumber === 5) {
+      setIsGameLost(true);
+    } else {
+      setGoNumber(prev => prev + 1);
+    }
 
     // Reset current guess
     setCurrentGuess('');
@@ -100,7 +131,6 @@ const useBardle = solution => {
 
     if (key === 'Enter' && (!isIntendedAsButtonOrLinkClick || isEnterKbButton)) {
       if (currentGuess.length !== solution.length) {
-        // console.log({ currentGuess });
         console.log('not enough letters');
         return;
       }
@@ -125,6 +155,35 @@ const useBardle = solution => {
     setCurrentGuess(prev => prev + key);
   };
 
+  const saveGame = (gameNum, keys, history, goNum, isWon, isLost) => {
+    localStorage.setItem(SAVE_GAME_KEY, JSON.stringify({
+      gameNum,
+      keys,
+      history,
+      goNum,
+      isWon,
+      isLost
+    }));
+  };
+
+  useEffect(() => {
+    saveGame(
+      gameNumber,
+      keyboardKeys,
+      guessHistory,
+      goNumber,
+      isGameWon,
+      isGameLost
+    );
+  }, [
+    gameNumber,
+    keyboardKeys,
+    guessHistory,
+    goNumber,
+    isGameWon,
+    isGameLost
+  ]);
+
   return {
     isValidKey,
     addGuess,
@@ -134,7 +193,8 @@ const useBardle = solution => {
     currentGuess,
     guessHistory,
     goNumber,
-    isWinningGuess,
+    isGameWon,
+    isGameLost,
     solution
   };
 };

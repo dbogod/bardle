@@ -88,7 +88,7 @@ test('Current guess is correctly updated by key handler', () => {
   expect(result.current.currentGuess).toBe('fabl');
 });
 
-test('isWinningGuess is true if player guesses correctly', () => {
+test('isGameWon is true if player guesses correctly', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
 
   act(() => {
@@ -105,7 +105,7 @@ test('isWinningGuess is true if player guesses correctly', () => {
     result.current.keyHandler({ key: 'Enter' });
   });
 
-  expect(result.current.isWinningGuess).toBe(true);
+  expect(result.current.isGameWon).toBe(true);
 });
 
 test('Guess is correctly marked up: ABODE vs ABODE', () => {
@@ -267,7 +267,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'a' });
@@ -280,7 +280,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('abode');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'Enter' });
@@ -289,7 +289,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(1);
   expect(result.current.goNumber).toBe(1);
   expect(result.current.currentGuess).toBe('');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'f' });
@@ -302,7 +302,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(1);
   expect(result.current.goNumber).toBe(1);
   expect(result.current.currentGuess).toBe('fable');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'Enter' });
@@ -311,7 +311,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(2);
   expect(result.current.goNumber).toBe(2);
   expect(result.current.currentGuess).toBe('');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'r' });
@@ -324,7 +324,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(2);
   expect(result.current.goNumber).toBe(2);
   expect(result.current.currentGuess).toBe('rural');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'Enter' });
@@ -333,7 +333,7 @@ test('Submitting a VALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(3);
   expect(result.current.goNumber).toBe(3);
   expect(result.current.currentGuess).toBe('');
-  expect(result.current.isWinningGuess).toBe(true);
+  expect(result.current.isGameWon).toBe(true);
 
 });
 
@@ -350,7 +350,7 @@ test('Submitting an INVALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('abod');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 
   act(() => {
     result.current.keyHandler({ key: 'Enter' });
@@ -359,7 +359,7 @@ test('Submitting an INVALID guess is handled as expected', () => {
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('abod');
-  expect(result.current.isWinningGuess).toBe(false);
+  expect(result.current.isGameWon).toBe(false);
 });
 
 test('Keyboard updates as expected', () => {

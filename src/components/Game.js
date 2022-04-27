@@ -5,12 +5,20 @@ import useBardle from '../hooks/useBardle';
 import Keyboard from './Keyboard';
 
 const Game = ({ gameNumber, solution }) => {
-  const { keyHandler, keyboardKeys, currentGuess } = useBardle(solution);
+  const { 
+    keyHandler, 
+    keyboardKeys, 
+    currentGuess,
+    isGameWon,
+    isGameLost
+  } = useBardle(gameNumber, solution);
 
   useEffect(() => {
-    window.addEventListener('keyup', keyHandler);
+    if (!isGameWon && !isGameLost) {
+      window.addEventListener('keyup', keyHandler);
+    }
     return () => window.removeEventListener('keyup', keyHandler);
-  }, [keyHandler]);
+  }, [keyHandler, isGameWon, isGameLost]);
 
   return (
     <>
