@@ -1,39 +1,31 @@
 import { useEffect, useState } from 'react';
 import {
-  SAVE_GAME_KEY,
   DEFAULT_STATUS,
   CORRECT_STATUS,
   PRESENT_STATUS,
   ABSENT_STATUS
 } from '../constants/strings';
+import {
+  saveGame,
+  getSavedGame
+} from '../lib/localStorage';
 import { KEY_ROWS } from '../constants/keys';
 
 const useBardle = (gameNumber, solution) => {
+  const savedGame = getSavedGame(gameNumber);
   let savedKeyboardKeys;
   let savedGameHistory;
   let savedGoNumber;
   let savedIsGameWon;
   let savedIsGameLost;
 
-  const loadGame = () => {
-    const savedGame = localStorage?.getItem(SAVE_GAME_KEY);
-
-    if (!savedGame) {
-      return null;
-    }
-
-    const { gameNum, keys, history, goNum, isWon, isLost } = JSON.parse(localStorage.getItem(SAVE_GAME_KEY));
-
-    if (gameNum === gameNumber) {
-      savedKeyboardKeys = keys;
-      savedGameHistory = history;
-      savedGoNumber = goNum;
-      savedIsGameWon = isWon;
-      savedIsGameLost = isLost;
-    }
-  };
-
-  loadGame();
+  if (savedGame) {
+    savedKeyboardKeys = savedGame.keys;
+    savedGameHistory = savedGame.history;
+    savedGoNumber = savedGame.goNum;
+    savedIsGameWon = savedGame.isWon;
+    savedIsGameLost = savedGame.isLost;
+  }
 
   const [keyboardKeys, setKeyboardKeys] = useState(savedKeyboardKeys ?? [
     ...KEY_ROWS[0].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
@@ -155,34 +147,9 @@ const useBardle = (gameNumber, solution) => {
     setCurrentGuess(prev => prev + key);
   };
 
-  const saveGame = (gameNum, keys, history, goNum, isWon, isLost) => {
-    localStorage.setItem(SAVE_GAME_KEY, JSON.stringify({
-      gameNum,
-      keys,
-      history,
-      goNum,
-      isWon,
-      isLost
-    }));
-  };
-
   useEffect(() => {
-    saveGame(
-      gameNumber,
-      keyboardKeys,
-      guessHistory,
-      goNumber,
-      isGameWon,
-      isGameLost
-    );
-  }, [
-    gameNumber,
-    keyboardKeys,
-    guessHistory,
-    goNumber,
-    isGameWon,
-    isGameLost
-  ]);
+    saveGame(gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost);
+  }, [gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost]);
 
   return {
     isValidKey,

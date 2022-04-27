@@ -1,7 +1,4 @@
-import { 
-  renderHook, 
-  act 
-} from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 
 import useBardle from './useBardle';
 
@@ -364,7 +361,7 @@ test('Submitting an INVALID guess is handled as expected', () => {
 
 test('Keyboard updates as expected', () => {
   const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
-  
+
   act(() => {
     result.current.keyHandler({ key: 'a' });
     result.current.keyHandler({ key: 'd' });
