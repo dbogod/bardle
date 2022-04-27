@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import Game from './components/Game';
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
-import './App.scss';
+import './styles/main.scss';
 
 export const getGameNumber = date => {
   const epoch = new Date(2022, 2, 11).valueOf();

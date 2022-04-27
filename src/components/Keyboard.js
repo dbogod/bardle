@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { KEY_ROWS } from '../constants/keys';
+import styles from '../styles/Keyboard.module.scss';
 
 const Keyboard = ({ markedUpKeyboard }) => {
-  console.log(markedUpKeyboard);
   return (
     <>
       {
@@ -14,6 +14,7 @@ const Keyboard = ({ markedUpKeyboard }) => {
                 return (
                   <button
                     key={i}
+                    className={styles.key}
                     type="button"
                     data-status={markedUpKey && markedUpKey.status}>
                     {kbKey}
