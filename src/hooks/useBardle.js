@@ -12,22 +12,25 @@ import {
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
 
-const useBardle = (gameNumber, solution) => {
-  const savedGame = getSavedGame(gameNumber);
+const useBardle = (gameNumber, solution, useSavedGame = false) => {
   let savedKeyboardKeys;
   let savedGameHistory;
   let savedGoNumber;
   let savedIsGameWon;
   let savedIsGameLost;
 
-  if (savedGame) {
-    savedKeyboardKeys = savedGame.keys;
-    savedGameHistory = savedGame.history;
-    savedGoNumber = savedGame.goNum;
-    savedIsGameWon = savedGame.isWon;
-    savedIsGameLost = savedGame.isLost;
+  if (useSavedGame) {
+    const savedGame = getSavedGame(gameNumber);
+    if (savedGame) {
+      savedKeyboardKeys = savedGame.keys;
+      savedGameHistory = savedGame.history;
+      savedGoNumber = savedGame.goNum;
+      savedIsGameWon = savedGame.isWon;
+      savedIsGameLost = savedGame.isLost;
+    }
   }
 
+  const [dictionary, setDictionary] = useState([]);
   const [keyboardKeys, setKeyboardKeys] = useState(savedKeyboardKeys ?? [
     ...KEY_ROWS[0].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
     ...KEY_ROWS[1].map(key => ({ char: key.toLowerCase(), status: DEFAULT_STATUS })),
@@ -38,7 +41,6 @@ const useBardle = (gameNumber, solution) => {
   const [goNumber, setGoNumber] = useState(savedGoNumber ?? 0);
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
-  const [dictionary, setDictionary] = useState(null);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -129,6 +131,11 @@ const useBardle = (gameNumber, solution) => {
         return;
       }
 
+      if (!dictionary.includes(currentGuess)) {
+        console.log('not in dictionary');
+        return;
+      }
+
       const markedUpGuess = markUpGuess(currentGuess);
       addGuess(markedUpGuess);
     }
@@ -149,14 +156,14 @@ const useBardle = (gameNumber, solution) => {
     setCurrentGuess(prev => prev + key);
   };
 
+  useEffect(() => {
+    saveGame(gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost);
+  }, [gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost]);
+
   const fetchDictionary = useCallback(async () => {
     const result = await getDictionary(solution);
     setDictionary(result);
   }, [solution]);
-
-  useEffect(() => {
-    saveGame(gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost);
-  }, [gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost]);
 
   useEffect(() => {
     fetchDictionary();
@@ -168,6 +175,7 @@ const useBardle = (gameNumber, solution) => {
     markUpGuess,
     keyHandler,
     fetchDictionary,
+    dictionary,
     keyboardKeys,
     currentGuess,
     guessHistory,

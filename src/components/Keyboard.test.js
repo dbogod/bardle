@@ -2,7 +2,9 @@ import {
   render, 
   screen, 
   renderHook, 
-  waitFor 
+  waitFor,
+  cleanup,
+  act
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -11,8 +13,21 @@ import Keyboard from './Keyboard';
 
 import { TEST_SOLUTION_1 } from '../constants/strings';
 
-test('All keyboard keys render', () => {
-  const { result } = renderHook(() => useBardle());
+let result;
+
+beforeEach(async () => {
+  result = renderHook(() => useBardle(47, TEST_SOLUTION_1)).result;
+  
+  await act(async () => {
+    await result.current.fetchDictionary();
+  });
+});
+
+afterEach(() => {
+  cleanup();
+});
+
+test('All keyboard keys render', async () => {
   render(
     <Keyboard
       markedUpKeyboard={result.current.keyboardKeys}
@@ -24,7 +39,6 @@ test('All keyboard keys render', () => {
 });
 
 test('Current guess is updated when clicking keyboard keys', async () => {
-  const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
   const user = userEvent.setup();
 
   render(
@@ -49,7 +63,6 @@ test('Current guess is updated when clicking keyboard keys', async () => {
 });
 
 test('You can tab through the keyboard', async () => {
-  const { result } = renderHook(() => useBardle(TEST_SOLUTION_1));
   const { getByText } = render(
     <Keyboard
       markedUpKeyboard={result.current.keyboardKeys}
