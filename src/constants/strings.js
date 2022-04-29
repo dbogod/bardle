@@ -7,3 +7,6 @@ export const ABSENT_STATUS = 'iago';
 export const TEST_SOLUTION_1 = 'abode';
 export const TEST_SOLUTION_2 = 'rural';
 export const TEST_SOLUTION_3 = 'tenet';
+export const TEST_SOLUTION_SIX_LETTERS = 'kingly';
+export const TEST_SOLUTION_SEVEN_LETTERS = 'william';
+export const TEST_SOLUTION_EIGHT_LETTERS = 'leanness';

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   DEFAULT_STATUS,
   CORRECT_STATUS,
@@ -149,23 +149,25 @@ const useBardle = (gameNumber, solution) => {
     setCurrentGuess(prev => prev + key);
   };
 
+  const fetchDictionary = useCallback(async () => {
+    const result = await getDictionary(solution);
+    setDictionary(result);
+  }, [solution]);
+
   useEffect(() => {
     saveGame(gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost);
   }, [gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost]);
 
   useEffect(() => {
-    const fetchDictionary = async () => {
-      const result = await getDictionary(solution);
-      setDictionary(result);
-    };
     fetchDictionary();
-  }, []);
+  }, [fetchDictionary]);
 
   return {
     isValidKey,
     addGuess,
     markUpGuess,
     keyHandler,
+    fetchDictionary,
     keyboardKeys,
     currentGuess,
     guessHistory,
