@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   DEFAULT_STATUS,
   CORRECT_STATUS,
@@ -9,6 +9,7 @@ import {
   saveGame,
   getSavedGame
 } from '../lib/localStorage';
+import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
 
 const useBardle = (gameNumber, solution) => {
@@ -37,6 +38,7 @@ const useBardle = (gameNumber, solution) => {
   const [goNumber, setGoNumber] = useState(savedGoNumber ?? 0);
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
+  const [dictionary, setDictionary] = useState(null);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -150,6 +152,14 @@ const useBardle = (gameNumber, solution) => {
   useEffect(() => {
     saveGame(gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost);
   }, [gameNumber, keyboardKeys, guessHistory, goNumber, isGameWon, isGameLost]);
+
+  useEffect(() => {
+    const fetchDictionary = async () => {
+      const result = await getDictionary(solution);
+      setDictionary(result);
+    };
+    fetchDictionary();
+  }, []);
 
   return {
     isValidKey,
