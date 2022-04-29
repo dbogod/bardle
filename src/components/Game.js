@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useBardle from '../hooks/useBardle';
 
 import Keyboard from './Keyboard';
-import Modal from './Modal';
+import Toast from './Toast';
 
 const Game = ({ gameNumber, solution }) => {
   const {
@@ -40,9 +40,9 @@ const Game = ({ gameNumber, solution }) => {
 
       {
         modalMessage &&
-        <Modal
-          modalMessage={modalMessage}
-          setModalMessage={setModalMessage}/>
+        <Toast
+          toastMessage={modalMessage}
+          setToastMessage={setModalMessage}/>
       }
     </>
   );

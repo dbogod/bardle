@@ -44,7 +44,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   const [goNumber, setGoNumber] = useState(savedGoNumber ?? 0);
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -101,7 +101,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);
-      setModalMessage(GAME_OVER_MESSAGE_WIN);
+      setToastMessage(GAME_OVER_MESSAGE_WIN);
     }
 
     // Add guess to guesses history
@@ -132,12 +132,12 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
 
     if (key === 'Enter' && (!isIntendedAsButtonOrLinkClick || isEnterKbButton)) {
       if (currentGuess.length !== solution.length) {
-        setModalMessage(ERROR_MSG_INSUFFICIENT_LETTERS);
+        setToastMessage(ERROR_MSG_INSUFFICIENT_LETTERS);
         return;
       }
 
       if (!dictionary.includes(currentGuess)) {
-        setModalMessage(ERROR_MSG_INVALID_WORD);
+        setToastMessage(ERROR_MSG_INVALID_WORD);
         return;
       }
 
@@ -179,7 +179,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     addGuess,
     markUpGuess,
     keyHandler,
-    setModalMessage,
+    setToastMessage,
     fetchDictionary,
     dictionary,
     keyboardKeys,
@@ -188,7 +188,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     goNumber,
     isGameWon,
     isGameLost,
-    modalMessage,
+    toastMessage,
     solution
   };
 };
