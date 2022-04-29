@@ -3,7 +3,10 @@ import {
   DEFAULT_STATUS,
   CORRECT_STATUS,
   PRESENT_STATUS,
-  ABSENT_STATUS
+  ABSENT_STATUS,
+  ERROR_MSG_INSUFFICIENT_LETTERS,
+  ERROR_MSG_INVALID_WORD,
+  GAME_OVER_MESSAGE_WIN
 } from '../constants/strings';
 import {
   saveGame,
@@ -41,6 +44,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   const [goNumber, setGoNumber] = useState(savedGoNumber ?? 0);
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
+  const [modalMessage, setModalMessage] = useState('');
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -97,6 +101,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);
+      setModalMessage(GAME_OVER_MESSAGE_WIN);
     }
 
     // Add guess to guesses history
@@ -127,12 +132,12 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
 
     if (key === 'Enter' && (!isIntendedAsButtonOrLinkClick || isEnterKbButton)) {
       if (currentGuess.length !== solution.length) {
-        console.log('not enough letters');
+        setModalMessage(ERROR_MSG_INSUFFICIENT_LETTERS);
         return;
       }
 
       if (!dictionary.includes(currentGuess)) {
-        console.log('not in dictionary');
+        setModalMessage(ERROR_MSG_INVALID_WORD);
         return;
       }
 
@@ -174,6 +179,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     addGuess,
     markUpGuess,
     keyHandler,
+    setModalMessage,
     fetchDictionary,
     dictionary,
     keyboardKeys,
@@ -182,6 +188,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     goNumber,
     isGameWon,
     isGameLost,
+    modalMessage,
     solution
   };
 };

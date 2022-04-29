@@ -27,8 +27,7 @@ const App = () => {
         gameNumber && solution &&
         <Game
           solution="abode"
-          gameNumber={gameNumber}
-          useSavedGame={true}/>
+          gameNumber={gameNumber}/>
       }
     </>
   );

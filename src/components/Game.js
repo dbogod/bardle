@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import useBardle from '../hooks/useBardle';
 
 import Keyboard from './Keyboard';
+import Modal from './Modal';
 
 const Game = ({ gameNumber, solution }) => {
-  const { 
-    keyHandler, 
-    keyboardKeys, 
+  const {
+    keyHandler,
+    setModalMessage,
+    keyboardKeys,
     currentGuess,
     isGameWon,
-    isGameLost
-  } = useBardle(gameNumber, solution);
+    isGameLost,
+    modalMessage
+  } = useBardle(gameNumber, solution, true);
 
   useEffect(() => {
     if (!isGameWon && !isGameLost) {
@@ -34,6 +37,13 @@ const Game = ({ gameNumber, solution }) => {
       <Keyboard
         markedUpKeyboard={keyboardKeys}
         keyHandler={keyHandler}/>
+
+      {
+        modalMessage &&
+        <Modal
+          modalMessage={modalMessage}
+          setModalMessage={setModalMessage}/>
+      }
     </>
   );
 };
