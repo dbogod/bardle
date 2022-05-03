@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
+import style from '../styles/Modal.module.scss';
 
 const Modal = ({ children }) => {
   return (
-    <h2>
-      {children}
-    </h2>
+    <div className={style.modal}>
+      <h2>
+        {children}
+      </h2>
+    </div>
   );
 };
 

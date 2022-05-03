@@ -1,1 +1,21 @@
 @import "variables";
+
+* {
+  box-sizing: border-box;
+}
+
+[data-status]:not([data-status="default"]) {
+  color: #fff;
+}
+
+[data-status="hamlet"] {
+  --colour-status-bg: var(--colour-status-correct);
+}
+
+[data-status="juliet"] {
+  --colour-status-bg: var(--colour-status-present);
+}
+
+[data-status="iago"] {
+  --colour-status-bg: var(--colour-status-absent);
+}

@@ -2,15 +2,19 @@ import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useBardle from '../hooks/useBardle';
 
+import Board from './Board';
 import Keyboard from './Keyboard';
 import Toast from './Toast';
 import Modal from './Modal';
+
+import style from '../styles/Game.module.scss';
 
 const Game = ({ gameNumber, solution }) => {
   const {
     keyHandler,
     setToastMessage,
     keyboardKeys,
+    guessHistory,
     currentGuess,
     isGameWon,
     isGameLost,
@@ -27,7 +31,7 @@ const Game = ({ gameNumber, solution }) => {
   }, [keyHandler, isGameWon, isGameLost]);
 
   return (
-    <>
+    <main className={style['game-container']}>
       <p>
         This is game number {gameNumber}
       </p>
@@ -37,6 +41,10 @@ const Game = ({ gameNumber, solution }) => {
       <p>
         The current guess is: {currentGuess}
       </p>
+      <Board
+        guessHistory={guessHistory}
+        currentGuess={currentGuess}
+        wordLength={solution.length}/>
       <Keyboard
         markedUpKeyboard={keyboardKeys}
         keyHandler={keyHandler}/>
@@ -65,7 +73,7 @@ const Game = ({ gameNumber, solution }) => {
           </>
         </Modal>
       }
-    </>
+    </main>
   );
 };
 

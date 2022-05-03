@@ -1,0 +1,29 @@
+.board,
+.row {
+  display: grid;
+  grid-gap: 0.25rem;
+}
+
+.board,
+.row,
+.tile {
+  width: 100%;
+}
+
+.board {
+  grid-template-rows: repeat(6, 1fr);
+ }
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  text-transform: uppercase;
+  background-color: var(--colour-status-bg);
+  border-color: var(--colour-status-bg, #000);
+  font-weight: bold;
+  font-size: 2rem;
+}

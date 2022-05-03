@@ -1,23 +1,11 @@
 .key {
  --colour-kb-text: #000;
- --colour-kb-bg: var(--colour-kb-default);
+ --colour-status-bg: var(--colour-kb-default);
  
  color: var(--colour-kb-text);
- background-color: var(--colour-kb-bg);
+ background-color: var(--colour-status-bg);
  
  &[data-status]:not([data-status="default"]) {
   --colour-kb-text: #fff;
- }
- 
- &[data-status="hamlet"] {
-  --colour-kb-bg: var(--colour-status-correct);
- }
-
- &[data-status="juliet"] {
-  --colour-kb-bg: var(--colour-status-present);
- }
-
- &[data-status="iago"] {
-  --colour-kb-bg: var(--colour-status-absent);
  }
 }

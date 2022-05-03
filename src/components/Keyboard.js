@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { KEY_ROWS } from '../constants/keys';
-import styles from '../styles/Keyboard.module.scss';
+import style from '../styles/Keyboard.module.scss';
 
 const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
   // Prevent event doubling up when pressing 'Enter' on 'Enter'
@@ -14,7 +14,7 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
   };
   
   return (
-    <>
+    <div className={style.keyboard}>
       {
         KEY_ROWS.map((kbRow, i) => (
           <div key={i}>
@@ -24,7 +24,7 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
                 return (
                   <button
                     key={i}
-                    className={styles.key}
+                    className={style.key}
                     type="button"
                     onClick={() => keyHandler({ key: kbKey })}
                     onKeyUp={e => e.key === 'Enter' && keyUpHandler(e, { key: kbKey })}
@@ -38,7 +38,7 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
           </div>
         ))
       }
-    </>
+    </div>
   );
 };
 
