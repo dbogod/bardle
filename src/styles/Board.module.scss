@@ -11,6 +11,7 @@
 }
 
 .board {
+  margin: 0 auto;
   grid-template-rows: repeat(6, 1fr);
  }
 
@@ -20,10 +21,9 @@
   justify-content: center;
   width: 100%;
   aspect-ratio: 1;
-  border: 1px solid black;
+  border: 2px solid var(--colour-status-bg, #d3d6da);
   text-transform: uppercase;
   background-color: var(--colour-status-bg);
-  border-color: var(--colour-status-bg, #000);
   font-weight: bold;
   font-size: 2rem;
 }
