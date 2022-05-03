@@ -4,16 +4,19 @@ import useBardle from '../hooks/useBardle';
 
 import Keyboard from './Keyboard';
 import Toast from './Toast';
+import Modal from './Modal';
 
 const Game = ({ gameNumber, solution }) => {
   const {
     keyHandler,
-    setModalMessage,
+    setToastMessage,
     keyboardKeys,
     currentGuess,
     isGameWon,
     isGameLost,
-    modalMessage
+    toastMessage,
+    showStatsModal,
+    showHelpModal
   } = useBardle(gameNumber, solution, true);
 
   useEffect(() => {
@@ -39,10 +42,28 @@ const Game = ({ gameNumber, solution }) => {
         keyHandler={keyHandler}/>
 
       {
-        modalMessage &&
+        toastMessage &&
         <Toast
-          toastMessage={modalMessage}
-          setToastMessage={setModalMessage}/>
+          toastMessage={toastMessage}
+          setToastMessage={setToastMessage}/>
+      }
+
+      {
+        showStatsModal &&
+        <Modal>
+          <>
+            STATS modal
+          </>
+        </Modal>
+      }
+
+      {
+        showHelpModal &&
+        <Modal>
+          <>
+            HELP modal
+          </>
+        </Modal>
       }
     </>
   );
@@ -50,7 +71,7 @@ const Game = ({ gameNumber, solution }) => {
 
 Game.propTypes = {
   gameNumber: PropTypes.number.isRequired,
-  solution: PropTypes.string.isRequired
+  solution: PropTypes.string.isRequired,
 };
 
 export default Game;

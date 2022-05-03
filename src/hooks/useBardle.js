@@ -45,6 +45,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
   const [toastMessage, setToastMessage] = useState('');
+  const [showStatsModal, setShowStatsModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -173,6 +175,12 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   useEffect(() => {
     fetchDictionary();
   }, [fetchDictionary]);
+  
+  useEffect(() => {
+    if (isGameLost || isGameWon) {
+      setShowStatsModal(true);
+    }
+  }, [isGameWon, isGameLost]);
 
   return {
     isValidKey,
@@ -189,6 +197,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     isGameWon,
     isGameLost,
     toastMessage,
+    showStatsModal,
+    showHelpModal,
     solution
   };
 };
