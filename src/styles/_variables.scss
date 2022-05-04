@@ -8,3 +8,8 @@
   --height-header: 3rem;
   --height-game: calc(100vh - var(--height-header));
 }
+
+[data-theme="dark"] {
+  --bg-app: #000;
+  --colour-text-app: #fff;
+}

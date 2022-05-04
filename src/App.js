@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+import HtmlHead from './components/HtmlHead';
 import Header from './components/Header';
 import Game from './components/Game';
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
@@ -27,6 +28,7 @@ const App = () => {
       {
         gameNumber && solution &&
         <>
+          <HtmlHead/>
           <Header/>
           <Game
             solution="abode"
