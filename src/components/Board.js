@@ -51,7 +51,7 @@ Tile.propTypes = {
 };
 
 const Board = ({ guessHistory, currentGuess, wordLength }) => {
-  const tileCount = 6;
+  const tileCount = wordLength;
 
   return (
     <div className={style.wrapper}>
