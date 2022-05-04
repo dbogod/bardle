@@ -1,3 +1,5 @@
+@import 'animations';
+
 .wrapper {
   display: flex;
   height: 100%;
@@ -27,10 +29,34 @@
   justify-content: center;
   width: 100%;
   aspect-ratio: 1;
-  border: 2px solid var(--colour-status-bg, #d3d6da);
+  border: 2px solid var(--colour-tile-border-default);
   border-radius: 0.35rem;
   text-transform: uppercase;
-  background-color: var(--colour-status-bg);
+  background-color: transparent;
   font-weight: bold;
   font-size: 2rem;
+
+  &[data-status]:not([data-status="bardle"]) {
+    animation: reveal 500ms ease-in forwards;
+  }
+
+  &[data-status="bardle"] {
+    color: #fff;
+    background-color: var(--colour-status-bg);
+    border-color: var(--colour-status-bg);
+    animation: celebrate 300ms ease-in forwards;
+  }
+
+  &[data-status="hamlet"],
+  &[data-status="bardle"] {
+    --colour-status-bg: var(--colour-status-correct);
+  }
+
+  &[data-status="juliet"] {
+    --colour-status-bg: var(--colour-status-present);
+  }
+
+  &[data-status="iago"] {
+    --colour-status-bg: var(--colour-status-absent);
+  }
 }

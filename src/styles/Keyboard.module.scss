@@ -15,7 +15,6 @@
 
 .key {
   --colour-kb-text: #000;
-  --colour-status-bg: var(--colour-kb-default);
 
   flex: 1;
   border: none;
@@ -26,8 +25,8 @@
   text-transform: uppercase;
   font-size: 0.75rem;
   font-weight: bold;
-  color: var(--colour-kb-text);
-  background-color: var(--colour-status-bg);
+  color: #000;
+  background-color: var(--colour-kb-default);
   
   &:first-of-type {
     margin-left: 0;
@@ -35,5 +34,17 @@
 
   &[data-status]:not([data-status="default"]) {
     --colour-kb-text: #fff;
+  }
+
+  &[data-status="hamlet"] {
+    --colour-status-bg: var(--colour-status-correct);
+  }
+
+  &[data-status="juliet"] {
+    --colour-status-bg: var(--colour-status-present);
+  }
+
+  &[data-status="iago"] {
+    --colour-status-bg: var(--colour-status-absent);
   }
 }

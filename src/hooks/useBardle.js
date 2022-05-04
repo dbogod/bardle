@@ -175,12 +175,21 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   useEffect(() => {
     fetchDictionary();
   }, [fetchDictionary]);
-  
+
   useEffect(() => {
+    if (isGameWon) {
+      const winningGuess = guessHistory[guessHistory.length - 1];
+
+      setTimeout(() => {
+        for (let i = 0; i < winningGuess.length; i++) {
+          winningGuess[i].status = 'bardle';
+        }
+      }, 2000);
+    }
     if (isGameLost || isGameWon) {
       setShowStatsModal(true);
     }
-  }, [isGameWon, isGameLost]);
+  }, [isGameWon, isGameLost, guessHistory]);
 
   return {
     isValidKey,
