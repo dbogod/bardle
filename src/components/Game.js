@@ -31,16 +31,7 @@ const Game = ({ gameNumber, solution }) => {
   }, [keyHandler, isGameWon, isGameLost]);
 
   return (
-    <main className={style['game-container']}>
-      <p>
-        This is game number {gameNumber}
-      </p>
-      <p>
-        The solution is {solution}
-      </p>
-      <p>
-        The current guess is: {currentGuess}
-      </p>
+    <main className={style.game}>
       <Board
         guessHistory={guessHistory}
         currentGuess={currentGuess}

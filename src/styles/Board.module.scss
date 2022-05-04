@@ -1,3 +1,9 @@
+.wrapper {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
 .board,
 .row {
   display: grid;
@@ -22,6 +28,7 @@
   width: 100%;
   aspect-ratio: 1;
   border: 2px solid var(--colour-status-bg, #d3d6da);
+  border-radius: 0.35rem;
   text-transform: uppercase;
   background-color: var(--colour-status-bg);
   font-weight: bold;

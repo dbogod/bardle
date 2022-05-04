@@ -12,12 +12,14 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
       }
     }
   };
-  
+
   return (
     <div className={style.keyboard}>
       {
         KEY_ROWS.map((kbRow, i) => (
-          <div key={i}>
+          <div
+            key={i}
+            className={style.row}>
             {
               kbRow.map((kbKey, i) => {
                 const markedUpKey = markedUpKeyboard.find(key => key.char === kbKey);

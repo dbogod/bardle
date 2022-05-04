@@ -1,11 +1,39 @@
+.keyboard {
+  width: 100%;
+  max-width: 28rem;
+  margin: auto auto 0 auto;
+}
+
+.row {
+  display: flex;
+  margin-top: 0.25rem;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
 .key {
- --colour-kb-text: #000;
- --colour-status-bg: var(--colour-kb-default);
- 
- color: var(--colour-kb-text);
- background-color: var(--colour-status-bg);
- 
- &[data-status]:not([data-status="default"]) {
-  --colour-kb-text: #fff;
- }
+  --colour-kb-text: #000;
+  --colour-status-bg: var(--colour-kb-default);
+
+  flex: 1;
+  border: none;
+  border-radius: 0.35rem;
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  height: 3.5rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--colour-kb-text);
+  background-color: var(--colour-status-bg);
+  
+  &:first-of-type {
+    margin-left: 0;
+  }
+
+  &[data-status]:not([data-status="default"]) {
+    --colour-kb-text: #fff;
+  }
 }

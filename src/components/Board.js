@@ -36,67 +36,68 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
   const tileCount = wordLength;
 
   return (
-    <div
-      className={style.board}
-      style={{ maxWidth: `calc(${tileCount} * 4.25rem)` }}>
-      BOARD:
-      {
-        guessHistory.map((guess, i) => (
-          <Row
-            key={i}
-            tileCount={tileCount}>
+    <div className={style.wrapper}>
+      <div
+        className={style.board}
+        style={{ maxWidth: `calc(${tileCount} * 4.25rem)` }}>
+        {
+          guessHistory.map((guess, i) => (
+            <Row
+              key={i}
+              tileCount={tileCount}>
+              <>
+                {
+                  guess.map(({ char, status }, i) => (
+                    <Tile
+                      key={i}
+                      status={status}>
+                      <>
+                        {char}
+                      </>
+                    </Tile>
+                  ))
+                }
+              </>
+            </Row>
+          ))
+        }
+        <Row tileCount={tileCount}>
+          {
             <>
               {
-                guess.map(({ char, status }, i) => (
-                  <Tile
-                    key={i}
-                    status={status}>
+                [...currentGuess].map((letter, i) => (
+                  <Tile key={i}>
                     <>
-                      {char}
+                      {letter}
                     </>
                   </Tile>
                 ))
               }
-            </>
-          </Row>
-        ))
-      }
-      <Row tileCount={tileCount}>
-        {
-          <>
-            {
-              [...currentGuess].map((letter, i) => (
-                <Tile key={i}>
-                  <>
-                    {letter}
-                  </>
-                </Tile>
-              ))
-            }
-            {
-              [...Array(tileCount - currentGuess.length)].map((_, i) => (
-                <Tile key={i}/>
-              ))
-            }
-          </>
-        }
-      </Row>
-
-      {
-        [...Array(5 - guessHistory.length)].map((_, i) => (
-          <Row
-            key={i}
-            tileCount={tileCount}>
-            <>
               {
-                [...Array(tileCount)].map((_, i) => (
+                [...Array(tileCount - currentGuess.length)].map((_, i) => (
                   <Tile key={i}/>
                 ))
               }
             </>
-          </Row>
-        ))
-      }
+          }
+        </Row>
+
+        {
+          [...Array(5 - guessHistory.length)].map((_, i) => (
+            <Row
+              key={i}
+              tileCount={tileCount}>
+              <>
+                {
+                  [...Array(tileCount)].map((_, i) => (
+                    <Tile key={i}/>
+                  ))
+                }
+              </>
+            </Row>
+          ))
+        }
+      </div> 
     </div>
   );
 };

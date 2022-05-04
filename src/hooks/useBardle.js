@@ -22,16 +22,16 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   let savedIsGameWon;
   let savedIsGameLost;
 
-  if (useSavedGame) {
-    const savedGame = getSavedGame(gameNumber);
-    if (savedGame) {
-      savedKeyboardKeys = savedGame.keys;
-      savedGameHistory = savedGame.history;
-      savedGoNumber = savedGame.goNum;
-      savedIsGameWon = savedGame.isWon;
-      savedIsGameLost = savedGame.isLost;
-    }
-  }
+  // if (useSavedGame) {
+  //   const savedGame = getSavedGame(gameNumber);
+  //   if (savedGame) {
+  //     savedKeyboardKeys = savedGame.keys;
+  //     savedGameHistory = savedGame.history;
+  //     savedGoNumber = savedGame.goNum;
+  //     savedIsGameWon = savedGame.isWon;
+  //     savedIsGameLost = savedGame.isLost;
+  //   }
+  // }
 
   const [dictionary, setDictionary] = useState([]);
   const [keyboardKeys, setKeyboardKeys] = useState(savedKeyboardKeys ?? [
