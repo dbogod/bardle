@@ -32,6 +32,13 @@ const Game = ({ gameNumber, solution }) => {
 
   return (
     <main className={style.game}>
+      {
+        toastMessage &&
+        <Toast
+          toastMessage={toastMessage}
+          setToastMessage={setToastMessage}/>
+      }
+      
       <Board
         guessHistory={guessHistory}
         currentGuess={currentGuess}
@@ -39,13 +46,6 @@ const Game = ({ gameNumber, solution }) => {
       <Keyboard
         markedUpKeyboard={keyboardKeys}
         keyHandler={keyHandler}/>
-
-      {
-        toastMessage &&
-        <Toast
-          toastMessage={toastMessage}
-          setToastMessage={setToastMessage}/>
-      }
 
       {
         showStatsModal &&

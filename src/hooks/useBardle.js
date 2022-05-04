@@ -178,15 +178,26 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
 
   useEffect(() => {
     if (isGameWon) {
-      const winningGuess = guessHistory[guessHistory.length - 1];
+      setTimeout(() => {
+        setGuessHistory(prev => {
+          const updatedHistory = [...prev];
+          const winningGuess = updatedHistory[updatedHistory.length - 1];
+          
+          for (let i = 0; i < winningGuess.length; i++) {
+            winningGuess[i].status = 'bardle';
+          }
+          
+          return updatedHistory;
+        });
+
+      }, 2000);
 
       setTimeout(() => {
-        for (let i = 0; i < winningGuess.length; i++) {
-          winningGuess[i].status = 'bardle';
-        }
-      }, 2000);
+        setShowStatsModal(true);
+      }, 3000);
     }
-    if (isGameLost || isGameWon) {
+    
+    if (isGameLost) {
       setShowStatsModal(true);
     }
   }, [isGameWon, isGameLost, guessHistory]);
