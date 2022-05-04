@@ -1,3 +1,4 @@
+export const GAME_TITLE = 'bardle';
 export const SAVE_GAME_KEY = 'bardle-game';
 export const STATS_KEY = 'bardle-stats';
 export const DEFAULT_STATUS = 'default';

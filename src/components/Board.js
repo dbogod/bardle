@@ -18,10 +18,20 @@ Row.propTypes = {
   children: PropTypes.object.isRequired
 };
 
-const Tile = ({ children, status, position }) => {
-  const styleObj = status !== FILLED_STATUS ?
-    { animationDelay: `calc(${status === WINNING_STATUS ? 100 : 300}ms * ${position})` } :
-    null;
+const Tile = ({ children, status, length, position }) => {
+  const styleObj = {};
+  
+  if (status !== FILLED_STATUS) {
+    styleObj.animationDelay =`calc(${status === WINNING_STATUS ? 100 : 300}ms * ${position})`;
+  }
+  
+  if (length === 7) {
+    styleObj['--font-size-xs'] = '1.75rem';
+  }
+
+  if (length === 8) {
+    styleObj['--font-size-xs'] = '1.5rem';
+  }
 
   return (
     <div
@@ -36,17 +46,18 @@ const Tile = ({ children, status, position }) => {
 Tile.propTypes = {
   children: PropTypes.object,
   status: PropTypes.string,
+  length: PropTypes.number.isRequired,
   position: PropTypes.number.isRequired
 };
 
 const Board = ({ guessHistory, currentGuess, wordLength }) => {
-  const tileCount = wordLength;
+  const tileCount = 6;
 
   return (
     <div className={style.wrapper}>
       <div
         className={style.board}
-        style={{ maxWidth: `calc(${tileCount} * 4.25rem)` }}>
+        style={{ maxWidth: `calc(${tileCount} * 3.75rem)` }}>
         {
           guessHistory.map((guess, i) => (
             <Row
@@ -58,6 +69,7 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
                     <Tile
                       key={i}
                       status={status}
+                      length={tileCount}
                       position={i}>
                       <>
                         {char}
@@ -76,8 +88,9 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
                 [...currentGuess].map((letter, i) => (
                   <Tile
                     key={i}
-                    position={i}
-                    status={FILLED_STATUS}>
+                    status={FILLED_STATUS}
+                    length={tileCount}
+                    position={i}>
                     <>
                       {letter}
                     </>
@@ -88,6 +101,7 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
                 [...Array(tileCount - currentGuess.length)].map((_, i) => (
                   <Tile
                     key={i}
+                    length={tileCount}
                     position={i}/>
                 ))
               }
@@ -105,6 +119,7 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
                   [...Array(tileCount)].map((_, i) => (
                     <Tile
                       key={i}
+                      length={tileCount}
                       position={i}/>
                   ))
                 }

@@ -4,5 +4,7 @@
   --colour-status-absent: #787c7e;
   --colour-kb-default: #d3d3d3;
   --colour-tile-border-default: #d3d6da;
-  --height-game: 100vh;
+  --colour-header-border: #d3d6da;
+  --height-header: 3rem;
+  --height-game: calc(100vh - var(--height-header));
 }

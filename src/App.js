@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 
+import Header from './components/Header';
 import Game from './components/Game';
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
 import './styles/main.scss';
@@ -14,20 +15,23 @@ export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
 const App = () => {
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
-  
+
   useEffect(() => {
     const gameNum = getGameNumber(Date.now());
     setGameNumber(gameNum);
     setSolution(getWordOfTheDay(gameNum));
   }, []);
-  
+
   return (
     <>
       {
         gameNumber && solution &&
-        <Game
-          solution="abode"
-          gameNumber={gameNumber}/>
+        <>
+          <Header/>
+          <Game
+            solution="abode"
+            gameNumber={gameNumber}/>
+        </>
       }
     </>
   );
