@@ -36,8 +36,12 @@
   font-weight: bold;
   font-size: 2rem;
 
-  &[data-status]:not([data-status="bardle"]) {
+  &[data-status]:not([data-status="bardle"]):not([data-status="falstaff"]) {
     animation: reveal 500ms ease-in forwards;
+  }
+
+  &[data-status="falstaff"] {
+    animation: pop 150ms ease-in forwards;
   }
 
   &[data-status="bardle"] {

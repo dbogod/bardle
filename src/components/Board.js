@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { WINNING_STATUS } from '../constants/strings';
+import { WINNING_STATUS, FILLED_STATUS } from '../constants/strings';
 
 import style from '../styles/Board.module.scss';
 
@@ -19,12 +19,14 @@ Row.propTypes = {
 };
 
 const Tile = ({ children, status, position }) => {
-  const animationDelayBase = status ===  WINNING_STATUS ? 100 : 300;
+  const styleObj = status !== FILLED_STATUS ?
+    { animationDelay: `calc(${status === WINNING_STATUS ? 100 : 300}ms * ${position})` } :
+    null;
 
   return (
     <div
       className={style.tile}
-      style={{ animationDelay: `calc(${animationDelayBase}ms * ${position})` }}
+      style={styleObj}
       data-status={status}>
       {children}
     </div>
@@ -74,7 +76,8 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
                 [...currentGuess].map((letter, i) => (
                   <Tile
                     key={i}
-                    position={i}>
+                    position={i}
+                    status={FILLED_STATUS}>
                     <>
                       {letter}
                     </>

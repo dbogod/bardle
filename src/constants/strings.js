@@ -5,6 +5,7 @@ export const CORRECT_STATUS = 'hamlet';
 export const PRESENT_STATUS = 'juliet';
 export const ABSENT_STATUS = 'iago';
 export const WINNING_STATUS = 'bardle';
+export const FILLED_STATUS = 'falstaff';
 export const ERROR_MSG_INSUFFICIENT_LETTERS = 'not enough letters';
 export const ERROR_MSG_INVALID_WORD = 'invalid word';
 export const GAME_OVER_MESSAGE_WIN = 'congratulations!';
