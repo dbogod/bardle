@@ -54,10 +54,13 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
   const tileCount = wordLength;
 
   return (
-    <div className={style.wrapper}>
+    <div 
+      className={style.wrapper}
+      data-testid="board-wrapper">
       <div
         className={style.board}
-        style={{ maxWidth: `calc(${tileCount} * 3.75rem)` }}>
+        style={{ maxWidth: `calc(${tileCount} * 3.75rem)` }}
+        data-testid="board">
         {
           guessHistory.map((guess, i) => (
             <Row
