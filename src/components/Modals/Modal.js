@@ -24,7 +24,7 @@ Modal.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   modalRef: PropTypes.object.isRequired,
-  children: PropTypes.object.isRequired
+  children: PropTypes.array.isRequired
 };
 
 export default Modal;
