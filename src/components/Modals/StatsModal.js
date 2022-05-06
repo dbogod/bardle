@@ -1,3 +1,4 @@
+import Countdown from 'react-countdown';
 import PropTypes from 'prop-types';
 
 import Modal from './Modal';
@@ -7,6 +8,9 @@ import style from '../../styles/Modal.module.scss';
 const StatsModal = ({ modalRef }) => {
   const winDist = [0, 4, 19, 16, 8, 3];
   const maxValue = Math.max(...winDist);
+  const tomorrow = new Date();
+  tomorrow.setHours(24, 0, 0, 0);
+  
   return (
     <Modal
       id="stats-modal"
@@ -49,6 +53,10 @@ const StatsModal = ({ modalRef }) => {
           }
         </tbody>
       </table>
+      <p role="heading" aria-level="2">
+        Next Bardle:
+      </p>
+      <Countdown date={tomorrow.valueOf()} />
     </Modal>
   );
 };
