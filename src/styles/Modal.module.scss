@@ -1,5 +1,46 @@
-.modal {
+.container,
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.container,
+.content {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  justify-content: center;
+  align-items: center;
+  
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+.overlay {
+  background-color: rgba(43, 46, 56, 0.9);
+}
+
+.content {
   min-height: 40vh;
-  width: 50vw;
+  width: 80vw;
   background-color: #c9b458;
+  border-radius: 0.35rem;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.close {
+  font-size: 1.5rem;
+  align-self: end;
+  width: 2.5rem;
+  height: 2.5rem;
 }

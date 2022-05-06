@@ -1,4 +1,7 @@
 import { useContext } from 'react';
+import PropTypes from 'prop-types';
+
+import ModalTrigger from './Modals/ModalTrigger';
 import { BiHelpCircle, BiBarChartAlt2, BiSun } from 'react-icons/bi';
 import { BsMoonStars } from 'react-icons/bs';
 
@@ -7,24 +10,26 @@ import { GAME_TITLE } from '../constants/strings';
 
 import style from '../styles/Header.module.scss';
 
-const Header = () => {
+const Header = ({ helpModalRef, statsModalRef }) => {
   const { currentTheme, toggleTheme } = useContext(ThemeContext);
   return (
     <header
       className={style.header}
       data-theme={currentTheme}>
-      <button type="button">
+      <ModalTrigger
+        modalRef={helpModalRef}>
         <BiHelpCircle/>
-      </button>
+      </ModalTrigger>
       <h1>
         {GAME_TITLE}
       </h1>
       <div className={style['buttons-wrapper']}>
-        <button type="button">
+        <ModalTrigger
+          modalRef={statsModalRef}>
           <BiBarChartAlt2/>
-        </button>
+        </ModalTrigger>
         <button
-          className={currentTheme === 'light' ? style['is-light-mode'] : '' }
+          className={currentTheme === 'light' ? style['is-light-mode'] : ''}
           onClick={toggleTheme}
           type="button">
           {
@@ -34,6 +39,11 @@ const Header = () => {
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  helpModalRef: PropTypes.object.isRequired,
+  statsModalRef: PropTypes.object.isRequired
 };
 
 export default Header;

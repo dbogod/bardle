@@ -6,7 +6,7 @@
 
 html,
 body {
-  background-color: var(--bg-app, transparent);
+  background-color: var(--bg-app);
   color: var(--colour-text-app)
 }
 
@@ -15,4 +15,5 @@ button {
   padding: 0;
   color: var(--colour-text-app);
   background: none;
+  cursor: pointer;
 }

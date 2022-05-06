@@ -15,7 +15,7 @@ import {
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
 
-const useBardle = (gameNumber, solution, useSavedGame = false) => {
+const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) => {
   let savedKeyboardKeys;
   let savedGameHistory;
   let savedGoNumber;
@@ -46,7 +46,6 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
   const [toastMessage, setToastMessage] = useState('');
   const [showStatsModal, setShowStatsModal] = useState(false);
-  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -104,6 +103,9 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     if (currentGuess === solution) {
       setIsGameWon(true);
       setToastMessage(GAME_OVER_MESSAGE_WIN);
+      setTimeout(() => {
+        statsModalRef.current.show();
+      }, 3000);
     }
 
     // Add guess to guesses history
@@ -182,11 +184,11 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
         setGuessHistory(prev => {
           const updatedHistory = [...prev];
           const winningGuess = updatedHistory[updatedHistory.length - 1];
-          
+
           for (let i = 0; i < winningGuess.length; i++) {
             winningGuess[i].status = 'bardle';
           }
-          
+
           return updatedHistory;
         });
 
@@ -196,7 +198,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
         setShowStatsModal(true);
       }, 3000);
     }
-    
+
     if (isGameLost) {
       setShowStatsModal(true);
     }
@@ -218,7 +220,6 @@ const useBardle = (gameNumber, solution, useSavedGame = false) => {
     isGameLost,
     toastMessage,
     showStatsModal,
-    showHelpModal,
     solution
   };
 };

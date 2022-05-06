@@ -1,9 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import HtmlHead from './components/HtmlHead';
 import Header from './components/Header';
 import Game from './components/Game';
+import HelpModal from './components/Modals/HelpModal';
+import StatsModal from './components/Modals/StatsModal';
+
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
+
 import './styles/main.scss';
 
 export const getGameNumber = date => {
@@ -14,6 +18,8 @@ export const getGameNumber = date => {
 export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
 
 const App = () => {
+  const helpModal = useRef();
+  const statsModal = useRef();
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
 
@@ -29,10 +35,15 @@ const App = () => {
         gameNumber && solution &&
         <>
           <HtmlHead/>
-          <Header/>
+          <Header
+            helpModalRef={helpModal}
+            statsModalRef={statsModal}/>
           <Game
             solution="abode"
-            gameNumber={gameNumber}/>
+            gameNumber={gameNumber}
+            statsModalRef={statsModal}/>
+          <HelpModal modalRef={helpModal}/>
+          <StatsModal modalRef={statsModal}/>
         </>
       }
     </>
