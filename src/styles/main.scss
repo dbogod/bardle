@@ -7,12 +7,12 @@
 html,
 body {
   background-color: var(--bg-app, transparent);
-  color: var(--colour-text-app, #000)
+  color: var(--colour-text-app)
 }
 
 button {
   border: none;
   padding: 0;
-  color: var(--colour-text-app, #000);
+  color: var(--colour-text-app);
   background: none;
 }

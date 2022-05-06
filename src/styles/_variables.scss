@@ -1,15 +1,25 @@
 :root {
+  --bg-app: #fff;
+  --colour-text-app: #000;
   --colour-status-correct: #6aaa64;
   --colour-status-present: #c9b458;
   --colour-status-absent: #787c7e;
-  --colour-kb-default: #d3d3d3;
+  --colour-kb-bg-default: #d3d3d3;
+  --colour-kb-text-default: #000;
   --colour-tile-border-default: #d3d6da;
+  --colour-tile-border-filled: #000;
   --colour-header-border: #d3d6da;
   --height-header: 3rem;
   --height-game: calc(100vh - var(--height-header));
 }
 
 [data-theme="dark"] {
-  --bg-app: #000;
+  --bg-app: #121213;
   --colour-text-app: #fff;
+  --colour-kb-bg-default: #818384;
+  --colour-kb-text-default: #fff;
+  --colour-tile-border-default: #3a3a3c;
+  --colour-tile-border-filled: #565758;
+  --colour-status-correct: #538d4e;
+  --colour-status-present: #b59f3b;
 }
