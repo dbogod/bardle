@@ -1,10 +1,11 @@
-import { useState, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import PropTypes from 'prop-types';
+import { saveThemePreference, getThemePreference } from '../lib/localStorage';
 
 const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState('light');
+  const [currentTheme, setCurrentTheme] = useState(getThemePreference() ?? 'light');
   const toggleTheme = () => {
     setCurrentTheme(prev => {
       if (prev === 'light') {
@@ -14,6 +15,10 @@ const ThemeProvider = ({ children }) => {
       return 'light';
     });
   };
+  
+  useEffect(() => {
+    saveThemePreference(currentTheme);
+  }, [currentTheme]);
 
   return (
     <ThemeContext.Provider value={{ currentTheme, toggleTheme }}>

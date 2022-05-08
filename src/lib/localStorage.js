@@ -1,4 +1,4 @@
-import { SAVE_GAME_KEY } from '../constants/strings';
+import { SAVE_GAME_KEY, SAVE_THEME_KEY } from '../constants/strings';
 
 export const saveGame = (gameNum, keys, history, goNum, isWon, isLost) => {
   localStorage.setItem(SAVE_GAME_KEY, JSON.stringify({
@@ -21,4 +21,18 @@ export const getSavedGame = gameNumber => {
   const { gameNum, keys, history, goNum, isWon, isLost } = JSON.parse(localStorage.getItem(SAVE_GAME_KEY));
   
   return gameNum === gameNumber ? { gameNum, keys, history, goNum, isWon, isLost } : null;
+};
+
+export const saveThemePreference = theme => {
+  localStorage.setItem(SAVE_THEME_KEY, theme);
+};
+
+export const getThemePreference = () => {
+  const savedTheme = localStorage?.getItem(SAVE_THEME_KEY);
+  
+  if (!savedTheme) {
+    return null;
+  }
+
+  return localStorage.getItem(SAVE_THEME_KEY);
 };

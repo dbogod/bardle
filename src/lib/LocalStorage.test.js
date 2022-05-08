@@ -1,5 +1,5 @@
-import { saveGame, getSavedGame } from './localStorage';
-import { SAVE_GAME_KEY } from '../constants/strings';
+import { saveGame, getSavedGame, saveThemePreference, getThemePreference } from './localStorage';
+import { SAVE_GAME_KEY, SAVE_THEME_KEY } from '../constants/strings';
 
 const mockData = {
   'gameNum': 47,
@@ -96,5 +96,16 @@ test('Game data can be saved to/retrieved from local storage', () => {
   
   expect(storedData).toEqual(JSON.stringify(mockData));
   expect(getSavedGame(47)).toEqual(JSON.parse(storedData));
+  window.localStorage.clear();
+});
+
+test('Game theme can be saved to/retrieved from local storage', () => {
+  saveThemePreference('dark');
+  let retrievedTheme = getThemePreference();
+  expect(retrievedTheme).toEqual('dark');
+
+  saveThemePreference('foo');
+  retrievedTheme = getThemePreference();
+  expect(retrievedTheme).toEqual('foo');
   window.localStorage.clear();
 });

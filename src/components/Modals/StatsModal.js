@@ -54,7 +54,7 @@ const StatsModal = ({ modalRef }) => {
         </tbody>
       </table>
       <p role="heading" aria-level="2">
-        Next Bardle:
+        Next Bardle
       </p>
       <Countdown date={tomorrow.valueOf()} />
     </Modal>
