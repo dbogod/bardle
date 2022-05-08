@@ -1,5 +1,5 @@
 import { saveGame, getSavedGame, saveThemePreference, getThemePreference } from './localStorage';
-import { SAVE_GAME_KEY, SAVE_THEME_KEY } from '../constants/strings';
+import { SAVE_GAME_KEY } from '../constants/strings';
 
 const mockData = {
   'gameNum': 47,

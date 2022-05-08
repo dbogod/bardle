@@ -10,7 +10,8 @@ import {
 } from '../constants/strings';
 import {
   saveGame,
-  getSavedGame
+  getSavedGame,
+  updateStats
 } from '../lib/localStorage';
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
@@ -179,30 +180,36 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   }, [fetchDictionary]);
 
   useEffect(() => {
-    if (isGameWon) {
-      setTimeout(() => {
-        setGuessHistory(prev => {
-          const updatedHistory = [...prev];
-          const winningGuess = updatedHistory[updatedHistory.length - 1];
+    const updateLocalStorage = async () => {
+      if (!isGameLost && !isGameWon) {
+        return;
+      }
 
-          for (let i = 0; i < winningGuess.length; i++) {
-            winningGuess[i].status = 'bardle';
-          }
+      await updateStats(isGameWon, goNumber);
 
-          return updatedHistory;
-        });
+      if (isGameWon) {
+        setTimeout(() => {
+          setGuessHistory(prev => {
+            const updatedHistory = [...prev];
+            const winningGuess = updatedHistory[updatedHistory.length - 1];
 
-      }, 2000);
+            for (let i = 0; i < winningGuess.length; i++) {
+              winningGuess[i].status = 'bardle';
+            }
+
+            return updatedHistory;
+          });
+
+        }, 2000);
+      }
 
       setTimeout(() => {
         setShowStatsModal(true);
       }, 3000);
-    }
+    };
 
-    if (isGameLost) {
-      setShowStatsModal(true);
-    }
-  }, [isGameWon, isGameLost, guessHistory]);
+    updateLocalStorage();
+  }, [isGameWon, isGameLost]);
 
   return {
     isValidKey,

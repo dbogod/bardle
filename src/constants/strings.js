@@ -1,7 +1,7 @@
 export const GAME_TITLE = 'bardle';
 export const BROWSER_TITLE = 'Bardle: Wordle, but Shakespearean';
 export const SAVE_GAME_KEY = 'bardle-game';
-export const SAVE_THEME_KEY = 'bardle-theme';
+export const THEME_KEY = 'bardle-theme';
 export const STATS_KEY = 'bardle-stats';
 export const DEFAULT_STATUS = 'default';
 export const CORRECT_STATUS = 'hamlet';
