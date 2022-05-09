@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import useBardle from '../hooks/useBardle';
 
@@ -6,9 +6,14 @@ import Board from './Board';
 import Keyboard from './Keyboard';
 import Toast from './Toast';
 
+import { generateShareableString } from '../lib/share';
+
+import { ThemeContext } from '../context/Theme';
+
 import style from '../styles/Game.module.scss';
 
-const Game = ({ gameNumber, solution, statsModalRef }) => {
+const Game = ({ gameNumber, setIsGameOver, setShareableResult, statsModalRef, solution }) => {
+  const { currentTheme } = useContext(ThemeContext);
   const {
     keyHandler,
     setToastMessage,
@@ -23,9 +28,15 @@ const Game = ({ gameNumber, solution, statsModalRef }) => {
   useEffect(() => {
     if (!isGameWon && !isGameLost) {
       window.addEventListener('keyup', keyHandler);
+    } else {
+      setIsGameOver(true);
     }
     return () => window.removeEventListener('keyup', keyHandler);
   }, [keyHandler, isGameWon, isGameLost]);
+  
+  useEffect(() => {
+    setShareableResult(generateShareableString(gameNumber, isGameLost, guessHistory, currentTheme));
+  }, [setShareableResult, gameNumber, isGameLost, guessHistory, currentTheme]);
 
   return (
     <main className={style.game}>
@@ -49,8 +60,10 @@ const Game = ({ gameNumber, solution, statsModalRef }) => {
 
 Game.propTypes = {
   gameNumber: PropTypes.number.isRequired,
+  setIsGameOver: PropTypes.func.isRequired,
+  setShareableResult: PropTypes.func.isRequired,
+  statsModalRef: PropTypes.object.isRequired,
   solution: PropTypes.string.isRequired,
-  statsModalRef: PropTypes.object.isRequired
 };
 
 export default Game;

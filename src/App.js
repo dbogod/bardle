@@ -25,6 +25,8 @@ const App = () => {
   const statsModalRef = useRef();
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
+  const [shareableResult, setShareableResult] = useState('');
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     const gameNum = getGameNumber(Date.now());
@@ -44,13 +46,17 @@ const App = () => {
           <Game
             solution="abode"
             gameNumber={gameNumber}
-            statsModalRef={statsModalRef}/>
+            statsModalRef={statsModalRef}
+            setShareableResult={setShareableResult}
+            setIsGameOver={setIsGameOver}/>
           <HelpModal 
             modalRef={helpModalRef}
             isOpen={currentModal === 'instructions-modal'}/>
           <StatsModal 
             modalRef={statsModalRef}
-            isOpen={currentModal === 'stats-modal'}/>
+            isOpen={currentModal === 'stats-modal'}
+            shareableResult={shareableResult}
+            isGameOver={isGameOver}/>
         </>
       }
     </>

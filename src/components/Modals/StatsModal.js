@@ -4,12 +4,17 @@ import PropTypes from 'prop-types';
 
 import Modal from './Modal';
 import { getStats } from '../../lib/localStorage';
+import { shareResult } from '../../lib/share';
 
 import style from '../../styles/Modal.module.scss';
 
-const StatsModal = ({ isOpen, modalRef }) => {
+const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult }) => {
   const [statsToDisplay, setStatsToDisplay] = useState(null);
-  
+
+  const clickHandler = () => {
+    shareResult(shareableResult);
+  };
+
   useEffect(() => {
     const getStatsToDisplay = async () => {
       const savedStats = await getStats();
@@ -18,13 +23,13 @@ const StatsModal = ({ isOpen, modalRef }) => {
 
     getStatsToDisplay();
   }, [isOpen]);
-  
+
   if (!statsToDisplay) {
     return (
       <></>
     );
   }
-  
+
   const { gamesPlayed, gamesWon, currentStreak, maxStreak, winDist } = statsToDisplay;
   const maxValue = Math.max(...winDist);
   const tomorrow = new Date();
@@ -72,17 +77,31 @@ const StatsModal = ({ isOpen, modalRef }) => {
           }
         </tbody>
       </table>
-      <p role="heading" aria-level="2">
-        Next Bardle
-      </p>
-      <Countdown date={tomorrow.valueOf()} />
+      <div>
+        <p
+          role="heading"
+          aria-level="2">
+          Next Bardle
+        </p>
+        <Countdown date={tomorrow.valueOf()}/>
+        {
+          isGameOver &&
+          <button
+            onClick={clickHandler}
+            type="button">
+            Share
+          </button>
+        }
+      </div>
     </Modal>
   );
 };
 
 StatsModal.propTypes = {
+  isGameOver: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  modalRef: PropTypes.object.isRequired
+  modalRef: PropTypes.object.isRequired,
+  shareableResult: PropTypes.string.isRequired
 };
 
 export default StatsModal;
