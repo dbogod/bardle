@@ -1,10 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 
 import HtmlHead from './components/HtmlHead';
 import Header from './components/Header';
 import Game from './components/Game';
 import HelpModal from './components/Modals/HelpModal';
 import StatsModal from './components/Modals/StatsModal';
+
+import { ModalContext } from './context/Modal';
 
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
 
@@ -18,8 +20,9 @@ export const getGameNumber = date => {
 export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
 
 const App = () => {
-  const helpModal = useRef();
-  const statsModal = useRef();
+  const { currentModal } = useContext(ModalContext);
+  const helpModalRef = useRef();
+  const statsModalRef = useRef();
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
 
@@ -36,14 +39,18 @@ const App = () => {
         <>
           <HtmlHead/>
           <Header
-            helpModalRef={helpModal}
-            statsModalRef={statsModal}/>
+            helpModalRef={helpModalRef}
+            statsModalRef={statsModalRef}/>
           <Game
             solution="abode"
             gameNumber={gameNumber}
-            statsModalRef={statsModal}/>
-          <HelpModal modalRef={helpModal}/>
-          <StatsModal modalRef={statsModal}/>
+            statsModalRef={statsModalRef}/>
+          <HelpModal 
+            modalRef={helpModalRef}
+            isOpen={currentModal === 'instructions-modal'}/>
+          <StatsModal 
+            modalRef={statsModalRef}
+            isOpen={currentModal === 'stats-modal'}/>
         </>
       }
     </>

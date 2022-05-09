@@ -4,7 +4,7 @@ import Modal from './Modal';
 
 import style from '../../styles/Modal.module.scss';
 
-const HelpModal = ({ modalRef }) => {
+const HelpModal = ({ isOpen, modalRef }) => {
   return (
     <Modal
       id="instructions-modal"
@@ -17,6 +17,7 @@ const HelpModal = ({ modalRef }) => {
 };
 
 HelpModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired
 };
 

@@ -226,7 +226,6 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     isGameWon,
     isGameLost,
     toastMessage,
-    showStatsModal,
     solution
   };
 };

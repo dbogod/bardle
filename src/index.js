@@ -5,14 +5,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from './context/Theme';
+import { ModalProvider } from './context/Modal';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <HelmetProvider>
     <ThemeProvider>
-      <React.StrictMode>
-        <App/>
-      </React.StrictMode>
+      <ModalProvider>
+        <React.StrictMode>
+          <App/>
+        </React.StrictMode>
+      </ModalProvider>
     </ThemeProvider>
   </HelmetProvider>
 );

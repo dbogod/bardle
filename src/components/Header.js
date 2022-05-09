@@ -16,16 +16,14 @@ const Header = ({ helpModalRef, statsModalRef }) => {
     <header
       className={style.header}
       data-theme={currentTheme}>
-      <ModalTrigger
-        modalRef={helpModalRef}>
+      <ModalTrigger modalRef={helpModalRef}>
         <BiHelpCircle/>
       </ModalTrigger>
       <h1>
         {GAME_TITLE}
       </h1>
       <div className={style['buttons-wrapper']}>
-        <ModalTrigger
-          modalRef={statsModalRef}>
+        <ModalTrigger modalRef={statsModalRef}>
           <BiBarChartAlt2/>
         </ModalTrigger>
         <button

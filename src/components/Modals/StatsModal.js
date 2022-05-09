@@ -1,16 +1,35 @@
+import { useState, useEffect } from 'react';
 import Countdown from 'react-countdown';
 import PropTypes from 'prop-types';
 
 import Modal from './Modal';
+import { getStats } from '../../lib/localStorage';
 
 import style from '../../styles/Modal.module.scss';
 
-const StatsModal = ({ modalRef }) => {
-  const winDist = [0, 4, 19, 16, 8, 3];
+const StatsModal = ({ isOpen, modalRef }) => {
+  const [statsToDisplay, setStatsToDisplay] = useState(null);
+  
+  useEffect(() => {
+    const getStatsToDisplay = async () => {
+      const savedStats = await getStats();
+      setStatsToDisplay(savedStats);
+    };
+
+    getStatsToDisplay();
+  }, [isOpen]);
+  
+  if (!statsToDisplay) {
+    return (
+      <></>
+    );
+  }
+  
+  const { gamesPlayed, gamesWon, currentStreak, maxStreak, winDist } = statsToDisplay;
   const maxValue = Math.max(...winDist);
   const tomorrow = new Date();
   tomorrow.setHours(24, 0, 0, 0);
-  
+
   return (
     <Modal
       id="stats-modal"
@@ -27,10 +46,10 @@ const StatsModal = ({ modalRef }) => {
         </thead>
         <tbody>
           <tr>
-            <td>54</td>
-            <td>50</td>
-            <td>4</td>
-            <td>9</td>
+            <td>{gamesPlayed}</td>
+            <td>{gamesWon}</td>
+            <td>{currentStreak}</td>
+            <td>{maxStreak}</td>
           </tr>
         </tbody>
       </table>
@@ -62,6 +81,7 @@ const StatsModal = ({ modalRef }) => {
 };
 
 StatsModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired
 };
 
