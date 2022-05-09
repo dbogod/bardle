@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Row from './Row';
 import Tile from './Tile';
 
-import { FILLED_STATUS } from '../constants/strings';
+import { FILLED_STATUS } from '../../constants/strings';
 
-import style from '../styles/Board.module.scss';
+import style from '../../styles/Board.module.scss';
 
 const Board = ({ guessHistory, currentGuess, wordLength }) => {
   const tileCount = wordLength;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
-import Row from './Row';
-import Tile from './Tile';
+import Row from './GameBoard/Row';
+import Tile from './GameBoard/Tile';
 
 import style from '../styles/Board.module.scss';
 

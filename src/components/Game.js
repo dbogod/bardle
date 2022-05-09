@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import useBardle from '../hooks/useBardle';
 
-import Board from './Board';
+import Board from './GameBoard/Board';
 import Keyboard from './Keyboard';
 import Toast from './Toast';
 

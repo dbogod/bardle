@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import style from '../styles/Board.module.scss';
+import style from '../../styles/Board.module.scss';
 
 const Row = ({ children, tileCount }) => {
   return (

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
-import { FILLED_STATUS, WINNING_STATUS } from '../constants/strings';
+import { FILLED_STATUS, WINNING_STATUS } from '../../constants/strings';
 
-import style from '../styles/Board.module.scss';
+import style from '../../styles/Board.module.scss';
 
 const Tile = ({ children, status, length, position }) => {
   const styleObj = {};

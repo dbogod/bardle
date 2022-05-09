@@ -8,7 +8,7 @@ import {
   CORRECT_STATUS,
   PRESENT_STATUS,
   ABSENT_STATUS
-} from '../constants/strings';
+} from '../../constants/strings';
 
 let guessHistory;
 let currentGuess;
