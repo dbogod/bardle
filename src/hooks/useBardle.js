@@ -23,16 +23,16 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   let savedIsGameWon;
   let savedIsGameLost;
 
-  // if (useSavedGame) {
-  //   const savedGame = getSavedGame(gameNumber);
-  //   if (savedGame) {
-  //     savedKeyboardKeys = savedGame.keys;
-  //     savedGameHistory = savedGame.history;
-  //     savedGoNumber = savedGame.goNum;
-  //     savedIsGameWon = savedGame.isWon;
-  //     savedIsGameLost = savedGame.isLost;
-  //   }
-  // }
+  if (useSavedGame) {
+    const savedGame = getSavedGame(gameNumber);
+    if (savedGame) {
+      savedKeyboardKeys = savedGame.keys;
+      savedGameHistory = savedGame.history;
+      savedGoNumber = savedGame.goNum;
+      savedIsGameWon = savedGame.isWon;
+      savedIsGameLost = savedGame.isLost;
+    }
+  }
 
   const [dictionary, setDictionary] = useState([]);
   const [keyboardKeys, setKeyboardKeys] = useState(savedKeyboardKeys ?? [
@@ -46,7 +46,6 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
   const [toastMessage, setToastMessage] = useState('');
-  const [showStatsModal, setShowStatsModal] = useState(false);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -202,14 +201,10 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
 
         }, 2000);
       }
-
-      setTimeout(() => {
-        setShowStatsModal(true);
-      }, 3000);
     };
 
     updateLocalStorage();
-  }, [isGameWon, isGameLost]);
+  }, [isGameWon, isGameLost, goNumber]);
 
   return {
     isValidKey,
