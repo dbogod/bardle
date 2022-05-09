@@ -12,11 +12,11 @@
 .container,
 .content {
   z-index: 2;
-  display: flex;
-  flex-direction: column;
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -44,6 +44,7 @@
   margin: 0;
   letter-spacing: 0.25rem;
   font-size: 1rem;
+  font-weight: bold;
   text-transform: uppercase;
   text-align: center;
 }
@@ -58,8 +59,22 @@
   height: 4rem;
 }
 
-.stats-table {
+.inner-wrapper {
+  display: flex;
+  flex-direction: column;
   margin-top: 1.25rem;
+  font-size: 0.875rem;
+  
+  > *:first-child {
+    margin-top: 0;
+  }
+  
+  p {
+    margin: 1rem 0 0;
+  }
+}
+
+.stats-table {
   table-layout: fixed;
   width: 100%;
 

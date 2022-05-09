@@ -43,71 +43,71 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult }) => {
       id="stats-modal"
       title="Statistics"
       modalRef={modalRef}>
-      <table className={style['stats-table']}>
-        <thead>
-          <tr>
-            <th scope="col">Played</th>
-            <th scope="col">Won</th>
-            <th scope="col">Current streak</th>
-            <th scope="col">Max streak</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{gamesPlayed}</td>
-            <td>{gamesWon}</td>
-            <td>{currentStreak}</td>
-            <td>{maxStreak}</td>
-          </tr>
-        </tbody>
-      </table>
-      <table className={style['stats-histogram']}>
-        <caption>
-          Guess distribution
-        </caption>
-        <tbody>
-          {
-            winDist.map((value, i) => (
-              <tr key={i}>
-                <th>{i + 1}</th>
-                <td style={{ width: `${(100 / maxValue) * value}%` }}>
-                  <span>
-                    {value}
-                  </span>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-      {
-        isGameOver &&
-        <div className={style['clock-and-share-wrapper']}>
-          <div>
-            <p
-              role="heading"
-              aria-level="2">
-              Next Bardle
-            </p>
-            <div className={style.clock}>
-              <Countdown
-                date={tomorrow.valueOf()}
-                daysInHours={true}/>
+      <div className={style['inner-wrapper']}>
+        <table className={style['stats-table']}>
+          <thead>
+            <tr>
+              <th scope="col">Played</th>
+              <th scope="col">Won</th>
+              <th scope="col">Current streak</th>
+              <th scope="col">Max streak</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{gamesPlayed}</td>
+              <td>{gamesWon}</td>
+              <td>{currentStreak}</td>
+              <td>{maxStreak}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table className={style['stats-histogram']}>
+          <caption>
+            Guess distribution
+          </caption>
+          <tbody>
+            {
+              winDist.map((value, i) => (
+                <tr key={i}>
+                  <th>{i + 1}</th>
+                  <td style={{ width: `${(100 / maxValue) * value}%` }}>
+                    <span>
+                      {value}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        {
+          isGameOver &&
+          <div className={style['clock-and-share-wrapper']}>
+            <div>
+              <p
+                role="heading"
+                aria-level="2">
+                Next Bardle
+              </p>
+              <div className={style.clock}>
+                <Countdown
+                  date={tomorrow.valueOf()}
+                  daysInHours={true}/>
+              </div>
+            </div>
+            <div>
+              <button
+                className={style.share}
+                onClick={clickHandler}
+                type="button">
+                <span>Share</span>
+                <BsShareFill/>
+              </button>
             </div>
           </div>
-          <div>
-            <button
-              className={style.share}
-              onClick={clickHandler}
-              type="button">
-              <span>Share</span>
-              <BsShareFill/>
-            </button>
-
-          </div>
-        </div>
-
-      }
+        }
+      </div>
     </Modal>
   );
 };

@@ -9,6 +9,8 @@
   --colour-tile-border-default: #d3d6da;
   --colour-tile-border-filled: #000;
   --colour-header-border: #d3d6da;
+  --colour-link: blue;
+  --colour-link-hover: red;
   --max-width-game: 32rem;
   --height-header: 3rem;
   --height-game: calc(100vh - var(--height-header));
@@ -23,4 +25,7 @@
   --colour-tile-border-default: #3a3a3c;
   --colour-tile-border-filled: #565758;
   --colour-status-absent: #5b5b5b;
+  --colour-link: #fff;
+  --colour-link-hover: #121213;
+  --colour-link-bg-hover: #fff;
 }

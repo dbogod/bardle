@@ -1,4 +1,4 @@
-export const GAME_TITLE = 'bardle';
+export const GAME_TITLE = 'Bardle';
 export const BROWSER_TITLE = 'Bardle: Wordle, but Shakespearean';
 export const SAVE_GAME_KEY = 'bardle-game';
 export const THEME_KEY = 'bardle-theme';

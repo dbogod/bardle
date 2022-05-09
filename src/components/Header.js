@@ -10,7 +10,7 @@ import { GAME_TITLE } from '../constants/strings';
 
 import style from '../styles/Header.module.scss';
 
-const Header = ({ helpModalRef, aboutModalRef, statsModalRef }) => {
+const Header = ({ howToPlayModalRef, aboutModalRef, statsModalRef }) => {
   const { currentTheme, toggleTheme } = useContext(ThemeContext);
   return (
     <header
@@ -19,7 +19,7 @@ const Header = ({ helpModalRef, aboutModalRef, statsModalRef }) => {
       <div className={style.content}>
         <div className={style['buttons-wrapper']}>
           <ModalTrigger 
-            modalRef={helpModalRef}
+            modalRef={howToPlayModalRef}
             modalTitle="instructions">
             <BiHelpCircle/>
           </ModalTrigger>
@@ -55,7 +55,7 @@ const Header = ({ helpModalRef, aboutModalRef, statsModalRef }) => {
 };
 
 Header.propTypes = {
-  helpModalRef: PropTypes.object.isRequired,
+  howToPlayModalRef: PropTypes.object.isRequired,
   aboutModalRef: PropTypes.object.isRequired,
   statsModalRef: PropTypes.object.isRequired
 };

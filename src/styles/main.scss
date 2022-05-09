@@ -34,3 +34,13 @@ button {
   background: none;
   cursor: pointer;
 }
+
+a {
+  color: var(--colour-link);
+  transition: all 150ms ease-in-out;
+  
+  &:hover {
+    color: var(--colour-link-hover);
+    background: var(--colour-link-bg-hover, transparent);
+  }
+}

@@ -32,7 +32,7 @@ const Game = ({ gameNumber, setIsGameOver, setShareableResult, statsModalRef, so
       setIsGameOver(true);
     }
     return () => window.removeEventListener('keyup', keyHandler);
-  }, [keyHandler, isGameWon, isGameLost]);
+  }, [keyHandler, setIsGameOver, isGameWon, isGameLost]);
   
   useEffect(() => {
     setShareableResult(generateShareableString(gameNumber, isGameLost, guessHistory, currentTheme));
