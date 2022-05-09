@@ -9,8 +9,10 @@
   --colour-tile-border-default: #d3d6da;
   --colour-tile-border-filled: #000;
   --colour-header-border: #d3d6da;
+  --max-width-game: 32rem;
   --height-header: 3rem;
   --height-game: calc(100vh - var(--height-header));
+  --padding-game-container: 0 0.25rem;
 }
 
 [data-theme="dark"] {

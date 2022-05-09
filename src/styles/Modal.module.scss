@@ -1,3 +1,5 @@
+@import "animations";
+
 .container,
 .overlay {
   position: fixed;
@@ -31,9 +33,11 @@
   position: relative;
   min-height: 60vh;
   width: 80vw;
+  max-width: calc(var(--max-width-game) * 0.8);
   border-radius: 0.35rem;
   padding: 1.25rem;
   background-color: var(--bg-app);
+  animation: float-up 300ms ease-out forwards;
 }
 
 .title {

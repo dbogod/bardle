@@ -2,10 +2,6 @@
 
 .header {
   width: 100%;
-  height: var(--height-header);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid var(--colour-header-border);
   
   h1 {
@@ -37,6 +33,17 @@
       --size-svg: 1.25rem;
     }
   }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: var(--height-header);
+  max-width: var(--max-width-game);
+  margin: 0 auto;
+  padding: var(--padding-game-container);
 }
 
 .buttons-wrapper {

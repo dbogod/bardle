@@ -64,3 +64,17 @@
     border-color: var(--colour-tile-border-filled);
   }
 }
+
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(2rem);
+  }
+  
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}

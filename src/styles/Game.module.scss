@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 32rem;
+  max-width: var(--max-width-game);
   height: var(--height-game);
   margin: 0 auto;
-  padding: 0 0.25rem 0.5rem 0.25rem;
+  padding: var(--padding-game-container);
+  padding-bottom: 0.5rem;
 }

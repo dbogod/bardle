@@ -16,25 +16,28 @@ const Header = ({ helpModalRef, statsModalRef }) => {
     <header
       className={style.header}
       data-theme={currentTheme}>
-      <ModalTrigger modalRef={helpModalRef}>
-        <BiHelpCircle/>
-      </ModalTrigger>
-      <h1>
-        {GAME_TITLE}
-      </h1>
-      <div className={style['buttons-wrapper']}>
-        <ModalTrigger modalRef={statsModalRef}>
-          <BiBarChartAlt2/>
+      <div className={style.content}>
+        <ModalTrigger modalRef={helpModalRef}>
+          <BiHelpCircle/>
         </ModalTrigger>
-        <button
-          className={currentTheme === 'light' ? style['is-light-mode'] : ''}
-          onClick={toggleTheme}
-          type="button">
-          {
-            currentTheme === 'light' ? <BsMoonStars/> : <BiSun/>
-          }
-        </button>
+        <h1>
+          {GAME_TITLE}
+        </h1>
+        <div className={style['buttons-wrapper']}>
+          <ModalTrigger modalRef={statsModalRef}>
+            <BiBarChartAlt2/>
+          </ModalTrigger>
+          <button
+            className={currentTheme === 'light' ? style['is-light-mode'] : ''}
+            onClick={toggleTheme}
+            type="button">
+            {
+              currentTheme === 'light' ? <BsMoonStars/> : <BiSun/>
+            }
+          </button>
+        </div>
       </div>
+      
     </header>
   );
 };
