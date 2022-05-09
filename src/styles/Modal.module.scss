@@ -32,10 +32,10 @@
 .content {
   position: relative;
   min-height: 60vh;
-  width: 80vw;
+  width: 90vw;
   max-width: calc(var(--max-width-game) * 0.8);
   border-radius: 0.35rem;
-  padding: 1.25rem;
+  padding: 1.25rem 1rem;
   background-color: var(--bg-app);
   animation: float-up 300ms ease-out forwards;
 }
@@ -80,7 +80,7 @@
 }
 
 .stats-histogram {
-  margin-top: 1.5rem;
+  margin: 1.5rem 0;
   height: 12.5rem;
   border-spacing: 0.25rem;
   
@@ -102,5 +102,51 @@
     font-weight: normal;
     padding-left: 0.5rem;
     background-color: var(--colour-status-correct);
+  }
+}
+
+.clock-and-share-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    
+    &:first-child {
+      border-right: 1px solid var(--colour-text-app);
+    }
+  }
+  
+  p {
+    margin: 0;
+  }
+}
+
+.clock {
+  font-size: 1.75rem;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0.75rem;
+  border-radius: 0.35rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1rem;
+  background: var(--colour-status-correct);
+  color: #fff;
+  
+  &:hover {
+    background: var(--colour-status-present);
+  }
+  
+  span {
+    margin-right: 0.5rem;
   }
 }

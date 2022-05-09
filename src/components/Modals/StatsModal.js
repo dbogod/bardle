@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import Countdown from 'react-countdown';
 import PropTypes from 'prop-types';
 
+import { BsShareFill } from 'react-icons/bs';
+
 import Modal from './Modal';
+
 import { getStats } from '../../lib/localStorage';
 import { shareResult } from '../../lib/share';
 
@@ -77,22 +80,34 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult }) => {
           }
         </tbody>
       </table>
-      <div>
-        <p
-          role="heading"
-          aria-level="2">
-          Next Bardle
-        </p>
-        <Countdown date={tomorrow.valueOf()}/>
-        {
-          isGameOver &&
-          <button
-            onClick={clickHandler}
-            type="button">
-            Share
-          </button>
-        }
-      </div>
+      {
+        isGameOver &&
+        <div className={style['clock-and-share-wrapper']}>
+          <div>
+            <p
+              role="heading"
+              aria-level="2">
+              Next Bardle
+            </p>
+            <div className={style.clock}>
+              <Countdown
+                date={tomorrow.valueOf()}
+                daysInHours={true}/>
+            </div>
+          </div>
+          <div>
+            <button
+              className={style.share}
+              onClick={clickHandler}
+              type="button">
+              <span>Share</span>
+              <BsShareFill/>
+            </button>
+
+          </div>
+        </div>
+
+      }
     </Modal>
   );
 };

@@ -29,8 +29,8 @@
       height: var(--size-svg);
     }
     
-    &.is-light-mode {
-      --size-svg: 1.25rem;
+    &.is-dark-mode {
+      --size-svg: 1.15rem;
     }
   }
 }
