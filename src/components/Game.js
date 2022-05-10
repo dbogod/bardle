@@ -12,7 +12,7 @@ import { ThemeContext } from '../context/Theme';
 
 import style from '../styles/Game.module.scss';
 
-const Game = ({ gameNumber, setIsGameOver, setShareableResult, statsModalRef, solution }) => {
+const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, statsModalRef, solution }) => {
   const { currentTheme } = useContext(ThemeContext);
   const {
     keyHandler,
@@ -50,7 +50,8 @@ const Game = ({ gameNumber, setIsGameOver, setShareableResult, statsModalRef, so
       <Board
         guessHistory={guessHistory}
         currentGuess={currentGuess}
-        wordLength={solution.length}/>
+        wordLength={solution.length}
+        isSmScreen={isSmScreen}/>
       <Keyboard
         markedUpKeyboard={keyboardKeys}
         keyHandler={keyHandler}/>
@@ -59,6 +60,7 @@ const Game = ({ gameNumber, setIsGameOver, setShareableResult, statsModalRef, so
 };
 
 Game.propTypes = {
+  isSmScreen: PropTypes.bool.isRequired,
   gameNumber: PropTypes.number.isRequired,
   setIsGameOver: PropTypes.func.isRequired,
   setShareableResult: PropTypes.func.isRequired,

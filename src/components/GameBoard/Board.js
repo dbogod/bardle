@@ -7,7 +7,7 @@ import { FILLED_STATUS } from '../../constants/strings';
 
 import style from '../../styles/Board.module.scss';
 
-const Board = ({ guessHistory, currentGuess, wordLength }) => {
+const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength }) => {
   const tileCount = wordLength;
 
   return (
@@ -16,7 +16,7 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
       data-testid="board-wrapper">
       <div
         className={style.board}
-        style={{ maxWidth: `calc(${tileCount} * 3.75rem)` }}
+        style={{ maxWidth: `calc(${tileCount} * ${isSmScreen ? '3rem' : '3.75rem'})` }}
         data-testid="board">
         {
           guessHistory.map((guess, i) => (
@@ -93,6 +93,7 @@ const Board = ({ guessHistory, currentGuess, wordLength }) => {
 };
 
 Board.propTypes = {
+  isSmScreen: PropTypes.bool.isRequired,
   guessHistory: PropTypes.array.isRequired,
   currentGuess: PropTypes.string.isRequired,
   wordLength: PropTypes.number.isRequired
