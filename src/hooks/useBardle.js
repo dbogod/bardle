@@ -6,7 +6,8 @@ import {
   ABSENT_STATUS,
   ERROR_MSG_INSUFFICIENT_LETTERS,
   ERROR_MSG_INVALID_WORD,
-  GAME_OVER_MESSAGE_WIN
+  GAME_OVER_MESSAGE_WIN,
+  GAME_OVER_MESSAGE_LOSE
 } from '../constants/strings';
 import {
   saveGame,
@@ -121,6 +122,10 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     // Add one to go number, unless this was the last guess
     if (goNumber === 5) {
       setIsGameLost(true);
+      setToastMessage(GAME_OVER_MESSAGE_LOSE);
+      setTimeout(() => {
+        statsModalRef.current.show();
+      }, 3000);
     } else {
       setGoNumber(prev => prev + 1);
     }

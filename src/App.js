@@ -43,11 +43,11 @@ const App = () => {
       window.addEventListener('resize', updateAppHeight);
       updateAppHeight();
     }
-    
+
     if (document?.body?.dataset) {
       document.body.dataset.theme = currentTheme;
     }
-    
+
     return () => window.removeEventListener('resize', updateAppHeight);
   }, [currentTheme]);
 
@@ -77,11 +77,12 @@ const App = () => {
             modalRef={howToPlayModalRef}/>
           <AboutModal
             modalRef={aboutModalRef}/>
-          <StatsModal 
+          <StatsModal
             modalRef={statsModalRef}
             isOpen={currentModal === 'stats-modal'}
             shareableResult={shareableResult}
-            isGameOver={isGameOver}/>
+            isGameOver={isGameOver}
+            solution={solution}/>
         </>
       }
     </>
