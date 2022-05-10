@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import Countdown from 'react-countdown';
 import PropTypes from 'prop-types';
-
 import { BsShareFill } from 'react-icons/bs';
 
 import Modal from './Modal';
-
+import { GAME_TITLE } from '../../constants/strings';
 import { getStats } from '../../lib/localStorage';
 import { shareResult } from '../../lib/share';
 
@@ -37,6 +36,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution })
   const maxValue = Math.max(...winDist);
   const tomorrow = new Date();
   tomorrow.setHours(24, 0, 0, 0);
+  const solutionTitle = GAME_TITLE ?? 'solution';
 
   return (
     <Modal
@@ -85,7 +85,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution })
           isGameOver &&
           <>
             <div className={style['solution-wrapper']}>
-              <span>Today&apos;s solution was:</span> 
+              <span>Today&apos;s {solutionTitle} was:</span> 
               <span className={style.solution}>{solution}</span>
             </div>
             <div className={style['clock-and-share-wrapper']}>
@@ -93,7 +93,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution })
                 <p
                   role="heading"
                   aria-level="2">
-                Next Bardle
+                Next {solutionTitle}
                 </p>
                 <div className={style.clock}>
                   <Countdown
