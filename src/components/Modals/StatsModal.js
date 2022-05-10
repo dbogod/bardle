@@ -11,7 +11,7 @@ import { shareResult } from '../../lib/share';
 
 import style from '../../styles/Modal.module.scss';
 
-const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult }) => {
+const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution }) => {
   const [statsToDisplay, setStatsToDisplay] = useState(null);
 
   const clickHandler = () => {
@@ -83,29 +83,35 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult }) => {
         </table>
         {
           isGameOver &&
-          <div className={style['clock-and-share-wrapper']}>
-            <div>
-              <p
-                role="heading"
-                aria-level="2">
+          <>
+            <div className={style['solution-wrapper']}>
+              <span>Today&apos;s solution was:</span> 
+              <span className={style.solution}>{solution}</span>
+            </div>
+            <div className={style['clock-and-share-wrapper']}>
+              <div>
+                <p
+                  role="heading"
+                  aria-level="2">
                 Next Bardle
-              </p>
-              <div className={style.clock}>
-                <Countdown
-                  date={tomorrow.valueOf()}
-                  daysInHours={true}/>
+                </p>
+                <div className={style.clock}>
+                  <Countdown
+                    date={tomorrow.valueOf()}
+                    daysInHours={true}/>
+                </div>
+              </div>
+              <div>
+                <button
+                  className={style.share}
+                  onClick={clickHandler}
+                  type="button">
+                  <span>Share</span>
+                  <BsShareFill/>
+                </button>
               </div>
             </div>
-            <div>
-              <button
-                className={style.share}
-                onClick={clickHandler}
-                type="button">
-                <span>Share</span>
-                <BsShareFill/>
-              </button>
-            </div>
-          </div>
+          </>
         }
       </div>
     </Modal>
@@ -116,7 +122,8 @@ StatsModal.propTypes = {
   isGameOver: PropTypes.bool.isRequired,
   isOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired,
-  shareableResult: PropTypes.string.isRequired
+  shareableResult: PropTypes.string.isRequired,
+  solution: PropTypes.string.isRequired
 };
 
 export default StatsModal;

@@ -31,21 +31,21 @@ const App = () => {
   const [solution, setSolution] = useState(null);
   const [shareableResult, setShareableResult] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
-  
+
   useEffect(() => {
     const updateAppHeight = throttle(() => {
       document.documentElement.style.height = `${window.innerHeight}px`;
     }, 100);
-    
+
     if (window && document?.documentElement) {
       window.addEventListener('resize', updateAppHeight);
       updateAppHeight();
     }
-    
+
     if (document?.body?.dataset) {
       document.body.dataset.theme = currentTheme;
     }
-    
+
     return () => window.removeEventListener('resize', updateAppHeight);
   }, [currentTheme]);
 
@@ -70,15 +70,16 @@ const App = () => {
             statsModalRef={statsModalRef}
             setShareableResult={setShareableResult}
             setIsGameOver={setIsGameOver}/>
-          <HowToPlayModal 
+          <HowToPlayModal
             modalRef={howToPlayModalRef}/>
           <AboutModal
             modalRef={aboutModalRef}/>
-          <StatsModal 
+          <StatsModal
             modalRef={statsModalRef}
             isOpen={currentModal === 'stats-modal'}
             shareableResult={shareableResult}
-            isGameOver={isGameOver}/>
+            isGameOver={isGameOver}
+            solution={solution}/>
         </>
       }
     </>
