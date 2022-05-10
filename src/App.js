@@ -31,13 +31,15 @@ const App = () => {
   const [solution, setSolution] = useState(null);
   const [shareableResult, setShareableResult] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
-
+  const [isSmScreen, setIsSmScreen] = useState(false);
+  
   useEffect(() => {
     const updateAppHeight = throttle(() => {
       document.documentElement.style.height = `${window.innerHeight}px`;
     }, 100);
-
+    
     if (window && document?.documentElement) {
+      setIsSmScreen(window.innerHeight < 625);
       window.addEventListener('resize', updateAppHeight);
       updateAppHeight();
     }
@@ -69,8 +71,9 @@ const App = () => {
             gameNumber={gameNumber}
             statsModalRef={statsModalRef}
             setShareableResult={setShareableResult}
-            setIsGameOver={setIsGameOver}/>
-          <HowToPlayModal
+            setIsGameOver={setIsGameOver}
+            isSmScreen={isSmScreen}/>
+          <HowToPlayModal 
             modalRef={howToPlayModalRef}/>
           <AboutModal
             modalRef={aboutModalRef}/>
