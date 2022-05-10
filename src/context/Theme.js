@@ -5,7 +5,13 @@ import { saveThemePreference, getThemePreference } from '../lib/localStorage';
 const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState(getThemePreference() ?? 'light');
+  const getSystemPreference = () => {
+    if (window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+  };
+  
+  const [currentTheme, setCurrentTheme] = useState(getThemePreference() ?? getSystemPreference());
   const toggleTheme = () => {
     setCurrentTheme(prev => {
       if (prev === 'light') {

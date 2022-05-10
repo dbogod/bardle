@@ -13,7 +13,7 @@
   --colour-link-hover: red;
   --max-width-game: 32rem;
   --height-header: 3rem;
-  --height-game: calc(100vh - var(--height-header));
+  --height-game: calc(100% - var(--height-header));
   --padding-game-container: 0 0.25rem;
 }
 
