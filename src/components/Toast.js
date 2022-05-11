@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import style from '../styles/Toast.module.scss';
 
 const Toast = ({ toast, setToast }) => {
-  const { msg, type } = toast;
   useEffect(() => {
     setTimeout(() => {
       setToast({});
@@ -13,14 +12,11 @@ const Toast = ({ toast, setToast }) => {
 
   return (
     <div className={style.container}>
-      {
-        msg && type &&
-        <div className={`${style.toast} ${style[`toast--${toast.type}`]}`}>
-          <p>
-            {toast.msg}
-          </p>
-        </div>
-      }
+      <div className={`${style.toast} ${style[`toast--${toast.type}`]}`}>
+        <p>
+          {toast.msg}
+        </p>
+      </div>
     </div>
   );
 };

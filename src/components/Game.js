@@ -22,7 +22,8 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
     currentGuess,
     isGameWon,
     isGameLost,
-    toast
+    toast,
+    rowAnimation
   } = useBardle(gameNumber, solution, true, statsModalRef);
 
   useEffect(() => {
@@ -50,7 +51,8 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
         guessHistory={guessHistory}
         currentGuess={currentGuess}
         wordLength={solution.length}
-        isSmScreen={isSmScreen}/>
+        isSmScreen={isSmScreen}
+        rowAnimation={rowAnimation}/>
       <Keyboard
         markedUpKeyboard={keyboardKeys}
         keyHandler={keyHandler}/>

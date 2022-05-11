@@ -14,20 +14,21 @@
 
 .toast {
   border-radius: 0 0 0.35rem 0.35rem;
-  font-weight: bold;
   overflow: hidden;
   animation: dropDown 2000ms ease-out forwards;
+  font-weight: bold;
+  color: #fff;
 
   &--win {
-    background-color: green;
+    background-color: var(--colour-toast-bg-win);
   }
 
   &--lose {
-    background-color: grey;
+    background-color: var(--colour-toast-bg-lose);
   }
   
   &--error {
-    background-color: #A72222;
+    background-color: var(--colour-toast-bg-error);
   }
   
   p {

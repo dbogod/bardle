@@ -24,6 +24,10 @@
   grid-template-rows: repeat(6, 1fr);
 }
 
+.row[data-animation="shake"] {
+  animation: shake 500ms ease-out forwards;
+}
+
 .tile {
   display: flex;
   align-items: center;

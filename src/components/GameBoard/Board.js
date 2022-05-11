@@ -7,7 +7,7 @@ import { FILLED_STATUS } from '../../constants/strings';
 
 import style from '../../styles/Board.module.scss';
 
-const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength }) => {
+const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimation }) => {
   const tileCount = wordLength;
 
   return (
@@ -44,7 +44,9 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength }) => {
         {
           guessHistory.length < 6 &&
           <>
-            <Row tileCount={tileCount}>
+            <Row 
+              tileCount={tileCount}
+              animation={rowAnimation}>
               {
                 <>
                   {
@@ -101,7 +103,8 @@ Board.propTypes = {
   isSmScreen: PropTypes.bool.isRequired,
   guessHistory: PropTypes.array.isRequired,
   currentGuess: PropTypes.string.isRequired,
-  wordLength: PropTypes.number.isRequired
+  wordLength: PropTypes.number.isRequired,
+  rowAnimation: PropTypes.string.isRequired
 };
 
 export default Board;

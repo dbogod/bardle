@@ -11,6 +11,9 @@
   --colour-header-border: #d3d6da;
   --colour-link: blue;
   --colour-link-hover: red;
+  --colour-toast-bg-win: var(--colour-status-correct);
+  --colour-toast-bg-lose: var(--colour-status-absent);
+  --colour-toast-bg-error: #a72222;
   --max-width-game: 32rem;
   --height-header: 3rem;
   --height-game: calc(100% - var(--height-header));

@@ -67,7 +67,7 @@ const App = () => {
             aboutModalRef={aboutModalRef}
             statsModalRef={statsModalRef}/>
           <Game
-            solution={'leanness'}
+            solution={solution}
             gameNumber={gameNumber}
             statsModalRef={statsModalRef}
             setShareableResult={setShareableResult}

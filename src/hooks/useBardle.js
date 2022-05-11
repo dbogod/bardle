@@ -47,6 +47,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
   const [toast, setToast] = useState({});
+  const [rowAnimation, setRowAnimation] = useState('');
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -147,6 +148,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
 
       if (!dictionary.includes(currentGuess)) {
         setToast({ msg: ERROR_MSG_INVALID_WORD, type: 'error' });
+        setRowAnimation('shake');
+        setTimeout(() => setRowAnimation(''), 2000);
         return;
       }
 
@@ -226,6 +229,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     isGameWon,
     isGameLost,
     toast,
+    rowAnimation,
     solution
   };
 };
