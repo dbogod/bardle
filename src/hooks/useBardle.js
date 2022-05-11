@@ -46,7 +46,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   const [goNumber, setGoNumber] = useState(savedGoNumber ?? 0);
   const [isGameWon, setIsGameWon] = useState(savedIsGameWon ?? false);
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
-  const [toastMessage, setToastMessage] = useState('');
+  const [toast, setToast] = useState({});
+  const [rowAnimation, setRowAnimation] = useState('');
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -103,7 +104,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);
-      setToastMessage(GAME_OVER_MESSAGE_WIN);
+      setToast({ msg: GAME_OVER_MESSAGE_WIN, type: 'win' });
       setTimeout(() => {
         statsModalRef.current.show();
       }, 3000);
@@ -122,7 +123,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     // Add one to go number, unless this was the last guess
     if (goNumber === 5) {
       setIsGameLost(true);
-      setToastMessage(GAME_OVER_MESSAGE_LOSE);
+      setToast({ msg: GAME_OVER_MESSAGE_LOSE, type: 'lose' });
       setTimeout(() => {
         statsModalRef.current.show();
       }, 3000);
@@ -141,12 +142,14 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
 
     if (key === 'Enter' && (!isIntendedAsButtonOrLinkClick || isEnterKbButton)) {
       if (currentGuess.length !== solution.length) {
-        setToastMessage(ERROR_MSG_INSUFFICIENT_LETTERS);
+        setToast({ msg: ERROR_MSG_INSUFFICIENT_LETTERS, type: 'error' });
         return;
       }
 
       if (!dictionary.includes(currentGuess)) {
-        setToastMessage(ERROR_MSG_INVALID_WORD);
+        setToast({ msg: ERROR_MSG_INVALID_WORD, type: 'error' });
+        setRowAnimation('shake');
+        setTimeout(() => setRowAnimation(''), 2000);
         return;
       }
 
@@ -216,7 +219,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     addGuess,
     markUpGuess,
     keyHandler,
-    setToastMessage,
+    setToast,
     fetchDictionary,
     dictionary,
     keyboardKeys,
@@ -225,7 +228,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     goNumber,
     isGameWon,
     isGameLost,
-    toastMessage,
+    toast,
+    rowAnimation,
     solution
   };
 };

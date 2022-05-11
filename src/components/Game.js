@@ -16,13 +16,14 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
   const { currentTheme } = useContext(ThemeContext);
   const {
     keyHandler,
-    setToastMessage,
+    setToast,
     keyboardKeys,
     guessHistory,
     currentGuess,
     isGameWon,
     isGameLost,
-    toastMessage
+    toast,
+    rowAnimation
   } = useBardle(gameNumber, solution, true, statsModalRef);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
     }
     return () => window.removeEventListener('keyup', keyHandler);
   }, [keyHandler, setIsGameOver, isGameWon, isGameLost]);
-  
+
   useEffect(() => {
     setShareableResult(generateShareableString(gameNumber, isGameLost, guessHistory, currentTheme));
   }, [setShareableResult, gameNumber, isGameLost, guessHistory, currentTheme]);
@@ -41,17 +42,17 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
   return (
     <main className={style.game}>
       {
-        toastMessage &&
+        toast.msg && toast.type &&
         <Toast
-          toastMessage={toastMessage}
-          setToastMessage={setToastMessage}/>
-      }
-
+          toast={toast}
+          setToast={setToast}/>
+      }      
       <Board
         guessHistory={guessHistory}
         currentGuess={currentGuess}
         wordLength={solution.length}
-        isSmScreen={isSmScreen}/>
+        isSmScreen={isSmScreen}
+        rowAnimation={rowAnimation}/>
       <Keyboard
         markedUpKeyboard={keyboardKeys}
         keyHandler={keyHandler}/>

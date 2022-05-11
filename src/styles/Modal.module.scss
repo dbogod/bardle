@@ -97,6 +97,7 @@
 }
 
 .stats-histogram {
+  width: 100%;
   margin: 1.5rem 0 2rem;
   height: 12.5rem;
   border-spacing: 0.25rem;
@@ -130,6 +131,7 @@
   border-radius: 0.35rem;
   margin-top: auto;
   padding: 1.5rem;
+  color: #fff;
   background-color: var(--colour-status-absent);
 }
 

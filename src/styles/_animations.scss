@@ -78,3 +78,14 @@
     transform: translateY(0);
   }
 }
+
+@keyframes dropDown {
+  0%, 100% {
+    flex: 0;
+  }
+
+  10%,
+  80% {
+    flex: 1;
+  }
+}

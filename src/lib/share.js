@@ -1,5 +1,10 @@
 import { UAParser } from 'ua-parser-js';
-import { GAME_TITLE } from '../constants/strings';
+import { 
+  CORRECT_STATUS, 
+  PRESENT_STATUS,
+  WINNING_STATUS, 
+  GAME_TITLE 
+} from '../constants/strings';
 
 export const shareResult = text => {
   const parser = new UAParser();
@@ -21,9 +26,10 @@ export const generateShareableString = (gameNumber, isGameLost, guessHistory, th
   const grid = guessHistory.map(guess => {
     return guess.map(tile => {
       switch (tile.status) {
-        case 'hamlet':
+        case CORRECT_STATUS:
+        case WINNING_STATUS:
           return '🟩';
-        case 'juliet':
+        case PRESENT_STATUS:
           return '🟨';
         default:
           return theme === 'light' ? '⬜' : '⬛';
@@ -31,5 +37,5 @@ export const generateShareableString = (gameNumber, isGameLost, guessHistory, th
     }).join('');
   }).join('\n');
 
-  return `${GAME_TITLE} ${gameNumber} ${isGameLost ? 'X' : guessHistory.length}\n\n${grid}`;
+  return `${GAME_TITLE} ${gameNumber} ${isGameLost ? 'X' : guessHistory.length}/6 \n\n${grid}`;
 };
