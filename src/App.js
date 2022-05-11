@@ -39,7 +39,7 @@ const App = () => {
     }, 100);
     
     if (window && document?.documentElement) {
-      setIsSmScreen(window.innerHeight < 625);
+      setIsSmScreen(window.innerHeight < 700);
       window.addEventListener('resize', updateAppHeight);
       updateAppHeight();
     }
@@ -67,7 +67,7 @@ const App = () => {
             aboutModalRef={aboutModalRef}
             statsModalRef={statsModalRef}/>
           <Game
-            solution={solution}
+            solution={'leanness'}
             gameNumber={gameNumber}
             statsModalRef={statsModalRef}
             setShareableResult={setShareableResult}

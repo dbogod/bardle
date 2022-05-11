@@ -1,24 +1,33 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Toast = ({ toastMessage, setToastMessage }) => {
-  
+import style from '../styles/Toast.module.scss';
+
+const Toast = ({ toast, setToast }) => {
+  const { msg, type } = toast;
   useEffect(() => {
     setTimeout(() => {
-      setToastMessage('');
+      setToast({});
     }, 2000);
-  }, [setToastMessage]);
-  
+  }, [setToast]);
+
   return (
-    <div>
-      {toastMessage}
+    <div className={style.container}>
+      {
+        msg && type &&
+        <div className={`${style.toast} ${style[`toast--${toast.type}`]}`}>
+          <p>
+            {toast.msg}
+          </p>
+        </div>
+      }
     </div>
   );
 };
 
 Toast.propTypes = {
-  toastMessage: PropTypes.string.isRequired,
-  setToastMessage: PropTypes.func.isRequired
+  toast: PropTypes.object.isRequired,
+  setToast: PropTypes.func.isRequired
 };
 
 export default Toast;

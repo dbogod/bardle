@@ -1,0 +1,36 @@
+@import "animations";
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 2.5rem;
+}
+
+.toast {
+  border-radius: 0 0 0.35rem 0.35rem;
+  font-weight: bold;
+  overflow: hidden;
+  animation: dropDown 2000ms ease-out forwards;
+
+  &--win {
+    background-color: green;
+  }
+
+  &--lose {
+    background-color: grey;
+  }
+  
+  &--error {
+    background-color: #A72222;
+  }
+  
+  p {
+    margin: 0.5rem;
+  }
+}

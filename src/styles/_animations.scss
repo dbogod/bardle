@@ -78,3 +78,27 @@
     transform: translateY(0);
   }
 }
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  25%,
+  75% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes dropDown {
+  0%, 100% {
+    flex: 0;
+  }
+
+  10%,
+  80% {
+    flex: 1;
+  }
+}
