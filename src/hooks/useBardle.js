@@ -121,13 +121,13 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     setKeyboardKeys(guess.keys);
 
     // Add one to go number, unless this was the last guess
-    if (goNumber === 5) {
+    if (goNumber >= 5 && currentGuess !== solution) {
       setIsGameLost(true);
       setToast({ msg: GAME_OVER_MESSAGE_LOSE, type: 'lose' });
       setTimeout(() => {
         statsModalRef.current.show();
       }, 3000);
-    } else {
+    } else if (goNumber < 5) {
       setGoNumber(prev => prev + 1);
     }
 
