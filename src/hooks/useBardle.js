@@ -192,7 +192,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
         return;
       }
 
-      await updateStats(isGameWon, goNumber);
+      await updateStats(isGameWon, goNumber, gameNumber);
 
       if (isGameWon) {
         setTimeout(() => {

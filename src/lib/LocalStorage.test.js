@@ -1,7 +1,18 @@
-import { saveGame, getSavedGame, saveThemePreference, getThemePreference } from './localStorage';
-import { SAVE_GAME_KEY } from '../constants/strings';
+import { 
+  saveGame, 
+  getSavedGame, 
+  saveThemePreference, 
+  getThemePreference,
+  saveStats,
+  getStats,
+  updateStats
+} from './localStorage';
+import { 
+  SAVE_GAME_KEY, 
+  STATS_KEY
+} from '../constants/strings';
 
-const mockData = {
+const mockSavedGame = {
   'gameNum': 47,
   'keys': [
     { 'char': 'q', 'status': 'default' },
@@ -62,6 +73,15 @@ const mockData = {
   'isLost': false
 };
 
+const mockStats = {
+  'gamesPlayed': 10,
+  'gamesWon': 7,
+  'currentStreak': 2,
+  'lastGame': 23,
+  'maxStreak': 4,
+  'winDist': [0, 0, 2, 3, 1, 1]
+};
+
 const mockLocalStorage = (function () {
   let store = {};
 
@@ -81,7 +101,8 @@ const mockLocalStorage = (function () {
   };
 })();
 
-const { gameNum, keys, history, goNum, isWon, isLost } = mockData;
+const { gameNum, keys, history, goNum, isWon, isLost } = mockSavedGame;
+const { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist } = mockStats;
 
 beforeAll(() => {
   Object.defineProperty(window, 'localStorage', {
@@ -94,7 +115,7 @@ test('Game data can be saved to/retrieved from local storage', () => {
   
   const storedData = window.localStorage.getItem(SAVE_GAME_KEY);
   
-  expect(storedData).toEqual(JSON.stringify(mockData));
+  expect(storedData).toEqual(JSON.stringify(mockSavedGame));
   expect(getSavedGame(47)).toEqual(JSON.parse(storedData));
   window.localStorage.clear();
 });
@@ -107,5 +128,84 @@ test('Game theme can be saved to/retrieved from local storage', () => {
   saveThemePreference('foo');
   retrievedTheme = getThemePreference();
   expect(retrievedTheme).toEqual('foo');
+  window.localStorage.clear();
+});
+
+test('Stats are saved', () => {
+  saveStats(gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist);
+  
+  const storedData = window.localStorage.getItem(STATS_KEY);
+  
+  expect(storedData).toEqual(JSON.stringify(mockStats));
+  window.localStorage.clear();
+});
+
+test('Stats are retrieved', async () => {
+  saveStats(gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist);
+
+  const storedData = await getStats();
+
+  expect(storedData).toEqual(mockStats);
+  window.localStorage.clear();
+});
+
+test('Stats are updated correctly after win', async () => {
+  saveStats(gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist);
+  await updateStats(true, 3, 24);
+  const storedData = await getStats();
+
+  expect(storedData).toEqual({
+    'gamesPlayed': 11,
+    'gamesWon': 8,
+    'currentStreak': 3,
+    'lastGame': 24,
+    'maxStreak': 4,
+    'winDist': [0, 0, 2, 4, 1, 1]
+  });
+  
+  window.localStorage.clear();
+});
+
+test('Initiated stats are updated correctly after win', async () => {
+  saveStats(0, 0, 0, null, 0, [0, 0, 0, 0, 0, 0]);
+  await updateStats(true, 3, 24);
+  const storedData = await getStats();
+
+  expect(storedData).toEqual({
+    'gamesPlayed': 1,
+    'gamesWon': 1,
+    'currentStreak': 1,
+    'lastGame': 24,
+    'maxStreak': 1,
+    'winDist': [0, 0, 0, 1, 0, 0]
+  });
+
+  window.localStorage.clear();
+});
+
+test('Stats are updated correctly after loss', async () => {
+  saveStats(gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist);
+  await updateStats(false, 3, 24);
+  const storedData = await getStats();
+
+  expect(storedData).toEqual({
+    'gamesPlayed': 11,
+    'gamesWon': 7,
+    'currentStreak': 0,
+    'lastGame': 24,
+    'maxStreak': 4,
+    'winDist': [0, 0, 2, 3, 1, 1]
+  });
+
+  window.localStorage.clear();
+});
+
+test('Stats are not updated twice for the same game', async () => {
+  saveStats(gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist);
+  await updateStats(true, 3, 23);
+  const storedData = await getStats();
+
+  expect(storedData).toEqual(mockStats);
+
   window.localStorage.clear();
 });
