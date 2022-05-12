@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import style from '../styles/Toast.module.scss';
 
 const Toast = ({ toast, setToast }) => {
+  
   useEffect(() => {
     setTimeout(() => {
       setToast({});
