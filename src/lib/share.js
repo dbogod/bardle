@@ -11,7 +11,6 @@ import {
 } from '../constants/strings';
 
 export const shareResult = text => {
-  console.log(text);
   const parser = new UAParser();
   const device = parser.getDevice();
 
