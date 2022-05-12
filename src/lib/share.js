@@ -3,7 +3,11 @@ import {
   CORRECT_STATUS, 
   PRESENT_STATUS,
   WINNING_STATUS, 
-  GAME_TITLE 
+  GAME_TITLE,
+  DEFAULT_SQUARE_LIGHT,
+  DEFAULT_SQUARE_DARK,
+  CORRECT_SQUARE,
+  PRESENT_SQUARE
 } from '../constants/strings';
 
 export const shareResult = text => {
@@ -28,11 +32,11 @@ export const generateShareableString = (gameNumber, isGameLost, guessHistory, th
       switch (tile.status) {
         case CORRECT_STATUS:
         case WINNING_STATUS:
-          return '🟩';
+          return CORRECT_SQUARE;
         case PRESENT_STATUS:
-          return '🟨';
+          return PRESENT_SQUARE;
         default:
-          return theme === 'light' ? '⬜' : '⬛';
+          return theme === 'light' ? DEFAULT_SQUARE_LIGHT : DEFAULT_SQUARE_DARK;
       }
     }).join('');
   }).join('\n');
