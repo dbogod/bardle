@@ -1,4 +1,9 @@
-import { renderHook, act, cleanup, waitFor } from '@testing-library/react';
+import {
+  renderHook,
+  act,
+  cleanup,
+  waitFor
+} from '@testing-library/react';
 
 import useBardle from './useBardle';
 
@@ -7,10 +12,29 @@ import {
   CORRECT_STATUS,
   PRESENT_STATUS,
   ABSENT_STATUS,
+  GAME_OVER_MESSAGE_WIN,
+  GAME_OVER_MESSAGE_LOSE,
   TEST_SOLUTION_1,
   TEST_SOLUTION_2,
   TEST_SOLUTION_3
 } from '../constants/strings';
+
+const typeWord = async (hookInstance, word) => {
+  await act(() => {
+    [...word].forEach(letter => hookInstance.current.keyHandler({ key: letter }));
+  });
+};
+
+const hitEnterKey = async hookInstance => {
+  await act(() => {
+    hookInstance.current.keyHandler({ key: 'Enter' });
+  });
+};
+
+const enterWord = async (hookInstance, word) => {
+  await typeWord(hookInstance, word);
+  await hitEnterKey(hookInstance);
+};
 
 afterEach(() => {
   cleanup();
@@ -52,11 +76,7 @@ test('Current guess is correctly updated by key handler', async () => {
 
   expect(result.current.currentGuess).toBe('');
 
-  await act(() => {
-    result.current.keyHandler({ key: 'f' });
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: '9' });
-  });
+  await typeWord(result, 'fa9');
 
   expect(result.current.currentGuess).toBe('fa');
 
@@ -68,18 +88,11 @@ test('Current guess is correctly updated by key handler', async () => {
 
   expect(result.current.currentGuess).toBe('fab');
 
-  await act(() => {
-    result.current.keyHandler({ key: 'l' });
-    result.current.keyHandler({ key: 'e' });
-  });
+  await typeWord(result, 'le');
 
   expect(result.current.currentGuess).toBe('fable');
 
-  await act(() => {
-    result.current.keyHandler({ key: 's' });
-    result.current.keyHandler({ key: 's' });
-    result.current.keyHandler({ key: 's' });
-  });
+  await typeWord(result, 'sss');
 
   expect(result.current.currentGuess).toBe('fable');
 
@@ -97,19 +110,11 @@ test('isGameWon is true if player guesses correctly', async () => {
     expect(result.current.dictionary.length > 0).toBe(true);
   });
 
-  await act(() => {
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 'b' });
-    result.current.keyHandler({ key: 'o' });
-    result.current.keyHandler({ key: 'd' });
-    result.current.keyHandler({ key: 'e' });
-  });
+  await typeWord(result, 'abode');
 
   expect(result.current.currentGuess).toBe('abode');
 
-  act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.isGameWon).toBe(true);
 });
@@ -117,7 +122,7 @@ test('isGameWon is true if player guesses correctly', async () => {
 test('Guess is correctly marked up: ABODE vs ABODE', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
   let guess;
-  
+
   await act(() => {
     guess = result.current.markUpGuess(TEST_SOLUTION_1).guessWord;
   });
@@ -134,7 +139,7 @@ test('Guess is correctly marked up: ABODE vs ABODE', async () => {
 test('Guess is correctly marked up: SPLIT vs ABODE', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
   let guess;
-  
+
   await act(() => {
     guess = result.current.markUpGuess('split').guessWord;
   });
@@ -151,7 +156,7 @@ test('Guess is correctly marked up: SPLIT vs ABODE', async () => {
 test('Guess is correctly marked up: AVOID vs ABODE', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
   let guess;
-  
+
   await act(() => {
     guess = result.current.markUpGuess('avoid').guessWord;
   });
@@ -168,7 +173,7 @@ test('Guess is correctly marked up: AVOID vs ABODE', async () => {
 test('Guess is correctly marked up: BOOKS vs ABODE', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
   let guess;
-  
+
   await act(() => {
     guess = result.current.markUpGuess('books').guessWord;
   });
@@ -185,7 +190,7 @@ test('Guess is correctly marked up: BOOKS vs ABODE', async () => {
 test('Guess is correctly marked up: LORRY vs RURAL', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_2));
   let guess;
-  
+
   await act(() => {
     guess = result.current.markUpGuess('lorry').guessWord;
   });
@@ -215,7 +220,7 @@ test('Guess is correctly marked up: TATTY vs TENET', async () => {
   ]);
 });
 
-test('Guess history updates as expected', async () => {
+test('addGuess updates guess history as expected', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
 
   await act(() => {
@@ -284,92 +289,60 @@ test('Submitting a VALID guess is handled as expected', async () => {
   expect(result.current.currentGuess).toBe('');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 'b' });
-    result.current.keyHandler({ key: 'o' });
-    result.current.keyHandler({ key: 'd' });
-    result.current.keyHandler({ key: 'e' });
-  });
+  await typeWord(result, 'abode');
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('abode');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(1);
   expect(result.current.goNumber).toBe(1);
   expect(result.current.currentGuess).toBe('');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'f' });
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 'b' });
-    result.current.keyHandler({ key: 'l' });
-    result.current.keyHandler({ key: 'e' });
-  });
+  await typeWord(result, 'fable');
 
   expect(result.current.guessHistory.length).toBe(1);
   expect(result.current.goNumber).toBe(1);
   expect(result.current.currentGuess).toBe('fable');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(2);
   expect(result.current.goNumber).toBe(2);
   expect(result.current.currentGuess).toBe('');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'r' });
-    result.current.keyHandler({ key: 'u' });
-    result.current.keyHandler({ key: 'r' });
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 'l' });
-  });
+  await typeWord(result, 'rural');
 
   expect(result.current.guessHistory.length).toBe(2);
   expect(result.current.goNumber).toBe(2);
   expect(result.current.currentGuess).toBe('rural');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(3);
   expect(result.current.goNumber).toBe(3);
   expect(result.current.currentGuess).toBe('');
   expect(result.current.isGameWon).toBe(true);
-
 });
 
 test('Submitting a guess of INVALID LENGTH is handled as expected', async () => {
   const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_2));
 
-  await act(() => {
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 'b' });
-    result.current.keyHandler({ key: 'o' });
-    result.current.keyHandler({ key: 'd' });
-  });
+  await typeWord(result, 'abod');
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('abod');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
@@ -382,24 +355,16 @@ test('Submitting a guess that is an INVALID WORD is handled as expected', async 
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
-  });  
-
-  await act(() => {
-    result.current.keyHandler({ key: 'q' });
-    result.current.keyHandler({ key: 'w' });
-    result.current.keyHandler({ key: 'e' });
-    result.current.keyHandler({ key: 'r' });
-    result.current.keyHandler({ key: 't' });
   });
+
+  await typeWord(result, 'qwert');
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
   expect(result.current.currentGuess).toBe('qwert');
   expect(result.current.isGameWon).toBe(false);
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
@@ -414,19 +379,11 @@ test('Keyboard updates as expected', async () => {
     expect(result.current.dictionary.length > 0).toBe(true);
   });
 
-  await act(() => {
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 'd' });
-    result.current.keyHandler({ key: 'e' });
-    result.current.keyHandler({ key: 'p' });
-    result.current.keyHandler({ key: 't' });
-  });
+  await typeWord(result, 'adept');
 
   expect(result.current.currentGuess).toBe('adept');
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.keyboardKeys).toEqual([
     { 'char': 'q', 'status': DEFAULT_STATUS },
@@ -460,19 +417,11 @@ test('Keyboard updates as expected', async () => {
     { 'char': 'del', 'status': DEFAULT_STATUS }
   ]);
 
-  await act(() => {
-    result.current.keyHandler({ key: 't' });
-    result.current.keyHandler({ key: 'o' });
-    result.current.keyHandler({ key: 'a' });
-    result.current.keyHandler({ key: 's' });
-    result.current.keyHandler({ key: 't' });
-  });
+  await typeWord(result, 'toast');
 
   expect(result.current.currentGuess).toBe('toast');
 
-  await act(() => {
-    result.current.keyHandler({ key: 'Enter' });
-  });
+  await hitEnterKey(result);
 
   expect(result.current.keyboardKeys).toEqual([
     { 'char': 'q', 'status': DEFAULT_STATUS },
@@ -505,4 +454,77 @@ test('Keyboard updates as expected', async () => {
     { 'char': 'm', 'status': DEFAULT_STATUS },
     { 'char': 'del', 'status': DEFAULT_STATUS }
   ]);
+});
+
+test('User loses game after submitting 6 wrong guesses', async () => {
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+
+  const assertExpectations = async (num, isGameLost = false) => {
+    const hasNum = num !== null;
+    const toastObj = hasNum ? {} : { msg: GAME_OVER_MESSAGE_LOSE, type: 'lose' };
+
+    expect(result.current.guessHistory.length).toBe(hasNum ? num : 6);
+    expect(result.current.goNumber).toBe(hasNum ? num : 5);
+    expect(result.current.currentGuess).toBe('');
+    expect(result.current.isGameWon).toBe(false);
+    expect(result.current.isGameLost).toBe(isGameLost);
+
+    await act(() => {
+      expect(result.current.toast).toEqual(toastObj);
+    });
+  };
+
+  const submitIncorrectGuess = async (iteration, isGameLost = false) => {
+    await enterWord(result, 'fable');
+    await assertExpectations(iteration, isGameLost);
+  };
+
+  await waitFor(() => {
+    expect(result.current.dictionary.length > 0).toBe(true);
+  });
+
+  await assertExpectations(0);
+  await submitIncorrectGuess(1);
+  await submitIncorrectGuess(2);
+  await submitIncorrectGuess(3);
+  await submitIncorrectGuess(4);
+  await submitIncorrectGuess(5);
+  await submitIncorrectGuess(null, true);
+});
+
+test('User wins game after submitting 5 wrong guesses and 1 correct guess', async () => {
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+
+  const assertExpectations = async (num, isGameWon = false) => {
+    const hasNum = num !== null;
+    const toastObj = hasNum ? {} : { msg: GAME_OVER_MESSAGE_WIN, type: 'win' };
+
+    expect(result.current.guessHistory.length).toBe(hasNum ? num : 6);
+    expect(result.current.goNumber).toBe(hasNum ? num : 5);
+    expect(result.current.currentGuess).toBe('');
+    expect(result.current.isGameWon).toBe(isGameWon);
+    expect(result.current.isGameLost).toBe(false);
+
+    await act(() => {
+      expect(result.current.toast).toEqual(toastObj);
+    });
+  };
+
+  const submitIncorrectGuess = async (iteration, isGameWon = false) => {
+    await enterWord(result, 'fable');
+    await assertExpectations(iteration, isGameWon);
+  };
+
+  await waitFor(() => {
+    expect(result.current.dictionary.length > 0).toBe(true);
+  });
+
+  await assertExpectations(0);
+  await submitIncorrectGuess(1);
+  await submitIncorrectGuess(2);
+  await submitIncorrectGuess(3);
+  await submitIncorrectGuess(4);
+  await submitIncorrectGuess(5);
+  await enterWord(result, TEST_SOLUTION_1);
+  await assertExpectations(null, true);
 });
