@@ -212,7 +212,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     };
 
     updateLocalStorage();
-  }, [isGameWon, isGameLost, goNumber]);
+  }, [gameNumber, isGameWon, isGameLost, goNumber]);
 
   return {
     isValidKey,
