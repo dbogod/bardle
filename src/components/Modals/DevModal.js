@@ -6,7 +6,13 @@ import { STATS_KEY, SAVE_GAME_KEY } from '../../constants/strings';
 
 import style from '../../styles/Modal.module.scss';
 
-const clickHandler = key => localStorage?.removeItem(key);
+const clickHandler = clearStats => {
+  localStorage?.removeItem(SAVE_GAME_KEY);
+
+  if (clearStats) {
+    localStorage?.removeItem(STATS_KEY);
+  }
+};
 
 const DevModal = ({ modalRef }) => {
   return (
@@ -17,13 +23,13 @@ const DevModal = ({ modalRef }) => {
       <div className={style['inner-wrapper']}>
         <button 
           className={style['dev-button']}
-          onClick={() => clickHandler(STATS_KEY)}
+          onClick={() => clickHandler(true)}
           type="button">
           Clear all stats
         </button>
         <button
           className={style['dev-button']}
-          onClick={() => clickHandler(SAVE_GAME_KEY)}
+          onClick={() => clickHandler()}
           type="button">
           Clear saved game
         </button>
