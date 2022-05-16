@@ -327,7 +327,7 @@ test('Submitting a VALID guess is handled as expected', async () => {
   await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(3);
-  expect(result.current.goNumber).toBe(3);
+  expect(result.current.goNumber).toBe(2);
   expect(result.current.currentGuess).toBe('');
   expect(result.current.isGameWon).toBe(true);
 });
