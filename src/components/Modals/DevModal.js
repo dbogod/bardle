@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import Modal from './Modal';
 
-import { GAME_TITLE, STATS_KEY, SAVE_GAME_KEY } from '../../constants/strings';
+import { STATS_KEY, SAVE_GAME_KEY } from '../../constants/strings';
 
 import style from '../../styles/Modal.module.scss';
 

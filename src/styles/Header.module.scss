@@ -32,6 +32,10 @@
     &.dev-modal-trigger {
       --size-svg: 1.15rem;
     }
+
+    &.about-modal-trigger {
+      display: none;
+    }
   }
 }
 

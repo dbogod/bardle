@@ -29,11 +29,12 @@ const Header = ({ howToPlayModalRef, devModalRef, aboutModalRef, statsModalRef }
             modalTitle="dev">
             <BsTools/>
           </ModalTrigger>
-          {/*<ModalTrigger*/}
-          {/*  modalRef={aboutModalRef}*/}
-          {/*  modalTitle="about">*/}
-          {/*  <BiInfoCircle/>*/}
-          {/*</ModalTrigger>*/}
+          <ModalTrigger
+            classes={style['about-modal-trigger']}
+            modalRef={aboutModalRef}
+            modalTitle="about">
+            <BiInfoCircle/>
+          </ModalTrigger>
         </div>
         <h1>
           {GAME_TITLE}
