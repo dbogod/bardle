@@ -77,7 +77,7 @@ const mockStats = {
   'gamesPlayed': 10,
   'gamesWon': 7,
   'currentStreak': 2,
-  'lastGame': 23,
+  'lastGame': { gameNumber: 23, result: 4 },
   'maxStreak': 4,
   'winDist': [0, 0, 2, 3, 1, 1]
 };
@@ -158,7 +158,7 @@ test('Stats are updated correctly after win', async () => {
     'gamesPlayed': 11,
     'gamesWon': 8,
     'currentStreak': 3,
-    'lastGame': 24,
+    'lastGame': { gameNumber: 24, result: 3 },
     'maxStreak': 4,
     'winDist': [0, 0, 2, 4, 1, 1]
   });
@@ -167,7 +167,7 @@ test('Stats are updated correctly after win', async () => {
 });
 
 test('Initiated stats are updated correctly after win', async () => {
-  saveStats(0, 0, 0, null, 0, [0, 0, 0, 0, 0, 0]);
+  saveStats(0, 0, 0, { gameNumber: null, result: null }, 0, [0, 0, 0, 0, 0, 0]);
   await updateStats(true, 3, 24);
   const storedData = await getStats();
 
@@ -175,7 +175,7 @@ test('Initiated stats are updated correctly after win', async () => {
     'gamesPlayed': 1,
     'gamesWon': 1,
     'currentStreak': 1,
-    'lastGame': 24,
+    'lastGame': { gameNumber: 24, result: 3 },
     'maxStreak': 1,
     'winDist': [0, 0, 0, 1, 0, 0]
   });
@@ -192,7 +192,7 @@ test('Stats are updated correctly after loss', async () => {
     'gamesPlayed': 11,
     'gamesWon': 7,
     'currentStreak': 0,
-    'lastGame': 24,
+    'lastGame': { gameNumber: 24, result: 'X' },
     'maxStreak': 4,
     'winDist': [0, 0, 2, 3, 1, 1]
   });

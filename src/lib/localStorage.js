@@ -39,28 +39,38 @@ export const getStats = async () => {
 
   if (!savedStats) {
     // Initiate stats in storage 
-    await saveStats(0, 0, 0, null, 0, [ 0, 0, 0, 0, 0, 0 ]);
+    await saveStats(0, 0, 0, { gameNumber: null, result: null }, 0, [0, 0, 0, 0, 0, 0]);
   }
 
-  const { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist } = JSON.parse(localStorage.getItem(STATS_KEY));
+  const {
+    gamesPlayed,
+    gamesWon,
+    currentStreak,
+    lastGame,
+    maxStreak,
+    winDist
+  } = JSON.parse(localStorage.getItem(STATS_KEY));
   return { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist };
 };
 
 export const updateStats = async (isGameWon, goNumber, gameNumber) => {
   const { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist } = await getStats();
-  
-  if (lastGame !== gameNumber) {
+
+  if (lastGame.gameNumber !== gameNumber) {
     const updatedGamesPlayed = gamesPlayed + 1;
     const updatedGamesWon = isGameWon ? gamesWon + 1 : gamesWon;
     const updatedCurrentStreak = isGameWon ? currentStreak + 1 : 0;
     const updatedMaxStreak = Math.max(updatedCurrentStreak, maxStreak);
     const updatedWinDist = winDist;
+    const updatedLastGame = { ...lastGame };
+    updatedLastGame.gameNumber = gameNumber;
+    updatedLastGame.result = isGameWon ? goNumber : 'X';
 
     if (isGameWon) {
       updatedWinDist[goNumber] = updatedWinDist[goNumber] + 1;
     }
 
-    saveStats(updatedGamesPlayed, updatedGamesWon, updatedCurrentStreak, gameNumber, updatedMaxStreak, updatedWinDist);
+    saveStats(updatedGamesPlayed, updatedGamesWon, updatedCurrentStreak, updatedLastGame, updatedMaxStreak, updatedWinDist);
   }
 };
 

@@ -28,7 +28,8 @@
       height: var(--size-svg);
     }
     
-    &.is-dark-mode {
+    &.is-dark-mode,
+    &.dev-modal-trigger {
       --size-svg: 1.15rem;
     }
   }

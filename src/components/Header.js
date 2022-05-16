@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 
 import ModalTrigger from './Modals/ModalTrigger';
 import { BiHelpCircle, BiInfoCircle, BiBarChartAlt2, BiSun } from 'react-icons/bi';
-import { BsMoonStars } from 'react-icons/bs';
+import { BsMoonStars, BsTools } from 'react-icons/bs';
 
 import { ThemeContext } from '../context/Theme';
 import { GAME_TITLE } from '../constants/strings';
 
 import style from '../styles/Header.module.scss';
 
-const Header = ({ howToPlayModalRef, aboutModalRef, statsModalRef }) => {
+const Header = ({ howToPlayModalRef, devModalRef, aboutModalRef, statsModalRef }) => {
   const { currentTheme, toggleTheme } = useContext(ThemeContext);
   return (
     <header
@@ -23,11 +23,17 @@ const Header = ({ howToPlayModalRef, aboutModalRef, statsModalRef }) => {
             modalTitle="instructions">
             <BiHelpCircle/>
           </ModalTrigger>
-          <ModalTrigger 
-            modalRef={aboutModalRef}
-            modalTitle="about">
-            <BiInfoCircle/>
+          <ModalTrigger
+            classes={style['dev-modal-trigger']}
+            modalRef={devModalRef}
+            modalTitle="dev">
+            <BsTools/>
           </ModalTrigger>
+          {/*<ModalTrigger*/}
+          {/*  modalRef={aboutModalRef}*/}
+          {/*  modalTitle="about">*/}
+          {/*  <BiInfoCircle/>*/}
+          {/*</ModalTrigger>*/}
         </div>
         <h1>
           {GAME_TITLE}
@@ -56,6 +62,7 @@ const Header = ({ howToPlayModalRef, aboutModalRef, statsModalRef }) => {
 
 Header.propTypes = {
   howToPlayModalRef: PropTypes.object.isRequired,
+  devModalRef: PropTypes.object.isRequired,
   aboutModalRef: PropTypes.object.isRequired,
   statsModalRef: PropTypes.object.isRequired
 };

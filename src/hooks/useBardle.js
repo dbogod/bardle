@@ -127,7 +127,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
       setTimeout(() => {
         statsModalRef.current.show();
       }, 3000);
-    } else if (goNumber < 5) {
+    } else if (goNumber < 5 && currentGuess !== solution) {
       setGoNumber(prev => prev + 1);
     }
 
