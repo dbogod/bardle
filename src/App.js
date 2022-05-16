@@ -4,6 +4,7 @@ import throttle from 'lodash/throttle';
 import Header from './components/Header';
 import Game from './components/Game';
 import HowToPlayModal from './components/Modals/HowToPlayModal';
+import DevModal from './components/Modals/DevModal';
 import AboutModal from './components/Modals/AboutModal';
 import StatsModal from './components/Modals/StatsModal';
 
@@ -25,6 +26,7 @@ const App = () => {
   const { currentModal } = useContext(ModalContext);
   const { currentTheme } = useContext(ThemeContext);
   const howToPlayModalRef = useRef();
+  const devModalRef = useRef();
   const aboutModalRef = useRef();
   const statsModalRef = useRef();
   const [gameNumber, setGameNumber] = useState(null);
@@ -64,6 +66,7 @@ const App = () => {
         <>
           <Header
             howToPlayModalRef={howToPlayModalRef}
+            devModalRef={devModalRef}
             aboutModalRef={aboutModalRef}
             statsModalRef={statsModalRef}/>
           <Game
@@ -75,6 +78,8 @@ const App = () => {
             isSmScreen={isSmScreen}/>
           <HowToPlayModal 
             modalRef={howToPlayModalRef}/>
+          <DevModal
+            modalRef={devModalRef}/>
           <AboutModal
             modalRef={aboutModalRef}/>
           <StatsModal

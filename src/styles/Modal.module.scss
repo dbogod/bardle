@@ -169,7 +169,8 @@
   font-weight: bold;
 }
 
-.share {
+.share,
+.dev-button {
   display: flex;
   align-items: center;
   padding: 1rem 0.75rem;
@@ -187,4 +188,9 @@
   span {
     margin-right: 0.5rem;
   }
+}
+
+.dev-button {
+  justify-content: center;
+  margin-top: 1.25rem;
 }
