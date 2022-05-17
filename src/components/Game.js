@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+
 import useBardle from '../hooks/useBardle';
 
 import Board from './GameBoard/Board';
@@ -25,7 +26,7 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
     toast,
     rowAnimation
   } = useBardle(gameNumber, solution, true, statsModalRef);
-
+  
   useEffect(() => {
     if (!isGameWon && !isGameLost) {
       window.addEventListener('keyup', keyHandler);
@@ -46,7 +47,7 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
         <Toast
           toast={toast}
           setToast={setToast}/>
-      }      
+      }
       <Board
         guessHistory={guessHistory}
         currentGuess={currentGuess}

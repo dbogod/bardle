@@ -10,8 +10,16 @@ import { shareResult } from '../../lib/share';
 
 import style from '../../styles/Modal.module.scss';
 
-const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution }) => {
+const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, definition }) => {
   const [statsToDisplay, setStatsToDisplay] = useState(null);
+  
+  let definitionHtml;
+  
+  if (definition?.snippet && definition?.snippet.length > 10) {
+    const snippetWithHtmlRemoved = definition.snippet.replace(/<[^>]*>/g, '');
+    const charCount = Math.min(snippetWithHtmlRemoved.length, 140);
+    definitionHtml =`${snippetWithHtmlRemoved.substring(0, charCount)}...`;
+  }
 
   const clickHandler = () => {
     shareResult(shareableResult);
@@ -85,15 +93,23 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution })
           isGameOver &&
           <>
             <div className={style['solution-wrapper']}>
-              <span>Today&apos;s {solutionTitle} was:</span> 
-              <span className={style.solution}>{solution}</span>
+              <span>Today&apos;s {solutionTitle} was:</span>
+              <a href={`https://www.google.com/search?q=${solution}+definition`}>
+                <span className={style.solution}>{solution}</span>
+              </a>
+
+              {
+                definitionHtml &&
+                <p dangerouslySetInnerHTML={{ __html: definitionHtml }}/>
+              }
+              
             </div>
             <div className={style['clock-and-share-wrapper']}>
               <div>
                 <p
                   role="heading"
                   aria-level="2">
-                Next {solutionTitle}
+                  Next {solutionTitle}
                 </p>
                 <div className={style.clock}>
                   <Countdown
@@ -123,7 +139,8 @@ StatsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired,
   shareableResult: PropTypes.string.isRequired,
-  solution: PropTypes.string.isRequired
+  solution: PropTypes.string.isRequired,
+  definition: PropTypes.object
 };
 
 export default StatsModal;

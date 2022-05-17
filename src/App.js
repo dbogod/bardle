@@ -11,6 +11,8 @@ import StatsModal from './components/Modals/StatsModal';
 import { ThemeContext } from './context/Theme';
 import { ModalContext } from './context/Modal';
 
+import { getSolutionDefinition } from './lib/dictionary';
+
 import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
 
 import './styles/main.scss';
@@ -31,15 +33,16 @@ const App = () => {
   const statsModalRef = useRef();
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
+  const [solutionDefinition, setSolutionDefinition] = useState(null);
   const [shareableResult, setShareableResult] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
   const [isSmScreen, setIsSmScreen] = useState(false);
-  
+
   useEffect(() => {
     const updateAppHeight = throttle(() => {
       document.documentElement.style.height = `${window.innerHeight}px`;
     }, 100);
-    
+
     if (window && document?.documentElement) {
       setIsSmScreen(window.innerHeight < 700);
       window.addEventListener('resize', updateAppHeight);
@@ -59,6 +62,16 @@ const App = () => {
     setSolution(getWordOfTheDay(gameNum));
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const res = await getSolutionDefinition(solution);
+      if (res?.title !== 'Null' && res.snippet) {
+        const { snippet, title } = res;
+        setSolutionDefinition({ snippet, title });
+      }
+    })();
+  }, [solution]);
+
   return (
     <>
       {
@@ -76,7 +89,7 @@ const App = () => {
             setShareableResult={setShareableResult}
             setIsGameOver={setIsGameOver}
             isSmScreen={isSmScreen}/>
-          <HowToPlayModal 
+          <HowToPlayModal
             modalRef={howToPlayModalRef}/>
           <DevModal
             modalRef={devModalRef}/>
@@ -87,7 +100,8 @@ const App = () => {
             isOpen={currentModal === 'stats-modal'}
             shareableResult={shareableResult}
             isGameOver={isGameOver}
-            solution={solution}/>
+            solution={solution}
+            definition={solutionDefinition}/>
         </>
       }
     </>
