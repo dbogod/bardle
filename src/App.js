@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import throttle from 'lodash/throttle';
+import ReactGA from 'react-ga';
 
 import Header from './components/Header';
 import Game from './components/Game';
@@ -23,6 +24,13 @@ export const getGameNumber = date => {
 };
 
 export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
+
+const { REACT_APP_GOOGLE_ANALYTICS_ID } = process.env;
+
+if (REACT_APP_GOOGLE_ANALYTICS_ID) {
+  ReactGA.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
+  ReactGA.pageview(window.location.hostname);
+}
 
 const App = () => {
   const { currentModal } = useContext(ModalContext);
