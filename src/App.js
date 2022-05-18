@@ -25,8 +25,11 @@ export const getGameNumber = date => {
 
 export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
 
-if (process?.env?.REACT_APP_GOOGLE_ANALYTICS_ID) {
-  ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);
+const { REACT_APP_GOOGLE_ANALYTICS_ID } = process.env;
+
+if (REACT_APP_GOOGLE_ANALYTICS_ID) {
+  ReactGA.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
+  ReactGA.pageview(window.location.hostname);
 }
 
 const App = () => {
