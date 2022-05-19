@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 
 import useBardle from '../hooks/useBardle';
 
@@ -33,6 +34,11 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
     } else {
       setIsGameOver(true);
     }
+    
+    ReactGA.event({
+      category: 'Game completed',
+      action: `Game ${isGameWon ? 'won' : 'lost'}`
+    });
     return () => window.removeEventListener('keyup', keyHandler);
   }, [keyHandler, setIsGameOver, isGameWon, isGameLost]);
 
