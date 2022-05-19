@@ -10,17 +10,17 @@ import {
   PRESENT_SQUARE
 } from '../constants/strings';
 
-export const shareResult = text => {
+export const shareResult = (text, url) => {
   const parser = new UAParser();
   const device = parser.getDevice();
 
   if (
     ['mobile', 'tablet', 'wearable'].includes(device.type) &&
     navigator.canShare &&
-    navigator.canShare({ text }) &&
+    navigator.canShare({ url, text }) &&
     navigator.share
   ) {
-    navigator.share({ text });
+    navigator.share({ url, text });
   } else if (navigator.clipboard?.writeText) {
     navigator.clipboard.writeText(text);
   }

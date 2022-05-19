@@ -127,9 +127,6 @@ const mockData = (isLoss, currentTheme) => {
 
 const expectedResult = (isLoss, theme) => {
   const defaultSquare = theme === 'light' ? DEFAULT_SQUARE_LIGHT : DEFAULT_SQUARE_DARK;
-  const finalLine = isLoss ?
-    `${defaultSquare}${defaultSquare}${defaultSquare}${defaultSquare}${defaultSquare}${defaultSquare}${defaultSquare}` :
-    `${CORRECT_SQUARE}${CORRECT_SQUARE}${CORRECT_SQUARE}${CORRECT_SQUARE}${CORRECT_SQUARE}${CORRECT_SQUARE}${CORRECT_SQUARE}`;
   
   return isLoss ? (
     `${CORRECT_SQUARE}${PRESENT_SQUARE}${defaultSquare}${defaultSquare}${defaultSquare}${defaultSquare}${defaultSquare}\n` +
