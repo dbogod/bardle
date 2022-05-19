@@ -1,3 +1,4 @@
+import ReactGA from 'react-ga';
 import { SAVE_GAME_KEY, THEME_KEY, STATS_KEY } from '../constants/strings';
 
 export const saveGame = (gameNum, keys, history, goNum, isWon, isLost) => {
@@ -53,7 +54,15 @@ export const getStats = async () => {
   return { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist };
 };
 
-export const updateStats = async (isGameWon, goNumber, gameNumber) => {
+const sendGaEventGameCompleted = (isGameWon, gameNumber, solution) => {
+  ReactGA.event({
+    category: 'Game completed',
+    action: `Game ${isGameWon ? 'won' : 'lost'}`,
+    label: `${gameNumber}: ${solution}`
+  });
+};
+
+export const updateStats = async (isGameWon, goNumber, gameNumber, solution) => {
   const { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist } = await getStats();
 
   if (lastGame.gameNumber !== gameNumber) {
@@ -68,6 +77,10 @@ export const updateStats = async (isGameWon, goNumber, gameNumber) => {
 
     if (isGameWon) {
       updatedWinDist[goNumber] = updatedWinDist[goNumber] + 1;
+    }
+    
+    if (solution) {
+      sendGaEventGameCompleted(isGameWon, gameNumber, solution);
     }
 
     saveStats(updatedGamesPlayed, updatedGamesWon, updatedCurrentStreak, updatedLastGame, updatedMaxStreak, updatedWinDist);
