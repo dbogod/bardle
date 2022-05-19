@@ -187,12 +187,12 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   }, [fetchDictionary]);
 
   useEffect(() => {
-    const updateLocalStorage = async () => {
+    const updateStatsInLocalStorage = async () => {
       if (!isGameLost && !isGameWon) {
         return;
       }
 
-      await updateStats(isGameWon, goNumber, gameNumber);
+      await updateStats(isGameWon, goNumber, gameNumber, solution);
 
       if (isGameWon) {
         setTimeout(() => {
@@ -211,8 +211,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
       }
     };
 
-    updateLocalStorage();
-  }, [gameNumber, isGameWon, isGameLost, goNumber]);
+    updateStatsInLocalStorage();
+  }, [gameNumber, solution, isGameWon, isGameLost, goNumber]);
 
   return {
     isValidKey,

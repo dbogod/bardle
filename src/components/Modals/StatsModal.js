@@ -22,7 +22,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
   }
 
   const clickHandler = () => {
-    shareResult(shareableResult);
+    shareResult(shareableResult, window.location.href);
   };
 
   useEffect(() => {
