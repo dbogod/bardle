@@ -73,7 +73,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const res = await getSolutionDefinition(solution);
-      if (res?.title !== 'Null' && res.snippet) {
+      if (res && res.title !== 'Null' && res.snippet) {
         const { snippet, title } = res;
         setSolutionDefinition({ snippet, title });
       }
