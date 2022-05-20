@@ -14,7 +14,9 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
   };
 
   return (
-    <div className={style.keyboard}>
+    <div 
+      className={style.keyboard}
+      data-testid="keyboard">
       {
         KEY_ROWS.map((kbRow, i) => (
           <div

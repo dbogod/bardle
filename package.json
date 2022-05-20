@@ -6,6 +6,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "e2e-test": "cypress open",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js"
@@ -24,6 +25,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "cypress": "^9.6.1",
+    "eslint-plugin-cypress": "^2.12.1",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
