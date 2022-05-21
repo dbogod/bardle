@@ -1,10 +1,8 @@
 import { GAME_TITLE } from '../../src/constants/strings';
-import { mount } from '@cypress/react';
-import App from '../../src/App';
 
 describe('Bardle', () => {
   it('It loads successfully', () => {
-    mount(<App />);
+    cy.visit('/');
 
     cy.get('header')
       .should('be.visible')
