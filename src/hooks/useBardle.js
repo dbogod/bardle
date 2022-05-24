@@ -12,7 +12,8 @@ import {
 import {
   saveGame,
   getSavedGame,
-  updateStats
+  updateStats,
+  sendGaEventGameStarted
 } from '../lib/localStorage';
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
@@ -101,6 +102,11 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   };
 
   const addGuess = guess => {
+    // If it's the first go, send GA event
+    if (goNumber === 0) {
+      sendGaEventGameStarted(gameNumber, solution);
+    }
+    
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);

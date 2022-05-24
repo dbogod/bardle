@@ -54,6 +54,13 @@ export const getStats = async () => {
   return { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist };
 };
 
+export const sendGaEventGameStarted = (gameNumber, solution) => {
+  ReactGA.event({
+    category: 'Game started',
+    label: `${gameNumber}: ${solution}`
+  });
+};
+
 const sendGaEventGameCompleted = (isGameWon, gameNumber, solution) => {
   ReactGA.event({
     category: 'Game completed',
