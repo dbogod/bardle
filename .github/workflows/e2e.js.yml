@@ -6,7 +6,9 @@ on: [ push ]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/included:9.2.0
+    container: 
+      image: cypress/included:9.5.4
+      options: --user 1001
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -16,6 +18,8 @@ jobs:
           chmod -R 777 cypress
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
           start: yarn start
           wait-on: 'http://localhost:3000'
