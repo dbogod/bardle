@@ -16,7 +16,8 @@ describe('Bardle', () => {
           .then(($buttons) => {
             return (
               Cypress.$.makeArray($buttons).filter(btn => {
-                return btn.ariaLabel && btn.ariaLabel.length > 0;
+                const ariaLabel = btn.getAttribute('aria-label');
+                return ariaLabel?.length > 0;
               })
             );
           })
