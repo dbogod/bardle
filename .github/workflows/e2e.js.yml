@@ -4,13 +4,89 @@
 name: End-to-end tests
 on: [ push ]
 jobs:
-  cypress-run:
-    runs-on: ubuntu-20.04
+  e2e-chrome-mobile:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/included:9.7.0
+      options: --user 1001
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+        with:
+          config: "viewportWidth=360,viewportHeight=740"
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+          
+  e2e-chrome:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/included:9.7.0
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
           start: yarn start
           wait-on: 'http://localhost:3000'
+          browser: chrome
+          
+  e2e-firefox-mobile:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/included:9.7.0
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+        with:
+          config: "viewportWidth=360,viewportHeight=740"
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          browser: firefox
+          
+  e2e-firefox:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/included:9.7.0
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+        with:
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          browser: firefox
+          
+  e2e-edge:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/included:9.7.0
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+        with:
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          browser: edge
