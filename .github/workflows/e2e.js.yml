@@ -7,15 +7,11 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     container: 
-      image: cypress/included:9.5.4
+      image: cypress/included:9.7.0
       options: --user 1001
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set permissions
-        run: |
-          chmod -R 777 /github/home
-          chmod -R 777 cypress
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
@@ -23,3 +19,4 @@ jobs:
         with:
           start: yarn start
           wait-on: 'http://localhost:3000'
+          browser: firefox
