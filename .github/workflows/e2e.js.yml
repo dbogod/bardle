@@ -6,7 +6,7 @@ on: [ push ]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/included:9.6.1
+    container: cypress/included:9.2.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
