@@ -11,7 +11,7 @@ test('Game number on the mock date is expected value', () => {
 });
 
 test('Word of the day on the mock date is as expected', () => {
-  expect(getWordOfTheDay(getGameNumber(mockDate))).toBe('herdsmen');
+  expect(getWordOfTheDay(getGameNumber(mockDate))).toBe('valeria');
 });
 
 test('Word of the day is 5-8 characters', () => {
