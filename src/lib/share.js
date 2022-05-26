@@ -22,7 +22,7 @@ export const shareResult = (text, url) => {
   ) {
     navigator.share({ url, text });
   } else if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(`${text}\n${url}`);
   }
 };
 

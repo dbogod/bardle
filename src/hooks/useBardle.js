@@ -14,7 +14,7 @@ import {
   getSavedGame,
   updateStats
 } from '../lib/localStorage';
-import {  sendGaEventGameStarted } from '../lib/analytics';
+import { sendGaEventGameStarted } from '../lib/analytics';
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
 
