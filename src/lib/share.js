@@ -41,5 +41,5 @@ export const generateShareableString = (gameNumber, isGameLost, guessHistory, th
     }).join('');
   }).join('\n');
 
-  return `${GAME_TITLE} ${gameNumber} ${isGameLost ? 'X' : guessHistory.length}/6 \n\n${grid}`;
+  return `${GAME_TITLE} ${gameNumber} ${isGameLost ? 'X' : guessHistory.length}/6 \n\n${grid}\n`;
 };
