@@ -7,7 +7,7 @@ import { FILLED_STATUS } from '../../constants/strings';
 
 import style from '../../styles/Board.module.scss';
 
-const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimation }) => {
+const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimation, isGameReady }) => {
   const tileCount = wordLength;
 
   return (
@@ -17,7 +17,9 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimatio
       <div
         className={style.board}
         style={{ maxWidth: `calc(${tileCount} * ${isSmScreen ? '3rem' : '3.75rem'})` }}
-        data-testid="board">
+        data-testid="board"
+        data-game-ready={isGameReady}
+        data-tile-count={tileCount}>
         {
           guessHistory.map((guess, i) => (
             <Row
@@ -44,7 +46,7 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimatio
         {
           guessHistory.length < 6 &&
           <>
-            <Row 
+            <Row
               tileCount={tileCount}
               animation={rowAnimation}>
               {
@@ -104,7 +106,8 @@ Board.propTypes = {
   guessHistory: PropTypes.array.isRequired,
   currentGuess: PropTypes.string.isRequired,
   wordLength: PropTypes.number.isRequired,
-  rowAnimation: PropTypes.string.isRequired
+  rowAnimation: PropTypes.string.isRequired,
+  isGameReady: PropTypes.bool.isRequired
 };
 
 export default Board;

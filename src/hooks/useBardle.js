@@ -49,6 +49,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   const [isGameLost, setIsGameLost] = useState(savedIsGameLost ?? false);
   const [toast, setToast] = useState({});
   const [rowAnimation, setRowAnimation] = useState('');
+  const [isGameReady, setIsGameReady] = useState(false);
 
   const isValidKey = value => /^[A-Za-z']$/.test(value);
 
@@ -234,6 +235,8 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     goNumber,
     isGameWon,
     isGameLost,
+    isGameReady,
+    setIsGameReady,
     toast,
     rowAnimation,
     solution
