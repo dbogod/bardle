@@ -3,29 +3,22 @@ import {
   TEST_SOLUTION_1,
   TEST_SOLUTION_SIX_LETTERS,
   TEST_SOLUTION_SEVEN_LETTERS,
-  TEST_SOLUTION_EIGHT_LETTERS,
-  FILLED_STATUS,
-  ABSENT_STATUS,
-  PRESENT_STATUS, 
-  WINNING_STATUS, 
-  CORRECT_STATUS,
+  TEST_SOLUTION_EIGHT_LETTERS
 } from '../../src/constants/strings';
 
-beforeEach(() => {
-  cy.visit('/');
-  cy.get('[data-game-ready="true"]')
-    .should('be.visible')
-    .invoke('attr', 'data-tile-count')
-    .as('tileCount');
-
-  cy.wrap(TEST_SOLUTION_1).as('word5');
-  cy.wrap(TEST_SOLUTION_SIX_LETTERS).as('word6');
-  cy.wrap(TEST_SOLUTION_SEVEN_LETTERS).as('word7');
-  cy.wrap(TEST_SOLUTION_EIGHT_LETTERS).as('word8');
-});
-
-describe('Bardle', () => {
+context('Game initialisation', () => {
   it('It loads successfully', function () {
+    cy.visit('/');
+    cy.get('[data-game-ready="true"]')
+      .should('be.visible')
+      .invoke('attr', 'data-tile-count')
+      .as('tileCount');
+
+    cy.wrap(TEST_SOLUTION_1).as('word5');
+    cy.wrap(TEST_SOLUTION_SIX_LETTERS).as('word6');
+    cy.wrap(TEST_SOLUTION_SEVEN_LETTERS).as('word7');
+    cy.wrap(TEST_SOLUTION_EIGHT_LETTERS).as('word8');
+    
     cy.get('header')
       .should('be.visible')
       .within(() => {
@@ -91,58 +84,5 @@ describe('Bardle', () => {
       })
       .invoke('height')
       .should('be.gt', 100);
-  });
-
-  it('The game can be won', function () {
-    const completeWord = this[`word${this.tileCount}`];
-
-    cy.get('[data-game-ready="true"] > div')
-      .eq(0)
-      .within(() => {
-        cy.get('> div')
-          .each((el) => {
-            cy.wrap(el).should('not.have.attr', 'data-status');
-          });
-      });
-
-    cy.get('body')
-      .type(completeWord);
-
-    cy.get('[data-game-ready="true"] > div')
-      .eq(0)
-      .within(() => {
-        cy.get('> div')
-          .each((el, i,) => {
-            cy.wrap(el)
-              .should('have.text', completeWord[i])
-              .invoke('attr', 'data-status')
-              .should('eq', FILLED_STATUS);
-          });
-      });
-
-    cy.get('body')
-      .type('{enter}')
-      .type(completeWord);
-
-    cy.get('[data-game-ready="true"] > div')
-      .eq(0)
-      .within(() => {
-        cy.get('> div')
-          .each((el, i,) => {
-            cy.wrap(el)
-              .should('have.text', completeWord[i])
-              .invoke('attr', 'data-status')
-              .should('be.oneOf', [ABSENT_STATUS, PRESENT_STATUS, WINNING_STATUS, CORRECT_STATUS]);
-          });
-      });
-
-    cy.get('[data-game-ready="true"] > div')
-      .eq(1)
-      .within(() => {
-        cy.get('> div')
-          .each((el, i,) => {
-            cy.wrap(el).should('have.text', completeWord[i]);
-          });
-      });
   });
 });
