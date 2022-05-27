@@ -1,9 +1,24 @@
-import { GAME_TITLE } from '../../src/constants/strings';
+import {
+  GAME_TITLE,
+  TEST_SOLUTION_1,
+  TEST_SOLUTION_SIX_LETTERS,
+  TEST_SOLUTION_SEVEN_LETTERS,
+  TEST_SOLUTION_EIGHT_LETTERS
+} from '../../src/constants/strings';
 
-describe('Bardle', () => {
-  it('It loads successfully', () => {
+context('Game initialisation', () => {
+  it('It loads successfully', function () {
     cy.visit('/');
+    cy.get('[data-game-ready="true"]')
+      .should('be.visible')
+      .invoke('attr', 'data-tile-count')
+      .as('tileCount');
 
+    cy.wrap(TEST_SOLUTION_1).as('word5');
+    cy.wrap(TEST_SOLUTION_SIX_LETTERS).as('word6');
+    cy.wrap(TEST_SOLUTION_SEVEN_LETTERS).as('word7');
+    cy.wrap(TEST_SOLUTION_EIGHT_LETTERS).as('word8');
+    
     cy.get('header')
       .should('be.visible')
       .within(() => {
@@ -33,7 +48,12 @@ describe('Bardle', () => {
       .should('be.visible')
       .within(() => {
         cy.get('> div')
-          .should('have.length', 6);
+          .should('have.length', 6)
+          .first()
+          .within(() => {
+            cy.get('> div')
+              .should('have.length', this.tileCount);
+          });
 
         cy.get('> div > div')
           .each(tile => {

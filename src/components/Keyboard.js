@@ -30,6 +30,7 @@ const Keyboard = ({ markedUpKeyboard, keyHandler }) => {
                     key={i}
                     className={style.key}
                     type="button"
+                    data-testid={kbKey}
                     onClick={() => keyHandler({ key: kbKey })}
                     onKeyUp={e => e.key === 'Enter' && keyUpHandler(e, { key: kbKey })}
                     onKeyDown={e => e.key === 'Enter' && e.preventDefault()}
