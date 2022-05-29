@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { DAILY_WORD_ARRAY } from '../constants/solutions/solutions_daily';
 
 export const getDictionary = async solution => {
   let numberString;
@@ -35,3 +36,10 @@ export const getSolutionDefinition = word => {
       throw new Error(err);
     });
 };
+
+export const getGameNumber = date => {
+  const epoch = new Date(2022, 2, 11).valueOf();
+  return Math.floor((date - epoch) / 86400000);
+};
+
+export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];

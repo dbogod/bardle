@@ -107,7 +107,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     if (goNumber === 0) {
       sendGaEventGameStarted(gameNumber, solution);
     }
-    
+
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);

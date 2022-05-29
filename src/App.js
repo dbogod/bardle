@@ -12,18 +12,9 @@ import StatsModal from './components/Modals/StatsModal';
 import { ThemeContext } from './context/Theme';
 import { ModalContext } from './context/Modal';
 
-import { getSolutionDefinition } from './lib/dictionary';
-
-import { DAILY_WORD_ARRAY } from './constants/solutions/solutions_daily';
+import { getSolutionDefinition, getGameNumber, getWordOfTheDay } from './lib/dictionary';
 
 import './styles/main.scss';
-
-export const getGameNumber = date => {
-  const epoch = new Date(2022, 2, 11).valueOf();
-  return Math.floor((date - epoch) / 86400000);
-};
-
-export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
 
 const { REACT_APP_GOOGLE_ANALYTICS_ID } = process.env;
 
