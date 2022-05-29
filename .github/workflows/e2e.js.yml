@@ -4,89 +4,197 @@
 name: End-to-end tests
 on: [ push ]
 jobs:
+  install:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/included:9.7.0
+      options: --user 1001
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
+        with:
+          # Disable running of tests within install job
+          runTests: false
+          build: yarn build
+          
   e2e-chrome-mobile:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
       image: cypress/included:9.7.0
       options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [ 1, 2, 3, 4, 5 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+          
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
+          install: false
           config: "viewportWidth=360,viewportHeight=740"
           start: yarn start
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           browser: chrome
-          
+          parallel: true
+  
   e2e-chrome:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
       image: cypress/included:9.7.0
       options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [ 1, 2, 3, 4, 5 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build      
+      
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
+          install: false
           start: yarn start
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           browser: chrome
-          
+          parallel: true
+  
   e2e-firefox-mobile:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
       image: cypress/included:9.7.0
       options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [ 1, 2, 3, 4, 5 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+          
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
+          install: false
           config: "viewportWidth=360,viewportHeight=740"
           start: yarn start
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           browser: firefox
-          
+          parallel: true
+  
   e2e-firefox:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
       image: cypress/included:9.7.0
       options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [ 1, 2, 3, 4, 5 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
+          install: false
           start: yarn start
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           browser: firefox
-          
+          parallel: true
+  
   e2e-edge:
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
       image: cypress/included:9.7.0
       options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [ 1, 2, 3, 4, 5 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
+          install: false
           start: yarn start
           wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
           browser: edge
+          parallel: true
