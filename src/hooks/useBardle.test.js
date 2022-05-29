@@ -13,11 +13,14 @@ import {
   PRESENT_STATUS,
   ABSENT_STATUS,
   GAME_OVER_MESSAGE_WIN,
-  GAME_OVER_MESSAGE_LOSE,
-  TEST_SOLUTION_1,
-  TEST_SOLUTION_2,
-  TEST_SOLUTION_3
+  GAME_OVER_MESSAGE_LOSE
 } from '../constants/strings';
+
+import {
+  TEST_SOLUTION_FIVE_LETTERS_1,
+  TEST_SOLUTION_FIVE_LETTERS_2,
+  TEST_SOLUTION_FIVE_LETTERS_3,
+} from '../constants/testParams';
 
 const typeWord = async (hookInstance, word) => {
   await act(() => {
@@ -41,7 +44,7 @@ afterEach(() => {
 });
 
 test('Only certain keys are accepted', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   let isNineNumberValid;
   let isNineStringValid;
@@ -68,7 +71,7 @@ test('Only certain keys are accepted', async () => {
 });
 
 test('Current guess is correctly updated by key handler', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   await act(() => {
     result.current.keyHandler({ key: 'Backspace' });
@@ -104,7 +107,7 @@ test('Current guess is correctly updated by key handler', async () => {
 });
 
 test('isGameWon is true if player guesses correctly', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -120,11 +123,11 @@ test('isGameWon is true if player guesses correctly', async () => {
 });
 
 test('Guess is correctly marked up: ABODE vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
   let guess;
 
   await act(() => {
-    guess = result.current.markUpGuess(TEST_SOLUTION_1).guessWord;
+    guess = result.current.markUpGuess(TEST_SOLUTION_FIVE_LETTERS_1).guessWord;
   });
 
   expect(guess).toEqual([
@@ -137,7 +140,7 @@ test('Guess is correctly marked up: ABODE vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: SPLIT vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
   let guess;
 
   await act(() => {
@@ -154,7 +157,7 @@ test('Guess is correctly marked up: SPLIT vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: AVOID vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
   let guess;
 
   await act(() => {
@@ -171,7 +174,7 @@ test('Guess is correctly marked up: AVOID vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: BOOKS vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
   let guess;
 
   await act(() => {
@@ -188,7 +191,7 @@ test('Guess is correctly marked up: BOOKS vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: LORRY vs RURAL', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_2));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
   let guess;
 
   await act(() => {
@@ -205,7 +208,7 @@ test('Guess is correctly marked up: LORRY vs RURAL', async () => {
 });
 
 test('Guess is correctly marked up: TATTY vs TENET', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_3));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_3));
   let guess;
   await act(() => {
     guess = result.current.markUpGuess('tatty').guessWord;
@@ -221,7 +224,7 @@ test('Guess is correctly marked up: TATTY vs TENET', async () => {
 });
 
 test('addGuess updates guess history as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   await act(() => {
     result.current.addGuess({
@@ -278,7 +281,7 @@ test('addGuess updates guess history as expected', async () => {
 });
 
 test('Submitting a VALID guess is handled as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_2));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -333,7 +336,7 @@ test('Submitting a VALID guess is handled as expected', async () => {
 });
 
 test('Submitting a guess of INVALID LENGTH is handled as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_2));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
 
   await typeWord(result, 'abod');
 
@@ -351,7 +354,7 @@ test('Submitting a guess of INVALID LENGTH is handled as expected', async () => 
 });
 
 test('Submitting a guess that is an INVALID WORD is handled as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_2));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -373,7 +376,7 @@ test('Submitting a guess that is an INVALID WORD is handled as expected', async 
 });
 
 test('Keyboard updates as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -457,7 +460,7 @@ test('Keyboard updates as expected', async () => {
 });
 
 test('User loses game after submitting 6 wrong guesses', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   const assertExpectations = async (num, isGameLost = false) => {
     const hasNum = num !== null;
@@ -493,7 +496,7 @@ test('User loses game after submitting 6 wrong guesses', async () => {
 });
 
 test('User wins game after submitting 5 wrong guesses and 1 correct guess', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_1));
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
 
   const assertExpectations = async (num, isGameWon = false) => {
     const hasNum = num !== null;
@@ -525,6 +528,6 @@ test('User wins game after submitting 5 wrong guesses and 1 correct guess', asyn
   await submitIncorrectGuess(3);
   await submitIncorrectGuess(4);
   await submitIncorrectGuess(5);
-  await enterWord(result, TEST_SOLUTION_1);
+  await enterWord(result, TEST_SOLUTION_FIVE_LETTERS_1);
   await assertExpectations(null, true);
 });

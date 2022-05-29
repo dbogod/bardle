@@ -42,14 +42,14 @@ const getSolution = date => {
 
 Cypress.Commands.add('gameReady', () => cy.get('[data-game-ready="true"]').should('exist'));
 
-Cypress.Commands.add('softEnter', () => cy.get('[data-testid=Enter]').click());
+Cypress.Commands.add('softEnter', () => cy.get('[data-testid="Enter"]').click());
 Cypress.Commands.add('hardEnter', () => cy.get('body').type('{enter}'));
-Cypress.Commands.add('softDelete', () => cy.get('[data-testid=Del]').click());
+Cypress.Commands.add('softDelete', () => cy.get('[data-testid="Del"]').click());
 Cypress.Commands.add('hardDelete', () => cy.get('body').type('{backspace}'));
 
 Cypress.Commands.add('tryWord', (word, softKeys = true, pressEnter = true) => {
   if (softKeys) {
-    cy.get('[data-testid=keyboard]')
+    cy.get('[data-testid="keyboard"]')
       .within(() => {
         [...word].forEach(letter => {
           cy.get(`[data-testid="${letter}"]`).click();

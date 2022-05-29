@@ -1,10 +1,10 @@
 import { getDictionary, getGameNumber, getWordOfTheDay } from './dictionary';
 import {
-  TEST_SOLUTION_1,
+  TEST_SOLUTION_FIVE_LETTERS_1,
   TEST_SOLUTION_SIX_LETTERS,
   TEST_SOLUTION_SEVEN_LETTERS,
   TEST_SOLUTION_EIGHT_LETTERS
-} from '../constants/strings';
+} from '../constants/testParams';
 import { DAILY_WORD_ARRAY } from '../constants/solutions/solutions_daily';
 
 const mockDate = new Date('April 23, 2022 01:00:00').valueOf();
@@ -13,9 +13,9 @@ const getRandomIndex = (min, max) => {
 };
 
 test('The right dictionary is fetched', async () => {
-  let dictionary = await getDictionary(TEST_SOLUTION_1);
+  let dictionary = await getDictionary(TEST_SOLUTION_FIVE_LETTERS_1);
   
-  expect(dictionary[0].length).toEqual(TEST_SOLUTION_1.length);
+  expect(dictionary[0].length).toEqual(TEST_SOLUTION_FIVE_LETTERS_1.length);
   expect(dictionary.length).toBe(12397);
 
   dictionary = await getDictionary(TEST_SOLUTION_SIX_LETTERS);
