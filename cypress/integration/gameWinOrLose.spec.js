@@ -25,16 +25,31 @@ const gameParams = {
 };
 
 context('Winning game', function () {
-  it.only('The game can be won (five letters)', () => {
+  it('The game can be won (five letters)', () => {
     cy.playWinningGame(gameParams.five);
   });
-  it.only('The game can be won (six letters)', () => {
+  it('The game can be won (six letters)', () => {
     cy.playWinningGame(gameParams.six);
   });
-  it.only('The game can be won (seven letters)', () => {
+  it('The game can be won (seven letters)', () => {
     cy.playWinningGame(gameParams.seven);
   });
-  it.only('The game can be won (eight letters)', () => {
+  it('The game can be won (eight letters)', () => {
     cy.playWinningGame(gameParams.eight);
+  });
+});
+
+context('Losing game', function () {
+  it('The game can be lost (five letters)', () => {
+    cy.playLosingGame(gameParams.five);
+  });
+  it('The game can be lost (six letters)', () => {
+    cy.playLosingGame(gameParams.six);
+  });
+  it('The game can be lost (seven letters)', () => {
+    cy.playLosingGame(gameParams.seven);
+  });
+  it('The game can be lost (eight letters)', () => {
+    cy.playLosingGame(gameParams.eight);
   });
 });
