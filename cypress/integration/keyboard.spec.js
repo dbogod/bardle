@@ -11,10 +11,10 @@ import {
   TEST_DATE_SIX_LETTERS
 } from '../../src/constants/testParams';
 
-const getRandomLetterIndex = word => Math.floor(Math.random() * (word.length + 1));
-const revealedStatusArray = [WINNING_STATUS, CORRECT_STATUS, ABSENT_STATUS, PRESENT_STATUS];
-
 context('Keyboard', () => {
+  const getRandomLetterIndex = word => Math.floor(Math.random() * (word.length + 1));
+  const revealedStatusArray = [WINNING_STATUS, CORRECT_STATUS, ABSENT_STATUS, PRESENT_STATUS];
+  
   beforeEach(() => {
     cy.clock(TEST_DATE_SIX_LETTERS, ['Date']);
     cy.visit('/');
