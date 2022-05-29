@@ -89,10 +89,10 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }) => {
   cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray);
   cy.tryWord(incorrectWord);
   cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray);
-  
+
   cy.tryWord(solution);
   cy.contains(GAME_OVER_MESSAGE_WIN).should('exist');
-  cy.get('[data-game-ready="true"] > div')
+  cy.get('[data-game-ready="true"] > div', { timeout: 8000 })
     .eq(2)
     .within(() => {
       cy.get('> div')
