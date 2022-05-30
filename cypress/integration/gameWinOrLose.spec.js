@@ -1,7 +1,7 @@
 import { TEST_GAME_PARAMS } from '../../src/constants/testParams';
 
 context('Winning game', function () {
-  it.only('The game can be won (five letters)', () => {
+  it('The game can be won (five letters)', () => {
     cy.playWinningGame(TEST_GAME_PARAMS.five);
   });
   it('The game can be won (six letters)', () => {
