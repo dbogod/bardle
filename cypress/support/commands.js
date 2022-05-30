@@ -86,7 +86,7 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot= fals
   cy.visit('/');
   cy.gameReady();
   
-  darkMode && cy.get('[data-testid="theme-toggle"]').click();
+  darkMode && cy.get('[data-testid="theme-toggle"]').click().blur();
 
   snapshot && cy.percySnapshot(`Blank game (${incorrectWord.length}-letter grid), ${modeString}`);
 
@@ -114,6 +114,8 @@ Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }, snapshot = fals
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
+
+  darkMode && cy.get('[data-testid="theme-toggle"]').click().blur();
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('not.exist');
 
