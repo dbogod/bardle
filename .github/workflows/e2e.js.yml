@@ -26,8 +26,8 @@ jobs:
           # Disable running of tests within install job
           runTests: false
       
-      -run: yarn cypress info
-      -run: yarn build
+      - run: yarn cypress info
+      - run: yarn build
       
       - name: Save build folder
         uses: actions/upload-artifact@v2
