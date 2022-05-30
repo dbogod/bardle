@@ -12,13 +12,7 @@
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
 
-import {
-  ABSENT_STATUS,
-  CORRECT_STATUS, GAME_OVER_MESSAGE_LOSE,
-  GAME_OVER_MESSAGE_WIN,
-  PRESENT_STATUS,
-  WINNING_STATUS
-} from '../../src/constants/strings';
+
 
 //
 // -- This is a child command --
@@ -33,6 +27,13 @@ import {
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import '@testing-library/cypress/add-commands';
 import { getGameNumber, getWordOfTheDay } from '../../src/lib/dictionary';
+import {
+  ABSENT_STATUS,
+  CORRECT_STATUS, FILLED_STATUS, GAME_OVER_MESSAGE_LOSE,
+  GAME_OVER_MESSAGE_WIN,
+  PRESENT_STATUS,
+  WINNING_STATUS
+} from '../../src/constants/strings';
 
 const revealedStatusArray = [CORRECT_STATUS, ABSENT_STATUS, PRESENT_STATUS];
 const getSolution = date => {
@@ -47,24 +48,25 @@ Cypress.Commands.add('hardEnter', () => cy.get('body').type('{enter}'));
 Cypress.Commands.add('softDelete', () => cy.get('[data-testid="Del"]').click());
 Cypress.Commands.add('hardDelete', () => cy.get('body').type('{backspace}'));
 
-Cypress.Commands.add('tryWord', (word, softKeys = true, pressEnter = true) => {
+Cypress.Commands.add('tryWord', (rowIndex, word, softKeys = true, pressEnter = true) => {
   if (softKeys) {
-    cy.get('[data-testid="keyboard"]')
-      .within(() => {
-        [...word].forEach(letter => {
-          cy.get(`[data-testid="${letter}"]`).click();
-        });
-        pressEnter && cy.softEnter();
-      });
+    [...word].forEach(letter => {
+      cy.get(`[data-testid="${letter}"]`).click();
+    });
   } else {
     cy.get('body').type(word);
-    pressEnter && cy.hardEnter();
+  }
+
+  if (pressEnter) {
+    cy.assertTilesStatus(rowIndex, word, 'eq', FILLED_STATUS).then(() => {
+      softKeys ?  cy.softEnter() : cy.hardEnter();
+    });
   }
 });
 
 Cypress.Commands.add('assertTilesStatus', (rowIndex, word, shouldOperator, shouldValue) => {
   cy.get('[data-game-ready="true"] > div')
-    .eq(0)
+    .eq(rowIndex)
     .within(() => {
       cy.get('> div')
         .each((el, i,) => {
@@ -85,24 +87,14 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }) => {
 
   cy.contains(GAME_OVER_MESSAGE_WIN).should('not.exist');
 
-  cy.tryWord(incorrectWord, false);
+  cy.tryWord(0, incorrectWord, false);
   cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray);
-  cy.tryWord(incorrectWord);
+  cy.tryWord(1, incorrectWord);
   cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray);
 
-  cy.tryWord(solution);
+  cy.tryWord(2, solution);
   cy.contains(GAME_OVER_MESSAGE_WIN).should('exist');
-  cy.get('[data-game-ready="true"] > div', { timeout: 8000 })
-    .eq(2)
-    .within(() => {
-      cy.get('> div')
-        .each((el, i,) => {
-          cy.wrap(el)
-            .should('have.text', solution[i])
-            .invoke('attr', 'data-status')
-            .should('eq', WINNING_STATUS);
-        });
-    });
+  cy.assertTilesStatus(2, solution, 'eq', WINNING_STATUS);
 
   cy.get('#stats-modal').should('be.visible');
 });
@@ -114,17 +106,17 @@ Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }) => {
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('not.exist');
 
-  cy.tryWord(incorrectWord, false);
+  cy.tryWord(0, incorrectWord, false);
   cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray);
-  cy.tryWord(incorrectWord);
+  cy.tryWord(1, incorrectWord);
   cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray);
-  cy.tryWord(incorrectWord, false);
+  cy.tryWord(2, incorrectWord, false);
   cy.assertTilesStatus(2, incorrectWord, 'be.oneOf', revealedStatusArray);
-  cy.tryWord(incorrectWord);
+  cy.tryWord(3, incorrectWord);
   cy.assertTilesStatus(3, incorrectWord, 'be.oneOf', revealedStatusArray);
-  cy.tryWord(incorrectWord, false);
+  cy.tryWord(4, incorrectWord, false);
   cy.assertTilesStatus(4, incorrectWord, 'be.oneOf', revealedStatusArray);
-  cy.tryWord(incorrectWord);
+  cy.tryWord(5, incorrectWord);
   cy.assertTilesStatus(5, incorrectWord, 'be.oneOf', revealedStatusArray);
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('exist');

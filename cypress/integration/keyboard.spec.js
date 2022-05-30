@@ -60,7 +60,7 @@ context('Keyboard', () => {
       }
 
       if (i === TEST_SOLUTION_SIX_LETTERS.length - 1) {
-        cy.tryWord('xyz', true, false);
+        cy.tryWord(0, 'xyz', true, false);
       }
     });
 
