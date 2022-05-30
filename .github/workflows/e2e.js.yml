@@ -60,6 +60,13 @@ jobs:
           
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           config: "defaultCommandTimeout=20000,viewportWidth=360,viewportHeight=740"
           start: yarn start
@@ -68,13 +75,6 @@ jobs:
           browser: chrome
           record: true
           parallel: true
-        env:
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
-          # Recommended: pass the GitHub token lets this action correctly
-          # determine the unique run id necessary to re-run the checks
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   e2e-chrome:
     timeout-minutes: 15
@@ -148,7 +148,7 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          config: "defaultCommandTimeout=20000viewportWidth=360,viewportHeight=740"
+          config: "defaultCommandTimeout=20000,viewportWidth=360,viewportHeight=740"
           start: yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
