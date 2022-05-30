@@ -116,45 +116,45 @@ jobs:
 #          record: true
 #          parallel: true
 #  
-#  e2e-firefox-mobile:
-#    timeout-minutes: 15
-#    runs-on: ubuntu-latest
-#    container:
-#      image: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
-#      options: --user 1001
-#    needs: install
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        # run copies of the current job in parallel
-#        containers: [ 1, 2, 3 ]
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        
-#      - name: Download the build folders
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: build
-#          path: build
-#          
-#      - name: Cypress run
-#        uses: cypress-io/github-action@v2
-#        env:
-#          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-#          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-#          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
-#          # Recommended: pass the GitHub token lets this action correctly
-#          # determine the unique run id necessary to re-run the checks
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          config: "defaultCommandTimeout=20000,viewportWidth=360,viewportHeight=740"
-#          start: yarn start
-#          wait-on: 'http://localhost:3000'
-#          wait-on-timeout: 120
-#          browser: firefox
-#          record: true
-#          parallel: true
+  e2e-firefox-mobile:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+      options: --user 1001
+    needs: install
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [ 1, 2, 3 ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config: "defaultCommandTimeout=20000,viewportWidth=360,viewportHeight=740"
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: firefox
+          record: true
+          parallel: true
 #  
 #  e2e-firefox:
 #    timeout-minutes: 15
