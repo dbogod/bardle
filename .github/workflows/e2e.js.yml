@@ -15,6 +15,8 @@ jobs:
 
       - name: Cypress install
         uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
         with:
           # Disable running of tests within install job
           runTests: false
