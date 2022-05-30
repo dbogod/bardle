@@ -4,12 +4,12 @@ import {
   FILLED_STATUS,
   PRESENT_STATUS,
   WINNING_STATUS,
-} from '../../src/constants/strings';
+} from '../../../src/constants/strings';
 
 import {
   TEST_SOLUTION_SIX_LETTERS,
   TEST_DATE_SIX_LETTERS
-} from '../../src/constants/testParams';
+} from '../../../src/constants/testParams';
 
 context('Keyboard', () => {
   const getRandomLetterIndex = word => Math.floor(Math.random() * (word.length + 1));

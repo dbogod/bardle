@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@cypress/react": "^5.12.5",
+    "@percy/cli": "^1.2.1",
+    "@percy/cypress": "^3.1.1",
     "@testing-library/cypress": "^8.0.2",
     "axios": "^0.27.2",
     "cypress": "^9.7.0",

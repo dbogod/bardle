@@ -78,12 +78,14 @@ Cypress.Commands.add('assertTilesStatus', (rowIndex, word, shouldOperator, shoul
     });
 });
 
-Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }) => {
+Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot= false) => {
   const solution = getSolution(date);
 
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
+
+  snapshot && cy.percySnapshot(`Blank game (${incorrectWord.length}-letter grid)`);
 
   cy.contains(GAME_OVER_MESSAGE_WIN).should('not.exist');
 
@@ -96,10 +98,14 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }) => {
   cy.contains(GAME_OVER_MESSAGE_WIN).should('exist');
   cy.assertTilesStatus(2, solution, 'eq', WINNING_STATUS);
 
+  snapshot && cy.percySnapshot(`End game (${incorrectWord.length}-letter grid) - win`);
+
   cy.get('#stats-modal').should('be.visible');
+
+  snapshot && cy.percySnapshot(`Status modal (${incorrectWord.length}-letter grid) - win`);
 });
 
-Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }) => {
+Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }, snapshot = false) => {
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
@@ -121,5 +127,9 @@ Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }) => {
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('exist');
 
+  snapshot && cy.percySnapshot(`End game (${incorrectWord.length}-letter grid) - lose`);
+
   cy.get('#stats-modal').should('be.visible');
+
+  snapshot && cy.percySnapshot(`Status modal (${incorrectWord.length}-letter grid) - lose`);
 });

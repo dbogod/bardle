@@ -75,3 +75,4 @@ jobs:
           browser: edge
           record: true
           parallel: true
+          spec: cypress/tests/functional/*
