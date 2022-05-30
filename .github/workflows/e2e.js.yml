@@ -53,13 +53,21 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build
           
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        with:
+          config: "viewportWidth=360,viewportHeight=740"
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          wait-on-timeout: 120
+          browser: chrome
+          record: true
+          parallel: true
         env:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -67,14 +75,6 @@ jobs:
           # Recommended: pass the GitHub token lets this action correctly
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          install: false
-          config: "viewportWidth=360,viewportHeight=740"
-          start: yarn start
-          wait-on: 'http://localhost:3000'
-          wait-on-timeout: 120
-          browser: chrome
-          parallel: true
   
   e2e-chrome:
     timeout-minutes: 15
@@ -93,7 +93,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build      
@@ -113,6 +113,7 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: chrome
+          record: true
           parallel: true
   
   e2e-firefox-mobile:
@@ -132,7 +133,7 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build
@@ -153,6 +154,7 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: firefox
+          record: true
           parallel: true
   
   e2e-firefox:
@@ -172,7 +174,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build
@@ -192,6 +194,7 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: firefox
+          record: true
           parallel: true
   
   e2e-edge:
@@ -211,7 +214,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download the build folders
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: build
@@ -231,4 +234,5 @@ jobs:
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
           browser: edge
+          record: true
           parallel: true
