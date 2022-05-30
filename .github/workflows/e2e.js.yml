@@ -61,7 +61,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          config: "viewportWidth=360,viewportHeight=740"
+          config: "defaultCommandTimeout=20000,viewportWidth=360,viewportHeight=740"
           start: yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
@@ -108,6 +108,7 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          config: "defaultCommandTimeout=20000"
           start: yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
@@ -147,7 +148,7 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          config: "viewportWidth=360,viewportHeight=740"
+          config: "defaultCommandTimeout=20000viewportWidth=360,viewportHeight=740"
           start: yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
@@ -187,6 +188,7 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          config: "defaultCommandTimeout=20000"
           start: yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
@@ -226,6 +228,7 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          config: "defaultCommandTimeout=20000"
           start: yarn start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
