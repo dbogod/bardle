@@ -20,7 +20,7 @@ jobs:
           # determine the unique run id necessary to re-run the checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          command: yarn run percy exec -- cypress run
+          command: yarn percy
           config: "defaultCommandTimeout=20000"
           start: yarn start
           wait-on: 'http://localhost:3000'
