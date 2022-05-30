@@ -11,12 +11,12 @@ import userEvent from '@testing-library/user-event';
 import useBardle from '../hooks/useBardle';
 import Keyboard from './Keyboard';
 
-import { TEST_SOLUTION_1 } from '../constants/strings';
+import { TEST_SOLUTION_FIVE_LETTERS_1 } from '../constants/testParams';
 
 let result;
 
 beforeEach(async () => {
-  result = renderHook(() => useBardle(47, TEST_SOLUTION_1)).result;
+  result = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1)).result;
   
   await act(async () => {
     await result.current.fetchDictionary();

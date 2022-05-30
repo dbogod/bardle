@@ -41,6 +41,7 @@ beforeEach(() => {
 test('The board renders', () => {
   render(
     <Board
+      isGameReady={true}
       rowAnimation={''}
       isSmScreen={false}
       guessHistory={guessHistory}
@@ -68,6 +69,7 @@ test('The board renders', () => {
 test('Guessed words are rendered', () => {
   render(
     <Board
+      isGameReady={true}
       rowAnimation={''}
       isSmScreen={false}
       guessHistory={guessHistory}
@@ -114,6 +116,7 @@ test('Six tiles are rendered', () => {
   wordLength = 6;
   render(
     <Board
+      isGameReady={true}
       rowAnimation={''}
       isSmScreen={false}
       guessHistory={[]}
@@ -130,6 +133,7 @@ test('Seven tiles are rendered', () => {
   wordLength = 7;
   render(
     <Board
+      isGameReady={true}
       rowAnimation={''}
       isSmScreen={false}
       guessHistory={[]}
@@ -146,6 +150,7 @@ test('Eight tiles are rendered', () => {
   wordLength = 8;
   render(
     <Board
+      isGameReady={true}
       rowAnimation={''}
       isSmScreen={false}
       guessHistory={[]}
