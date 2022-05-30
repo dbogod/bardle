@@ -16,11 +16,18 @@ jobs:
       - name: Cypress install
         uses: cypress-io/github-action@v2
         env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # Disable running of tests within install job
           runTests: false
-          build: yarn build
+      
+      -run: yarn cypress info
+      -run: yarn build
       
       - name: Save build folder
         uses: actions/upload-artifact@v2
@@ -40,10 +47,10 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Download the build folders
         uses: actions/download-artifact@v2
@@ -54,7 +61,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           install: false
           config: "viewportWidth=360,viewportHeight=740"
@@ -75,10 +87,10 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download the build folders
         uses: actions/download-artifact@v2
@@ -89,7 +101,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           install: false
           start: yarn start
@@ -109,10 +126,10 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       - name: Download the build folders
         uses: actions/download-artifact@v2
@@ -123,7 +140,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           install: false
           config: "viewportWidth=360,viewportHeight=740"
@@ -144,10 +166,10 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download the build folders
         uses: actions/download-artifact@v2
@@ -158,7 +180,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           install: false
           start: yarn start
@@ -178,10 +205,10 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download the build folders
         uses: actions/download-artifact@v2
@@ -192,7 +219,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
+          # Recommended: pass the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           install: false
           start: yarn start
