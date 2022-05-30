@@ -3,5 +3,6 @@
   "video": false,
   "retries": {
     "runMode": 2
-  }
+  },
+  "integrationFolder": "cypress/tests"
 }

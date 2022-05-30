@@ -10,6 +10,7 @@
     "cy:run:chrome": "cypress run --browser chrome",
     "cy:run:firefox": "cypress run --browser firefox",
     "cy:run:edge": "cypress run --browser edge",
+    "percy": "percy exec -- cypress run",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js"
@@ -28,6 +29,8 @@
   },
   "dependencies": {
     "@cypress/react": "^5.12.5",
+    "@percy/cli": "^1.2.1",
+    "@percy/cypress": "^3.1.1",
     "@testing-library/cypress": "^8.0.2",
     "axios": "^0.27.2",
     "cypress": "^9.7.0",

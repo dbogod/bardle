@@ -78,12 +78,17 @@ Cypress.Commands.add('assertTilesStatus', (rowIndex, word, shouldOperator, shoul
     });
 });
 
-Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }) => {
+Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot= false, darkMode = false) => {
   const solution = getSolution(date);
+  const modeString = darkMode ? 'dark mode' : 'light mode';
 
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
+  
+  darkMode && cy.get('[data-testid="theme-toggle"]').click().blur();
+
+  snapshot && cy.percySnapshot(`Blank game (${incorrectWord.length}-letter grid), ${modeString}`);
 
   cy.contains(GAME_OVER_MESSAGE_WIN).should('not.exist');
 
@@ -96,13 +101,21 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }) => {
   cy.contains(GAME_OVER_MESSAGE_WIN).should('exist');
   cy.assertTilesStatus(2, solution, 'eq', WINNING_STATUS);
 
+  snapshot && cy.percySnapshot(`End game (${incorrectWord.length}-letter grid), ${modeString} - win`);
+
   cy.get('#stats-modal').should('be.visible');
+
+  snapshot && cy.percySnapshot(`Status modal (${incorrectWord.length}-letter grid), ${modeString} - win`);
 });
 
-Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }) => {
+Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }, snapshot = false, darkMode = false) => {
+  const modeString = darkMode ? 'dark mode' : 'light mode';
+  
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
+
+  darkMode && cy.get('[data-testid="theme-toggle"]').click().blur();
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('not.exist');
 
@@ -121,5 +134,9 @@ Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }) => {
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('exist');
 
+  snapshot && cy.percySnapshot(`End game (${incorrectWord.length}-letter grid), ${modeString} - lose`);
+
   cy.get('#stats-modal').should('be.visible');
+
+  snapshot && cy.percySnapshot(`Status modal (${incorrectWord.length}-letter grid), ${modeString} - lose`);
 });

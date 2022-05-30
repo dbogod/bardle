@@ -49,6 +49,7 @@ const Header = ({ howToPlayModalRef, devModalRef, aboutModalRef, statsModalRef }
             className={currentTheme === 'light' ? '' : style['is-dark-mode']}
             aria-label="toggle light/dark theme"
             onClick={toggleTheme}
+            data-testid="theme-toggle"
             type="button">
             {
               currentTheme === 'light' ? <BiSun/> :  <BsMoonStars/>

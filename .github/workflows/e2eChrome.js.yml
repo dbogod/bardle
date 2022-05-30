@@ -75,6 +75,7 @@ jobs:
           browser: chrome
           record: true
           parallel: true
+          spec: cypress/tests/functional/*
   
   e2e-chrome:
     timeout-minutes: 15
@@ -115,3 +116,4 @@ jobs:
           browser: chrome
           record: true
           parallel: true
+          spec: cypress/tests/functional/*

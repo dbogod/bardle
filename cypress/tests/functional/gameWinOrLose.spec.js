@@ -1,4 +1,4 @@
-import { TEST_GAME_PARAMS } from '../../src/constants/testParams';
+import { TEST_GAME_PARAMS } from '../../../src/constants/testParams';
 
 context('Winning game', function () {
   it('The game can be won (five letters)', () => {

@@ -1,13 +1,11 @@
-import { GAME_TITLE } from '../../src/constants/strings';
+import { GAME_TITLE } from '../../../src/constants/strings';
+import { TEST_DATE_FIVE_LETTERS } from '../../../src/constants/testParams';
 
 context('Game initialisation', () => {
   it('It loads successfully', function () {
+    cy.clock(TEST_DATE_FIVE_LETTERS, ['Date']);
     cy.visit('/');
     cy.gameReady();
-    
-    cy.get('[data-game-ready="true"]')
-      .invoke('attr', 'data-tile-count')
-      .as('tileCount');
 
     cy.get('header')
       .should('be.visible')
@@ -42,7 +40,7 @@ context('Game initialisation', () => {
           .first()
           .within(() => {
             cy.get('> div')
-              .should('have.length', this.tileCount);
+              .should('have.length', 5);
           });
 
         cy.get('> div > div')
