@@ -10,7 +10,7 @@
     "cy:run:chrome": "cypress run --browser chrome",
     "cy:run:firefox": "cypress run --browser firefox",
     "cy:run:edge": "cypress run --browser edge",
-    "percy": "percy exec -- cypress run",
+    "percy": "percy exec -- cypress run --spec cypress/tests/visual/*",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint --fix src/**/*.js"
