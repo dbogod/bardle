@@ -92,14 +92,18 @@
   }
 
   td {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
+    
+    @media (min-width: 500px) {
+      font-size: 2.25rem;
+    }
   }
 }
 
 .stats-histogram {
   width: 100%;
   margin: 1.5rem 0 2rem;
-  height: 12.5rem;
+  height: 14.5rem;
   border-spacing: 0.25rem;
   
   caption {

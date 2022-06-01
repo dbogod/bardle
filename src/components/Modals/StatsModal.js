@@ -10,6 +10,26 @@ import { shareResult } from '../../lib/share';
 
 import style from '../../styles/Modal.module.scss';
 
+export const getAverage = num => {
+  const countDecimals = value => {
+    if (Math.floor(value) === value) {
+      return 0;
+    }
+    return value.toString().split('.')[1].length || 0;
+  };
+
+  const decimals = countDecimals(num);
+
+  switch (decimals) {
+    case 0:
+      return num;
+    case 1:
+      return parseFloat(num.toFixed(1));
+    default:
+      return parseFloat(num.toFixed(2));
+  }
+};
+
 const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, definition }) => {
   const [statsToDisplay, setStatsToDisplay] = useState(null);
   
@@ -41,10 +61,22 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
   }
 
   const { gamesPlayed, gamesWon, currentStreak, maxStreak, winDist } = statsToDisplay;
+  const gamesLost = gamesPlayed - gamesWon;
   const maxValue = Math.max(...winDist);
   const tomorrow = new Date();
   tomorrow.setHours(24, 0, 0, 0);
   const solutionTitle = GAME_TITLE ?? 'solution';
+  
+  let totalGuesses = 0;
+  for (const [key, frequency] of Object.entries(winDist)) {
+    let score = parseInt(key) + 1;
+    if (key === 'X') {
+      score = 7;
+    }
+    totalGuesses += (score * parseInt(frequency));
+  }
+
+  const averageScore = getAverage(totalGuesses/gamesPlayed);
 
   return (
     <Modal
@@ -57,6 +89,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
             <tr>
               <th scope="col">Played</th>
               <th scope="col">Won</th>
+              <th scope="col">Average score</th>
               <th scope="col">Current streak</th>
               <th scope="col">Max streak</th>
             </tr>
@@ -65,6 +98,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
             <tr>
               <td>{gamesPlayed}</td>
               <td>{gamesWon}</td>
+              <td>{averageScore}</td>
               <td>{currentStreak}</td>
               <td>{maxStreak}</td>
             </tr>
@@ -87,6 +121,14 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
                 </tr>
               ))
             }
+            <tr>
+              <th>X</th>
+              <td style={{ width: `${(100 / maxValue) * gamesLost}%` }}>
+                <span>
+                  {gamesLost}
+                </span>
+              </td>
+            </tr>
           </tbody>
         </table>
         {
