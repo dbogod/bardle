@@ -124,6 +124,10 @@
 }
 
 .solution-wrapper {
+  --colour-link: #fff;
+  --colour-link-hover: #000;
+  --colour-link-bg-hover: #fff;
+  
   display: flex;
   flex-direction: column;
   align-items: center;

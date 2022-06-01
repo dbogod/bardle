@@ -90,7 +90,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
           </tbody>
         </table>
         {
-          isGameOver &&
+          // isGameOver &&
           <>
             <div className={style['solution-wrapper']}>
               <span>Today&apos;s {solutionTitle} was:</span>
