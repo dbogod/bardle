@@ -18,7 +18,7 @@ export const getAverage = num => {
     return value.toString().split('.')[1].length || 0;
   };
 
-  const decimals = countDecimals(num);
+  const decimals = num && countDecimals(num);
 
   switch (decimals) {
     case 0:
@@ -89,7 +89,10 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
             <tr>
               <th scope="col">Played</th>
               <th scope="col">Won</th>
-              <th scope="col">Average score</th>
+              {
+                averageScore ?
+                  <th scope="col">Average score</th> : null
+              }
               <th scope="col">Current streak</th>
               <th scope="col">Max streak</th>
             </tr>
@@ -98,7 +101,10 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
             <tr>
               <td>{gamesPlayed}</td>
               <td>{gamesWon}</td>
-              <td>{averageScore}</td>
+              {
+                averageScore ?
+                  <td>{averageScore}</td> : null
+              }
               <td>{currentStreak}</td>
               <td>{maxStreak}</td>
             </tr>
