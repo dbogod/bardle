@@ -56,8 +56,7 @@ const App = () => {
   }, [currentTheme]);
 
   useEffect(() => {
-    // const gameNum = getGameNumber(Date.now());
-    const gameNum = 42;
+    const gameNum = getGameNumber(Date.now());
     setGameNumber(gameNum);
     setSolution(getWordOfTheDay(gameNum));
   }, []);

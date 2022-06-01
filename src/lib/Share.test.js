@@ -148,27 +148,27 @@ test('The shareable grid is correct (win, light theme)', () => {
   const { gameNumber, isGameLost, guessHistory, theme } = mockData(false, 'light');
   const grid = expectedResult(false, 'light');
   const result = generateShareableString(gameNumber, isGameLost, guessHistory, theme);
-  expect(result).toBe(`${GAME_TITLE} 23 5/6 \n\n${grid}\n`);
+  expect(result).toBe(`${GAME_TITLE} 23 5/6 \n\n${window.location.href}\n\n${grid}`);
 });
 
 test('The shareable grid is correct (win, dark theme)', () => {
   const { gameNumber, isGameLost, guessHistory, theme } = mockData(false, 'dark');
   const grid = expectedResult(false, 'dark');
   const result = generateShareableString(gameNumber, isGameLost, guessHistory, theme);
-  expect(result).toBe(`${GAME_TITLE} 23 5/6 \n\n${grid}\n`);
+  expect(result).toBe(`${GAME_TITLE} 23 5/6 \n\n${window.location.href}\n\n${grid}`);
 });
 
 test('The shareable grid is correct (loss, light theme)', () => {
   const { gameNumber, isGameLost, guessHistory, theme } = mockData(true, 'light');
   const grid = expectedResult(true, 'light');
   const result = generateShareableString(gameNumber, isGameLost, guessHistory, theme);
-  expect(result).toBe(`${GAME_TITLE} 23 X/6 \n\n${grid}\n`);
+  expect(result).toBe(`${GAME_TITLE} 23 X/6 \n\n${window.location.href}\n\n${grid}`);
 });
 
 test('The shareable grid is correct (loss, dark theme)', () => {
   const { gameNumber, isGameLost, guessHistory, theme } = mockData(true, 'dark');
   const grid = expectedResult(true, 'dark');
   const result = generateShareableString(gameNumber, isGameLost, guessHistory, theme);
-  expect(result).toBe(`${GAME_TITLE} 23 X/6 \n\n${grid}\n`);
+  expect(result).toBe(`${GAME_TITLE} 23 X/6 \n\n${window.location.href}\n\n${grid}`);
 });
 

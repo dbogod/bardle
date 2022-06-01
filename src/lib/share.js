@@ -10,19 +10,19 @@ import {
   PRESENT_SQUARE
 } from '../constants/strings';
 
-export const shareResult = (text, url) => {
+export const shareResult = (text) => {
   const parser = new UAParser();
   const device = parser.getDevice();
 
   if (
     ['mobile', 'tablet', 'wearable'].includes(device.type) &&
     navigator.canShare &&
-    navigator.canShare({ url, text }) &&
+    navigator.canShare(text) &&
     navigator.share
   ) {
-    navigator.share({ url, text });
+    navigator.share(text);
   } else if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(`${text}\n${url}`);
+    navigator.clipboard.writeText(text);
   }
 };
 
@@ -41,5 +41,5 @@ export const generateShareableString = (gameNumber, isGameLost, guessHistory, th
     }).join('');
   }).join('\n');
 
-  return `${GAME_TITLE} ${gameNumber} ${isGameLost ? 'X' : guessHistory.length}/6 \n\n${grid}\n`;
+  return `${GAME_TITLE} ${gameNumber} ${isGameLost ? 'X' : guessHistory.length}/6 \n\n${window.location.href}\n\n${grid}`;
 };
