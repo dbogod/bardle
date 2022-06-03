@@ -12,11 +12,13 @@ import {
 import {
   saveGame,
   getSavedGame,
-  updateStats
+  updateStats,
+  updateCurrentStreak
 } from '../lib/localStorage';
 import { sendGaEventGameStarted } from '../lib/analytics';
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
+import game from '../components/Game';
 
 const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) => {
   let savedKeyboardKeys;
@@ -220,6 +222,10 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
 
     updateStatsInLocalStorage();
   }, [gameNumber, solution, isGameWon, isGameLost, goNumber]);
+  
+  useEffect(() => {
+    updateCurrentStreak(gameNumber);
+  }, [gameNumber]);
 
   return {
     isValidKey,

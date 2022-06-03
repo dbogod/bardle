@@ -5,21 +5,19 @@
 }
 
 :is(a, button, input, label, textarea, summary) {
-  @media (min-width: 62.5em) {
-    --outline-size: max(4px, 0.08em);
-    --outline-style: dotted;
-    --outline-color: var(--colour-status-present);
-    --outline-offset: -5px;
+  --outline-size: max(4px, 0.08em);
+  --outline-style: dotted;
+  --outline-color: var(--colour-status-present);
+  --outline-offset: -5px;
 
-    &:focus {
-      outline: none;
-      box-shadow: none;
-    }
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 
-    &:focus-visible {
-      outline: var(--outline-size) var(--outline-style) var(--outline-color) !important;
-      outline-offset: var(--outline-offset) !important;
-    } 
+  &:focus-visible {
+    outline: var(--outline-size) var(--outline-style) var(--outline-color) !important;
+    outline-offset: var(--outline-offset) !important;
   }
 }
 
@@ -40,7 +38,7 @@ button {
 a {
   color: var(--colour-link);
   transition: all 150ms ease-in-out;
-  
+
   &:hover {
     color: var(--colour-link-hover);
     background: var(--colour-link-bg-hover, transparent);
