@@ -509,7 +509,9 @@ test('User wins game after submitting 5 wrong guesses and 1 correct guess', asyn
     expect(result.current.isGameLost).toBe(false);
 
     await act(() => {
-      expect(result.current.toast).toEqual(toastObj);
+      setTimeout(() => {
+        expect(result.current.toast).toEqual(toastObj);
+      }, 2000);
     });
   };
 

@@ -18,7 +18,6 @@ import {
 import { sendGaEventGameStarted } from '../lib/analytics';
 import { getDictionary } from '../lib/dictionary';
 import { KEY_ROWS } from '../constants/keys';
-import game from '../components/Game';
 
 const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) => {
   let savedKeyboardKeys;
@@ -113,10 +112,12 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);
-      setToast({ msg: GAME_OVER_MESSAGE_WIN, type: 'win' });
+      setTimeout(() => {
+        setToast({ msg: GAME_OVER_MESSAGE_WIN, type: 'win' });
+      }, 2000);
       setTimeout(() => {
         statsModalRef.current.show();
-      }, 3000);
+      }, 4000);
     }
 
     // Add guess to guesses history
