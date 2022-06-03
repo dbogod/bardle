@@ -1,4 +1,4 @@
-import {  sendGaEventGameCompleted } from './analytics';
+import { sendGaEventGameCompleted } from './analytics';
 import { SAVE_GAME_KEY, THEME_KEY, STATS_KEY } from '../constants/strings';
 
 export const saveGame = (gameNum, keys, history, goNum, isWon, isLost) => {
@@ -54,6 +54,12 @@ export const getStats = async () => {
   return { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist };
 };
 
+export const updateCurrentStreak = async gameNumber => {
+  const { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist } = await getStats();
+  const updatedCurrentStreak = gameNumber - lastGame.gameNumber > 1 ? 0 : currentStreak;
+  saveStats(gamesPlayed, gamesWon, updatedCurrentStreak, lastGame, maxStreak, winDist);
+};
+
 export const updateStats = async (isGameWon, goNumber, gameNumber, solution) => {
   const { gamesPlayed, gamesWon, currentStreak, lastGame, maxStreak, winDist } = await getStats();
 
@@ -70,7 +76,7 @@ export const updateStats = async (isGameWon, goNumber, gameNumber, solution) => 
     if (isGameWon) {
       updatedWinDist[goNumber] = updatedWinDist[goNumber] + 1;
     }
-    
+
     if (solution) {
       sendGaEventGameCompleted(isGameWon, gameNumber, solution);
     }

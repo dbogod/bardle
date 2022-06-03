@@ -12,7 +12,8 @@ import {
 import {
   saveGame,
   getSavedGame,
-  updateStats
+  updateStats,
+  updateCurrentStreak
 } from '../lib/localStorage';
 import { sendGaEventGameStarted } from '../lib/analytics';
 import { getDictionary } from '../lib/dictionary';
@@ -111,10 +112,12 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
     // Check if guess is correct
     if (currentGuess === solution) {
       setIsGameWon(true);
-      setToast({ msg: GAME_OVER_MESSAGE_WIN, type: 'win' });
+      setTimeout(() => {
+        setToast({ msg: GAME_OVER_MESSAGE_WIN, type: 'win' });
+      }, 2000);
       setTimeout(() => {
         statsModalRef.current.show();
-      }, 3000);
+      }, 4000);
     }
 
     // Add guess to guesses history
@@ -220,6 +223,10 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
 
     updateStatsInLocalStorage();
   }, [gameNumber, solution, isGameWon, isGameLost, goNumber]);
+  
+  useEffect(() => {
+    updateCurrentStreak(gameNumber);
+  }, [gameNumber]);
 
   return {
     isValidKey,
