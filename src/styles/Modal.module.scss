@@ -189,13 +189,24 @@
   background: var(--colour-status-correct);
   color: #fff;
   
-  &:hover {
+ @media (hover: hover) {
+   &:hover {
+     background: var(--colour-status-present);
+   } 
+ }
+
+  &:active {
     background: var(--colour-status-present);
   }
-  
+
   span {
     margin-right: 0.5rem;
   }
+}
+
+.clock,
+.share {
+  margin: 0 0.5rem;
 }
 
 .dev-button {

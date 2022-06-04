@@ -4,6 +4,7 @@ import {
   CORRECT_STATUS,
   PRESENT_STATUS,
   ABSENT_STATUS,
+  WINNING_STATUS,
   ERROR_MSG_INSUFFICIENT_LETTERS,
   ERROR_MSG_INVALID_WORD,
   GAME_OVER_MESSAGE_WIN,
@@ -146,6 +147,10 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
   };
 
   const keyHandler = e => {
+    if (isGameWon || isGameLost) {
+      return;
+    }
+    
     const { key } = e;
     const isIntendedAsButtonOrLinkClick = e.target && (e.target.tagName === 'BUTTON' || e.target.tagName === 'A');
     const isEnterKbButton = isIntendedAsButtonOrLinkClick && e.target.textContent === 'Enter';
@@ -211,7 +216,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
             const winningGuess = updatedHistory[updatedHistory.length - 1];
 
             for (let i = 0; i < winningGuess.length; i++) {
-              winningGuess[i].status = 'bardle';
+              winningGuess[i].status = WINNING_STATUS;
             }
 
             return updatedHistory;
@@ -223,7 +228,7 @@ const useBardle = (gameNumber, solution, useSavedGame = false, statsModalRef) =>
 
     updateStatsInLocalStorage();
   }, [gameNumber, solution, isGameWon, isGameLost, goNumber]);
-  
+
   useEffect(() => {
     updateCurrentStreak(gameNumber);
   }, [gameNumber]);
