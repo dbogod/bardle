@@ -70,6 +70,25 @@ const App = () => {
       }
     })();
   }, [solution]);
+  
+  useEffect(() => {
+    const removeKbNavClass = () => document.body.classList.remove('is-kb-nav');
+    const keyboardNavigationHandler = e => {
+      if (e?.key === 'Tab') {
+        document.body.classList.add('is-kb-nav');
+      }
+    };
+
+    window.addEventListener('touchstart', removeKbNavClass);
+    window.addEventListener('click', removeKbNavClass);
+    window.addEventListener('keydown', keyboardNavigationHandler);
+    
+    return () => {
+      window.removeEventListener('touchstart', removeKbNavClass);
+      window.removeEventListener('click', removeKbNavClass);
+      window.removeEventListener('keydown', keyboardNavigationHandler);
+    };
+  });
 
   return (
     <>

@@ -4,20 +4,22 @@
   box-sizing: border-box;
 }
 
-:is(a, button, input, label, textarea, summary) {
-  --outline-size: max(4px, 0.08em);
-  --outline-style: dotted;
-  --outline-color: var(--colour-status-present);
-  --outline-offset: -5px;
-
-  &:focus {
+:is(a, button, input, label, textarea, summary):focus {
     outline: none !important;
     box-shadow: none !important;
-  }
+}
 
-  &:focus-visible {
-    outline: var(--outline-size) var(--outline-style) var(--outline-color) !important;
-    outline-offset: var(--outline-offset) !important;
+.is-kb-nav {
+  :is(a, button, input, label, textarea, summary) {
+    --outline-size: max(4px, 0.08em);
+    --outline-style: dotted;
+    --outline-color: var(--colour-status-present);
+    --outline-offset: -5px;
+
+    &:focus-visible {
+      outline: var(--outline-size) var(--outline-style) var(--outline-color) !important;
+      outline-offset: var(--outline-offset) !important;
+    }
   }
 }
 
