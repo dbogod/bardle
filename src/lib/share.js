@@ -10,17 +10,20 @@ import {
   PRESENT_SQUARE
 } from '../constants/strings';
 
-export const shareResult = (text) => {
+export const isDesktop = () => {
   const parser = new UAParser();
   const device = parser.getDevice();
+  return !['mobile', 'tablet', 'wearable'].includes(device.type);
+};
 
+export const shareResult = (text) => {
   if (
-    ['mobile', 'tablet', 'wearable'].includes(device.type) &&
+    !isDesktop() &&
     navigator.canShare &&
-    navigator.canShare(text) &&
+    navigator.canShare({ text }) &&
     navigator.share
   ) {
-    navigator.share(text);
+    navigator.share({ text });
   } else if (navigator.clipboard?.writeText) {
     navigator.clipboard.writeText(text);
   }

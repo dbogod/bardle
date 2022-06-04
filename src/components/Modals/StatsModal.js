@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import { BsShareFill } from 'react-icons/bs';
 
 import Modal from './Modal';
-import { GAME_TITLE } from '../../constants/strings';
+import { 
+  GAME_TITLE,
+  SHARE_BUTTON_TEXT, 
+  COPY_BUTTON_TEXT
+} from '../../constants/strings';
 import { getStats } from '../../lib/localStorage';
-import { shareResult } from '../../lib/share';
+import { isDesktop, shareResult } from '../../lib/share';
 
 import style from '../../styles/Modal.module.scss';
 
@@ -32,14 +36,6 @@ export const getAverage = num => {
 
 const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, definition }) => {
   const [statsToDisplay, setStatsToDisplay] = useState(null);
-  
-  let definitionHtml;
-  
-  if (definition?.snippet && definition?.snippet.length > 10) {
-    const snippetWithHtmlRemoved = definition.snippet.replace(/<[^>]*>/g, '');
-    const charCount = Math.min(snippetWithHtmlRemoved.length, 140);
-    definitionHtml =`${snippetWithHtmlRemoved.substring(0, charCount)}...`;
-  }
 
   const clickHandler = () => {
     shareResult(shareableResult);
@@ -66,7 +62,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
   const tomorrow = new Date();
   tomorrow.setHours(24, 0, 0, 0);
   const solutionTitle = GAME_TITLE ?? 'solution';
-  
+
   let totalGuesses = 0;
   for (const [key, frequency] of Object.entries(winDist)) {
     let score = parseInt(key) + 1;
@@ -76,7 +72,7 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
     totalGuesses += (score * parseInt(frequency));
   }
 
-  const averageScore = getAverage(totalGuesses/gamesPlayed);
+  const averageScore = getAverage(totalGuesses / gamesPlayed);
 
   return (
     <Modal
@@ -146,11 +142,6 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
                 <span className={style.solution}>{solution}</span>
               </a>
 
-              {
-                definitionHtml &&
-                <p dangerouslySetInnerHTML={{ __html: definitionHtml }}/>
-              }
-              
             </div>
             <div className={style['clock-and-share-wrapper']}>
               <div>
@@ -170,8 +161,11 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, d
                   className={style.share}
                   onClick={clickHandler}
                   type="button">
-                  <span>Share</span>
-                  <BsShareFill/>
+                  <span>{isDesktop() ? COPY_BUTTON_TEXT : SHARE_BUTTON_TEXT}</span>
+                  {
+                    !isDesktop() &&
+                    <BsShareFill/>
+                  }
                 </button>
               </div>
             </div>
