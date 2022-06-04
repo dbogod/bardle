@@ -34,7 +34,7 @@ export const getAverage = num => {
   }
 };
 
-const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution, definition }) => {
+const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution }) => {
   const [statsToDisplay, setStatsToDisplay] = useState(null);
 
   const clickHandler = () => {
@@ -181,8 +181,7 @@ StatsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired,
   shareableResult: PropTypes.string.isRequired,
-  solution: PropTypes.string.isRequired,
-  definition: PropTypes.object
+  solution: PropTypes.string.isRequired
 };
 
 export default StatsModal;
