@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import throttle from 'lodash/throttle';
-import ReactGA from 'react-ga';
 
 import Header from './components/Header';
 import Game from './components/Game';
@@ -13,16 +12,9 @@ import { ThemeContext } from './context/Theme';
 import { ModalContext } from './context/Modal';
 
 import { getSolutionDefinition, getGameNumber, getWordOfTheDay } from './lib/dictionary';
+import { initialiseGoogleAnalytics } from './lib/analytics';
 
 import './styles/main.scss';
-
-const { REACT_APP_GOOGLE_ANALYTICS_ID } = process.env;
-
-if (REACT_APP_GOOGLE_ANALYTICS_ID) {
-  ReactGA.initialize(REACT_APP_GOOGLE_ANALYTICS_ID);
-  ReactGA.pageview(window.location.hostname);
-}
-
 const App = () => {
   const { currentModal } = useContext(ModalContext);
   const { currentTheme } = useContext(ThemeContext);
@@ -36,6 +28,7 @@ const App = () => {
   const [shareableResult, setShareableResult] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
   const [isSmScreen, setIsSmScreen] = useState(false);
+  const { REACT_APP_GOOGLE_ANALYTICS_ID } = process.env;
 
   useEffect(() => {
     const updateAppHeight = throttle(() => {
@@ -70,7 +63,7 @@ const App = () => {
       }
     })();
   }, [solution]);
-  
+
   useEffect(() => {
     const removeKbNavClass = () => document.body.classList.remove('is-kb-nav');
     const keyboardNavigationHandler = e => {
@@ -82,13 +75,19 @@ const App = () => {
     window.addEventListener('touchstart', removeKbNavClass);
     window.addEventListener('click', removeKbNavClass);
     window.addEventListener('keydown', keyboardNavigationHandler);
-    
+
     return () => {
       window.removeEventListener('touchstart', removeKbNavClass);
       window.removeEventListener('click', removeKbNavClass);
       window.removeEventListener('keydown', keyboardNavigationHandler);
     };
   });
+  
+  useEffect(() => {
+    if (REACT_APP_GOOGLE_ANALYTICS_ID) {
+      initialiseGoogleAnalytics(REACT_APP_GOOGLE_ANALYTICS_ID);
+    }
+  }, [REACT_APP_GOOGLE_ANALYTICS_ID]);
 
   return (
     <>
