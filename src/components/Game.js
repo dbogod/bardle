@@ -27,7 +27,7 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
     setIsGameReady,
     toast,
     rowAnimation
-  } = useBardle(gameNumber, solution, true, statsModalRef);
+  } = useBardle(gameNumber, solution, true);
   
   useEffect(() => {
     if (!isGameWon && !isGameLost) {
@@ -50,7 +50,8 @@ const Game = ({ isSmScreen, gameNumber, setIsGameOver, setShareableResult, stats
         toast.msg && toast.type &&
         <Toast
           toast={toast}
-          setToast={setToast}/>
+          setToast={setToast}
+          statsModalRef={statsModalRef}/>
       }
       <Board
         guessHistory={guessHistory}

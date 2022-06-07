@@ -3,11 +3,16 @@ import PropTypes from 'prop-types';
 import Row from './Row';
 import Tile from './Tile';
 
-import { FILLED_STATUS } from '../../constants/strings';
-
 import style from '../../styles/Board.module.scss';
 
-const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimation, isGameReady }) => {
+const Board = ({
+  isSmScreen,
+  guessHistory,
+  currentGuess,
+  wordLength,
+  rowAnimation,
+  isGameReady
+}) => {
   const tileCount = wordLength;
 
   const activeRowId = `row-${(guessHistory.length).toString()}`;
@@ -40,6 +45,7 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimatio
                           id={tileId}
                           status={status}
                           length={tileCount}
+                          resolved={true}
                           position={i}>
                           <>
                             {char}
@@ -63,25 +69,25 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimatio
               {
                 <>
                   {
-                    [...currentGuess].map((letter, i) => {
+                    currentGuess.guessWord.map(({ char, status }, i) => {
                       const tileId = `${activeRowId}-tile-${i}`;
                       return (
                         <Tile
                           key={tileId}
                           id={tileId}
-                          status={FILLED_STATUS}
+                          status={status}
                           length={tileCount}
                           position={i}>
                           <>
-                            {letter}
+                            {char}
                           </>
                         </Tile>
                       );
                     })
                   }
                   {
-                    [...Array(tileCount - currentGuess.length)].map((_, i) => {
-                      const tileId = `${activeRowId}-tile-${i + currentGuess.length}`;
+                    [...Array(tileCount - currentGuess.guessWord.length)].map((_, i) => {
+                      const tileId = `${activeRowId}-tile-${i + currentGuess.guessWord.length}`;
                       return (
                         <Tile
                           key={tileId}
@@ -122,7 +128,6 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimatio
             }
           </>
         }
-
       </div>
     </div>
   );
@@ -131,7 +136,7 @@ const Board = ({ isSmScreen, guessHistory, currentGuess, wordLength, rowAnimatio
 Board.propTypes = {
   isSmScreen: PropTypes.bool.isRequired,
   guessHistory: PropTypes.array.isRequired,
-  currentGuess: PropTypes.string.isRequired,
+  currentGuess: PropTypes.object.isRequired,
   wordLength: PropTypes.number.isRequired,
   rowAnimation: PropTypes.string.isRequired,
   isGameReady: PropTypes.bool.isRequired

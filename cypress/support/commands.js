@@ -11,9 +11,6 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
-
-
-
 //
 // -- This is a child command --
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
@@ -25,6 +22,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/* eslint-disable cypress/no-unnecessary-waiting */
+
 import '@testing-library/cypress/add-commands';
 import { getGameNumber, getWordOfTheDay } from '../../src/lib/dictionary';
 import {
@@ -49,19 +49,26 @@ Cypress.Commands.add('softDelete', () => cy.get('[data-testid="Del"]').click());
 Cypress.Commands.add('hardDelete', () => cy.get('body').type('{backspace}'));
 
 Cypress.Commands.add('tryWord', (rowIndex, word, softKeys = true, pressEnter = true) => {
-  if (softKeys) {
-    [...word].forEach(letter => {
-      cy.get(`[data-testid="${letter}"]`).click();
+  cy.gameReady().then(() => {
+    cy.wait(500);
+    [...word].forEach((letter, i) => {
+      if (softKeys) {
+        cy.get(`[data-testid="${letter}"]`).click();
+      } else {
+        cy.get('body').type(letter);
+      }
     });
-  } else {
-    cy.get('body').type(word);
-  }
 
-  if (pressEnter) {
-    cy.assertTilesStatus(rowIndex, word, 'eq', FILLED_STATUS).then(() => {
-      softKeys ?  cy.softEnter() : cy.hardEnter();
-    });
-  }
+    if (pressEnter) {
+      cy.assertTilesStatus(rowIndex, word, 'eq', FILLED_STATUS).then(() => {
+        softKeys ? cy.softEnter() : cy.hardEnter();
+      });
+    }
+  });
+});
+
+Cypress.Commands.add('assertTilesResolved', (rowIndex) => {
+  cy.get(`[data-game-ready="true"] > #row-${rowIndex} [data-resolved]`);
 });
 
 Cypress.Commands.add('assertTilesStatus', (rowIndex, word, shouldOperator, shouldValue) => {
@@ -78,14 +85,14 @@ Cypress.Commands.add('assertTilesStatus', (rowIndex, word, shouldOperator, shoul
     });
 });
 
-Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot= false, darkMode = false) => {
+Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot = false, darkMode = false) => {
   const solution = getSolution(date);
   const modeString = darkMode ? 'dark mode' : 'light mode';
 
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
-  
+
   darkMode && cy.get('[data-testid="theme-toggle"]').click().blur();
 
   snapshot && cy.percySnapshot(`Blank game (${incorrectWord.length}-letter grid), ${modeString}`);
@@ -93,13 +100,20 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot= fals
   cy.contains(GAME_OVER_MESSAGE_WIN).should('not.exist');
 
   cy.tryWord(0, incorrectWord, false);
-  cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(0);
+  });
+
   cy.tryWord(1, incorrectWord);
-  cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(1);
+  });
 
   cy.tryWord(2, solution);
   cy.contains(GAME_OVER_MESSAGE_WIN).should('exist');
-  cy.assertTilesStatus(2, solution, 'eq', WINNING_STATUS);
+  cy.assertTilesStatus(2, solution, 'eq', WINNING_STATUS).then(() => {
+    cy.assertTilesResolved(2);
+  });
 
   snapshot && cy.percySnapshot(`End game (${incorrectWord.length}-letter grid), ${modeString} - win`);
 
@@ -110,7 +124,7 @@ Cypress.Commands.add('playWinningGame', ({ date, incorrectWord }, snapshot= fals
 
 Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }, snapshot = false, darkMode = false) => {
   const modeString = darkMode ? 'dark mode' : 'light mode';
-  
+
   cy.clock(date, ['Date']);
   cy.visit('/');
   cy.gameReady();
@@ -120,17 +134,29 @@ Cypress.Commands.add('playLosingGame', ({ date, incorrectWord }, snapshot = fals
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('not.exist');
 
   cy.tryWord(0, incorrectWord, false);
-  cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(0, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(0);
+  });
   cy.tryWord(1, incorrectWord);
-  cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(1, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(1);
+  });
   cy.tryWord(2, incorrectWord, false);
-  cy.assertTilesStatus(2, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(2, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(2);
+  });
   cy.tryWord(3, incorrectWord);
-  cy.assertTilesStatus(3, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(3, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(3);
+  });
   cy.tryWord(4, incorrectWord, false);
-  cy.assertTilesStatus(4, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(4, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(4);
+  });
   cy.tryWord(5, incorrectWord);
-  cy.assertTilesStatus(5, incorrectWord, 'be.oneOf', revealedStatusArray);
+  cy.assertTilesStatus(5, incorrectWord, 'be.oneOf', revealedStatusArray).then(() => {
+    cy.assertTilesResolved(5);
+  });
 
   cy.contains(GAME_OVER_MESSAGE_LOSE).should('exist');
 

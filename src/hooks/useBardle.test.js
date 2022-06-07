@@ -7,6 +7,8 @@ import {
 
 import useBardle from './useBardle';
 
+import { RevealProvider } from '../context/Reveal';
+
 import {
   DEFAULT_STATUS,
   CORRECT_STATUS,
@@ -28,9 +30,10 @@ const typeWord = async (hookInstance, word) => {
   });
 };
 
-const hitEnterKey = async hookInstance => {
+const hitEnterKey = async (hookInstance, rowRevealAnimationValue = false) => {
   await act(() => {
     hookInstance.current.keyHandler({ key: 'Enter' });
+    hookInstance.current.setIsRowBeingRevealed(rowRevealAnimationValue);
   });
 };
 
@@ -44,7 +47,8 @@ afterEach(() => {
 });
 
 test('Only certain keys are accepted', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   let isNineNumberValid;
   let isNineStringValid;
@@ -71,17 +75,18 @@ test('Only certain keys are accepted', async () => {
 });
 
 test('Current guess is correctly updated by key handler', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   await act(() => {
     result.current.keyHandler({ key: 'Backspace' });
   });
 
-  expect(result.current.currentGuess).toBe('');
+  expect(result.current.currentGuessWord).toBe('');
 
   await typeWord(result, 'fa9');
 
-  expect(result.current.currentGuess).toBe('fa');
+  expect(result.current.currentGuessWord).toBe('fa');
 
   await act(() => {
     result.current.keyHandler({ key: 'Backspace' });
@@ -89,25 +94,26 @@ test('Current guess is correctly updated by key handler', async () => {
     result.current.keyHandler({ key: 'b' });
   });
 
-  expect(result.current.currentGuess).toBe('fab');
+  expect(result.current.currentGuessWord).toBe('fab');
 
   await typeWord(result, 'le');
 
-  expect(result.current.currentGuess).toBe('fable');
+  expect(result.current.currentGuessWord).toBe('fable');
 
   await typeWord(result, 'sss');
 
-  expect(result.current.currentGuess).toBe('fable');
+  expect(result.current.currentGuessWord).toBe('fable');
 
   await act(() => {
     result.current.keyHandler({ key: 'Backspace' });
   });
 
-  expect(result.current.currentGuess).toBe('fabl');
+  expect(result.current.currentGuessWord).toBe('fabl');
 });
 
 test('isGameWon is true if player guesses correctly', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -115,15 +121,16 @@ test('isGameWon is true if player guesses correctly', async () => {
 
   await typeWord(result, 'abode');
 
-  expect(result.current.currentGuess).toBe('abode');
+  expect(result.current.currentGuessWord).toBe('abode');
 
   await hitEnterKey(result);
-
+  
   expect(result.current.isGameWon).toBe(true);
 });
 
 test('Guess is correctly marked up: ABODE vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
   let guess;
 
   await act(() => {
@@ -140,7 +147,8 @@ test('Guess is correctly marked up: ABODE vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: SPLIT vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
   let guess;
 
   await act(() => {
@@ -157,7 +165,8 @@ test('Guess is correctly marked up: SPLIT vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: AVOID vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
   let guess;
 
   await act(() => {
@@ -174,7 +183,8 @@ test('Guess is correctly marked up: AVOID vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: BOOKS vs ABODE', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
   let guess;
 
   await act(() => {
@@ -191,7 +201,8 @@ test('Guess is correctly marked up: BOOKS vs ABODE', async () => {
 });
 
 test('Guess is correctly marked up: LORRY vs RURAL', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2), { wrapper });
   let guess;
 
   await act(() => {
@@ -208,7 +219,8 @@ test('Guess is correctly marked up: LORRY vs RURAL', async () => {
 });
 
 test('Guess is correctly marked up: TATTY vs TENET', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_3));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_3), { wrapper });
   let guess;
   await act(() => {
     guess = result.current.markUpGuess('tatty').guessWord;
@@ -224,7 +236,8 @@ test('Guess is correctly marked up: TATTY vs TENET', async () => {
 });
 
 test('addGuess updates guess history as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   await act(() => {
     result.current.addGuess({
@@ -237,6 +250,7 @@ test('addGuess updates guess history as expected', async () => {
       ],
       keys: result.current.keyboardKeys
     });
+    result.current.setIsRowBeingRevealed(false);
   });
 
   expect(result.current.guessHistory).toEqual([
@@ -260,6 +274,7 @@ test('addGuess updates guess history as expected', async () => {
       ],
       keys: result.current.keyboardKeys
     });
+    result.current.setIsRowBeingRevealed(false);
   });
 
   expect(result.current.guessHistory).toEqual([
@@ -281,7 +296,8 @@ test('addGuess updates guess history as expected', async () => {
 });
 
 test('Submitting a VALID guess is handled as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2), { wrapper });
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -289,72 +305,74 @@ test('Submitting a VALID guess is handled as expected', async () => {
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
-  expect(result.current.currentGuess).toBe('');
+  expect(result.current.currentGuessWord).toBe('');
   expect(result.current.isGameWon).toBe(false);
 
   await typeWord(result, 'abode');
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
-  expect(result.current.currentGuess).toBe('abode');
+  expect(result.current.currentGuessWord).toBe('abode');
   expect(result.current.isGameWon).toBe(false);
 
   await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(1);
   expect(result.current.goNumber).toBe(1);
-  expect(result.current.currentGuess).toBe('');
+  expect(result.current.currentGuessWord).toBe('');
   expect(result.current.isGameWon).toBe(false);
 
   await typeWord(result, 'fable');
 
   expect(result.current.guessHistory.length).toBe(1);
   expect(result.current.goNumber).toBe(1);
-  expect(result.current.currentGuess).toBe('fable');
+  expect(result.current.currentGuessWord).toBe('fable');
   expect(result.current.isGameWon).toBe(false);
 
   await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(2);
   expect(result.current.goNumber).toBe(2);
-  expect(result.current.currentGuess).toBe('');
+  expect(result.current.currentGuessWord).toBe('');
   expect(result.current.isGameWon).toBe(false);
 
   await typeWord(result, 'rural');
 
   expect(result.current.guessHistory.length).toBe(2);
   expect(result.current.goNumber).toBe(2);
-  expect(result.current.currentGuess).toBe('rural');
+  expect(result.current.currentGuessWord).toBe('rural');
   expect(result.current.isGameWon).toBe(false);
 
   await hitEnterKey(result);
 
   expect(result.current.guessHistory.length).toBe(3);
   expect(result.current.goNumber).toBe(2);
-  expect(result.current.currentGuess).toBe('');
+  expect(result.current.currentGuessWord).toBe('');
   expect(result.current.isGameWon).toBe(true);
 });
 
 test('Submitting a guess of INVALID LENGTH is handled as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2), { wrapper });
 
   await typeWord(result, 'abod');
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
-  expect(result.current.currentGuess).toBe('abod');
+  expect(result.current.currentGuessWord).toBe('abod');
   expect(result.current.isGameWon).toBe(false);
 
-  await hitEnterKey(result);
+  await hitEnterKey(result, null);
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
-  expect(result.current.currentGuess).toBe('abod');
+  expect(result.current.currentGuessWord).toBe('abod');
   expect(result.current.isGameWon).toBe(false);
 });
 
 test('Submitting a guess that is an INVALID WORD is handled as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_2), { wrapper });
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -364,19 +382,20 @@ test('Submitting a guess that is an INVALID WORD is handled as expected', async 
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
-  expect(result.current.currentGuess).toBe('qwert');
+  expect(result.current.currentGuessWord).toBe('qwert');
   expect(result.current.isGameWon).toBe(false);
 
-  await hitEnterKey(result);
+  await hitEnterKey(result, null);
 
   expect(result.current.guessHistory.length).toBe(0);
   expect(result.current.goNumber).toBe(0);
-  expect(result.current.currentGuess).toBe('qwert');
+  expect(result.current.currentGuessWord).toBe('qwert');
   expect(result.current.isGameWon).toBe(false);
 });
 
 test('Keyboard updates as expected', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   await waitFor(() => {
     expect(result.current.dictionary.length > 0).toBe(true);
@@ -384,7 +403,7 @@ test('Keyboard updates as expected', async () => {
 
   await typeWord(result, 'adept');
 
-  expect(result.current.currentGuess).toBe('adept');
+  expect(result.current.currentGuessWord).toBe('adept');
 
   await hitEnterKey(result);
 
@@ -422,7 +441,7 @@ test('Keyboard updates as expected', async () => {
 
   await typeWord(result, 'toast');
 
-  expect(result.current.currentGuess).toBe('toast');
+  expect(result.current.currentGuessWord).toBe('toast');
 
   await hitEnterKey(result);
 
@@ -460,7 +479,8 @@ test('Keyboard updates as expected', async () => {
 });
 
 test('User loses game after submitting 6 wrong guesses', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   const assertExpectations = async (num, isGameLost = false) => {
     const hasNum = num !== null;
@@ -468,7 +488,7 @@ test('User loses game after submitting 6 wrong guesses', async () => {
 
     expect(result.current.guessHistory.length).toBe(hasNum ? num : 6);
     expect(result.current.goNumber).toBe(hasNum ? num : 5);
-    expect(result.current.currentGuess).toBe('');
+    expect(result.current.currentGuessWord).toBe('');
     expect(result.current.isGameWon).toBe(false);
     expect(result.current.isGameLost).toBe(isGameLost);
 
@@ -496,7 +516,8 @@ test('User loses game after submitting 6 wrong guesses', async () => {
 });
 
 test('User wins game after submitting 5 wrong guesses and 1 correct guess', async () => {
-  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1));
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  const { result } = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper });
 
   const assertExpectations = async (num, isGameWon = false) => {
     const hasNum = num !== null;
@@ -504,7 +525,7 @@ test('User wins game after submitting 5 wrong guesses and 1 correct guess', asyn
 
     expect(result.current.guessHistory.length).toBe(hasNum ? num : 6);
     expect(result.current.goNumber).toBe(hasNum ? num : 5);
-    expect(result.current.currentGuess).toBe('');
+    expect(result.current.currentGuessWord).toBe('');
     expect(result.current.isGameWon).toBe(isGameWon);
     expect(result.current.isGameLost).toBe(false);
 

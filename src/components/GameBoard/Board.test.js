@@ -2,8 +2,8 @@ import {
   render,
   screen
 } from '@testing-library/react';
-
 import Board from './Board';
+import { RevealProvider } from '../../context/Reveal';
 import {
   CORRECT_STATUS,
   PRESENT_STATUS,
@@ -34,47 +34,51 @@ beforeEach(() => {
     ]
   ];
 
-  currentGuess = '';
+  currentGuess = { guessWord: [], keys: [] };
   wordLength = 5;
 });
 
 test('The board renders', () => {
   render(
-    <Board
-      isGameReady={true}
-      rowAnimation={''}
-      isSmScreen={false}
-      guessHistory={guessHistory}
-      currentGuess={currentGuess}
-      wordLength={wordLength}/>
+    <RevealProvider>
+      <Board
+        isGameReady={true}
+        rowAnimation={''}
+        isSmScreen={false}
+        guessHistory={guessHistory}
+        currentGuess={currentGuess}
+        wordLength={wordLength}/>
+    </RevealProvider>
   );
-  
+
   const wrappers = screen.queryAllByTestId(boardWrapperSelector);
-  
+
   expect(wrappers.length).toBe(1);
-  
+
   const boards = screen.queryAllByTestId(boardSelector);
 
   expect(boards.length).toBe(1);
-  
+
   const rows = boards[0]?.children;
-  
+
   expect(rows.length).toBe(6);
-  
+
   const firstRowTiles = rows[0].children;
-  
+
   expect(firstRowTiles.length).toBe(wordLength);
 });
 
 test('Guessed words are rendered', () => {
   render(
-    <Board
-      isGameReady={true}
-      rowAnimation={''}
-      isSmScreen={false}
-      guessHistory={guessHistory}
-      currentGuess={currentGuess}
-      wordLength={wordLength}/>
+    <RevealProvider>
+      <Board
+        isGameReady={true}
+        rowAnimation={''}
+        isSmScreen={false}
+        guessHistory={guessHistory}
+        currentGuess={currentGuess}
+        wordLength={wordLength}/>
+    </RevealProvider>
   );
 
   const boards = screen.queryAllByTestId(boardSelector);
@@ -115,13 +119,15 @@ test('Guessed words are rendered', () => {
 test('Six tiles are rendered', () => {
   wordLength = 6;
   render(
-    <Board
-      isGameReady={true}
-      rowAnimation={''}
-      isSmScreen={false}
-      guessHistory={[]}
-      currentGuess={''}
-      wordLength={wordLength}/>
+    <RevealProvider>
+      <Board
+        isGameReady={true}
+        rowAnimation={''}
+        isSmScreen={false}
+        guessHistory={[]}
+        currentGuess={currentGuess}
+        wordLength={wordLength}/>
+    </RevealProvider>
   );
 
   const firstRowTiles = screen.queryAllByTestId(boardSelector)[0]?.children[0].children;
@@ -132,13 +138,15 @@ test('Six tiles are rendered', () => {
 test('Seven tiles are rendered', () => {
   wordLength = 7;
   render(
-    <Board
-      isGameReady={true}
-      rowAnimation={''}
-      isSmScreen={false}
-      guessHistory={[]}
-      currentGuess={''}
-      wordLength={wordLength}/>
+    <RevealProvider>
+      <Board
+        isGameReady={true}
+        rowAnimation={''}
+        isSmScreen={false}
+        guessHistory={[]}
+        currentGuess={currentGuess}
+        wordLength={wordLength}/>
+    </RevealProvider>
   );
 
   const firstRowTiles = screen.queryAllByTestId(boardSelector)[0]?.children[0].children;
@@ -149,13 +157,15 @@ test('Seven tiles are rendered', () => {
 test('Eight tiles are rendered', () => {
   wordLength = 8;
   render(
-    <Board
-      isGameReady={true}
-      rowAnimation={''}
-      isSmScreen={false}
-      guessHistory={[]}
-      currentGuess={''}
-      wordLength={wordLength}/>
+    <RevealProvider>
+      <Board
+        isGameReady={true}
+        rowAnimation={''}
+        isSmScreen={false}
+        guessHistory={[]}
+        currentGuess={currentGuess}
+        wordLength={wordLength}/>
+    </RevealProvider>
   );
 
   const firstRowTiles = screen.queryAllByTestId(boardSelector)[0]?.children[0].children;

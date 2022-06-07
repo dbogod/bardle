@@ -1,7 +1,7 @@
-import { 
-  render, 
-  screen, 
-  renderHook, 
+import {
+  render,
+  screen,
+  renderHook,
   waitFor,
   cleanup,
   act
@@ -9,15 +9,19 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import useBardle from '../hooks/useBardle';
+
 import Keyboard from './Keyboard';
+
+import { RevealProvider } from '../context/Reveal';
 
 import { TEST_SOLUTION_FIVE_LETTERS_1 } from '../constants/testParams';
 
 let result;
 
 beforeEach(async () => {
-  result = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1)).result;
-  
+  const wrapper = ({ children }) => <RevealProvider>{children}</RevealProvider>;
+  result = renderHook(() => useBardle(47, TEST_SOLUTION_FIVE_LETTERS_1), { wrapper }).result;
+
   await act(async () => {
     await result.current.fetchDictionary();
   });
@@ -58,7 +62,7 @@ test('Current guess is updated when clicking keyboard keys', async () => {
   user.click(getKey('e'));
 
   await waitFor(() => {
-    expect(result.current.currentGuess).toBe('abode');
+    expect(result.current.currentGuessWord).toBe('abode');
   });
 });
 

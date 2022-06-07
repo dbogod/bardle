@@ -1,10 +1,21 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { FILLED_STATUS, WINNING_STATUS } from '../../constants/strings';
+import { RevealContext } from '../../context/Reveal';
+
+import { 
+  ABSENT_STATUS, 
+  CORRECT_STATUS, 
+  FILLED_STATUS, 
+  PRESENT_STATUS, 
+  WINNING_STATUS 
+} from '../../constants/strings';
 
 import style from '../../styles/Board.module.scss';
 
-const Tile = ({ children, id, status, length, position }) => {
+const Tile = ({ children, id, status, length, position, resolved }) => {
+  const { setIsRowBeingRevealed } = useContext(RevealContext);
+
   const styleObj = {};
 
   if (status !== FILLED_STATUS) {
@@ -20,8 +31,9 @@ const Tile = ({ children, id, status, length, position }) => {
   }
 
   const animationHandler = () => {
-    console.log(`tile ${position} animated`);
-    console.log({ status });
+    if ([WINNING_STATUS, ABSENT_STATUS, CORRECT_STATUS, PRESENT_STATUS].includes(status)) {
+      setIsRowBeingRevealed(false);
+    }
   };
 
   return (
@@ -29,8 +41,15 @@ const Tile = ({ children, id, status, length, position }) => {
       id={id}
       className={style.tile}
       style={styleObj}
+      data-resolved={resolved}
       data-status={status}
-      onAnimationEnd={() => position === length - 1 && animationHandler()}>
+      onAnimationEnd={
+        () => {
+          if (!resolved && position === length - 1) {
+            animationHandler();
+          }
+        }
+      }>
       {children}
     </div>
   );
@@ -41,7 +60,8 @@ Tile.propTypes = {
   id: PropTypes.string,
   status: PropTypes.string,
   length: PropTypes.number.isRequired,
-  position: PropTypes.number.isRequired
+  position: PropTypes.number.isRequired,
+  resolved: PropTypes.bool
 };
 
 export default Tile;

@@ -5,15 +5,18 @@ import reportWebVitals from './reportWebVitals';
 
 import { ThemeProvider } from './context/Theme';
 import { ModalProvider } from './context/Modal';
+import { RevealProvider } from './context/Reveal';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider>
-    <ModalProvider>
-      <React.StrictMode>
-        <App/>
-      </React.StrictMode>
-    </ModalProvider>
+    <RevealProvider>
+      <ModalProvider>
+        <React.StrictMode>
+          <App/>
+        </React.StrictMode>
+      </ModalProvider>
+    </RevealProvider>
   </ThemeProvider>
 );
 
