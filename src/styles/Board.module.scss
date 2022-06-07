@@ -59,7 +59,7 @@
     font-size: 2rem;
   }
 
-  &[data-status]:not([data-status="bardle"]):not([data-status="falstaff"]) {
+  &[data-status]:not([data-status="bardle"]):not([data-status="falstaff"]):not([data-resolved="true"]) {
     animation: reveal 500ms ease-in forwards;
   }
 
@@ -67,10 +67,14 @@
     animation: pop 150ms ease-in forwards;
   }
 
-  &[data-status="bardle"] {
+  &[data-status="bardle"],
+  &[data-resolved="true"] {
     color: #fff;
     background-color: var(--colour-status-bg);
     border-color: var(--colour-status-bg);
+  }
+
+  &[data-status="bardle"] {
     animation: celebrate 300ms ease-in forwards;
   }
 
