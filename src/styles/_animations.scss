@@ -10,6 +10,8 @@
 
   55%,
   100% {
+    --tile-bottom-border-opacity: 0.15;
+    
     color: #fff;
     background-color: var(--colour-status-bg);
     border-color: var(--colour-status-bg);

@@ -29,17 +29,34 @@
 }
 
 .tile {
+  --tile-border-width: 2px;
+  --tile-bottom-border-inset: calc(var(--tile-border-width) * -1);
+  --tile-bottom-border-opacity: 0;
+  
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   aspect-ratio: 1;
-  border: 2px solid var(--colour-tile-border-default);
+  border: var(--tile-border-width) solid var(--colour-tile-border-default);
   border-radius: 0.35rem;
   text-transform: uppercase;
   background-color: transparent;
   font-weight: bold;
   font-size: var(--font-size-xs, 2rem);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: var(--tile-bottom-border-inset);
+    bottom: var(--tile-bottom-border-inset);
+    left: var(--tile-bottom-border-inset);
+    right: var(--tile-bottom-border-inset);
+    border-radius: inherit;
+    background-color: rgba(0, 0, 0, var(--tile-bottom-border-opacity));
+    clip-path: polygon(0% 95%, 100% 95%, 100% 100%, 0% 100%);
+  }
 
   @supports not (aspect-ratio: 1) {
     &::before {
@@ -69,6 +86,8 @@
 
   &[data-status="bardle"],
   &[data-resolved="true"] {
+    --tile-bottom-border-opacity: 0.15;
+
     color: #fff;
     background-color: var(--colour-status-bg);
     border-color: var(--colour-status-bg);
