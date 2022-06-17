@@ -213,3 +213,23 @@
   justify-content: center;
   margin-top: 1.25rem;
 }
+
+.footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.25rem 1rem;
+  
+  a {
+    font-size: 1.75rem;
+  }
+  
+  span {
+    display: flex;
+    align-items: center;
+    margin: 0 0.5rem 0.25rem;
+  }
+}
