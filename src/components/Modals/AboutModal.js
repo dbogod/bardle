@@ -20,7 +20,7 @@ const AboutModal = ({ modalRef }) => {
         </p>
         <p>
           Bardle is a daily word game that was heavily inspired (like so many) by those twin bastions of modern
-          excellence: Josh Wardle&apos;s <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>*,
+          excellence: Josh Wardle&apos;s <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>,
           and <a href="https://en.wikipedia.org/wiki/William_Shakespeare">William Shakespeare</a>.
         </p>
         <p>
