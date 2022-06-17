@@ -19,13 +19,13 @@ const AboutModal = ({ modalRef }) => {
           Congratulations, you&apos;ve found Bardle! The whole Internet at your disposal, yet here you are. Bless you.
         </p>
         <p>
-          Bardle is a daily word game that was heavily inspired (like so many) by those twin pillars of modern
-          excellence: Josh Wardle&apos;s <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>,
+          Bardle is a daily word game that was heavily inspired (like so many) by those twin bastions of modern
+          excellence: Josh Wardle&apos;s <a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>*,
           and <a href="https://en.wikipedia.org/wiki/William_Shakespeare">William Shakespeare</a>.
         </p>
         <p>
           It was mixed, cooked, baked and served up hot and ready by me, Daniel. If you just ❤️ it and want to shower me
-          with glory, please consider <a href="https://ko-fi.com/bogod">buying me a coffee</a>.
+          with praise, please consider <a href="https://ko-fi.com/bogod">buying me a coffee</a>.
         </p>
         <p>
           Also, shout out to Dad for coming up with the name. Yes,
@@ -38,6 +38,9 @@ const AboutModal = ({ modalRef }) => {
         </p>
         <p>
           Fare thee well!
+        </p>
+        <p>
+          PS - if you like Wordle, you might have a use for <a href="https://wordlemonkey.bogod.dev">Wordle Monkey</a>. Just saying.
         </p>
         <div className={style.footer}>
           <a
@@ -52,12 +55,12 @@ const AboutModal = ({ modalRef }) => {
           </a>
           <span>&nbsp; | &nbsp;</span>
           <a
-            href="https://github.com/dbogod/wordle-monkey"
+            href="https://github.com/dbogod/bardle"
             aria-labelledby="github-link-desc">
             <span
               id="github-link-desc"
               className="hidden">
-                  Take a look at the source code on Github
+              Browse the source code on Github
             </span>
             <BsGithub/>
           </a>
@@ -69,7 +72,7 @@ const AboutModal = ({ modalRef }) => {
             <span
               id="ko-fi-link-desc"
               className="hidden">
-                  Like the monkey? Buy the organ grinder a coffee!
+              Like Bardle? Buy the code scribe a coffee!
             </span>
             <BiCoffeeTogo/>
           </a>
