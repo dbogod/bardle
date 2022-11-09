@@ -119,9 +119,6 @@ const App = () => {
             isGameOver={isGameOver}
             solution={solution}
             definition={solutionDefinition}/>
-          <a rel="me" tabIndex="-1" className="hidden" href="https://mastodon.social/@bogod">
-            Follow me on Mastodon
-          </a>
         </>
       }
     </>
