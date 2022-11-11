@@ -39,6 +39,7 @@ export const getSolutionDefinition = word => {
 
 export const getGameNumber = date => {
   const epoch = new Date(2022, 2, 11).valueOf();
+  // Divide by ms per day to get number of days since epoch
   return Math.floor((date - epoch) / 86400000);
 };
 
