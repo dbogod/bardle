@@ -15,6 +15,7 @@ import { getSolutionDefinition, getGameNumber, getWordOfTheDay } from './lib/dic
 import { initialiseGoogleAnalytics } from './lib/analytics';
 
 import './styles/main.scss';
+
 const App = () => {
   const { currentModal } = useContext(ModalContext);
   const { currentTheme } = useContext(ThemeContext);
@@ -49,9 +50,12 @@ const App = () => {
   }, [currentTheme]);
 
   useEffect(() => {
-    const gameNum = getGameNumber(Date.now());
-    setGameNumber(gameNum);
-    setSolution(getWordOfTheDay(gameNum));
+    (async () => {
+      const gameNum = getGameNumber(Date.now());
+      setGameNumber(gameNum);
+      const { Word: word } = await getWordOfTheDay(1);
+      setSolution(word);
+    })();
   }, []);
 
   useEffect(() => {

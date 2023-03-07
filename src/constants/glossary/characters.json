@@ -1,0 +1,647 @@
+[
+  {
+    "lines": 1099,
+    "play": "Hamlet",
+    "word": "Hamlet"
+  },
+  {
+    "lines": 848,
+    "play": "Othello",
+    "word": "Othello"
+  },
+  {
+    "lines": 716,
+    "play": "Macbeth",
+    "word": "Macbeth"
+  },
+  {
+    "lines": 676,
+    "play": "The Tempest",
+    "word": "Prospero"
+  },
+  {
+    "lines": 597,
+    "play": "Pericles",
+    "word": "Pericles"
+  },
+  {
+    "lines": 595,
+    "play": "The Two Noble Kinsmen",
+    "word": "Palamon"
+  },
+  {
+    "lines": 593,
+    "play": "Romeo and Juliet",
+    "word": "Romeo"
+  },
+  {
+    "lines": 580,
+    "play": "Love's Labour's Lost",
+    "word": "Berowne"
+  },
+  {
+    "lines": 574,
+    "play": "Cymbeline",
+    "word": "Imogen"
+  },
+  {
+    "lines": 544,
+    "play": "Romeo and Juliet",
+    "word": "Juliet"
+  },
+  {
+    "lines": 519,
+    "play": "Troilus and Cressida",
+    "word": "Troilus"
+  },
+  {
+    "lines": 509,
+    "play": "The Merchant of Venice",
+    "word": "Portia"
+  },
+  {
+    "lines": 506,
+    "play": "Julius Caesar",
+    "word": "Cassius"
+  },
+  {
+    "lines": 490,
+    "play": "The Two Noble Kinsmen",
+    "word": "Arcite"
+  },
+  {
+    "lines": 484,
+    "play": "Troilus and Cressida",
+    "word": "Ulysses"
+  },
+  {
+    "lines": 459,
+    "play": "All's Well That Ends Well",
+    "word": "Helena"
+  },
+  {
+    "lines": 438,
+    "play": "The Two Gentlemen of Verona",
+    "word": "Proteus"
+  },
+  {
+    "lines": 409,
+    "play": "Measure for Measure",
+    "word": "Isabella"
+  },
+  {
+    "lines": 392,
+    "play": "Henry VI, Part 3",
+    "word": "Richard"
+  },
+  {
+    "lines": 374,
+    "play": "Cymbeline",
+    "word": "Jachimo"
+  },
+  {
+    "lines": 372,
+    "play": "The Two Noble Kinsmen",
+    "word": "Emilia"
+  },
+  {
+    "lines": 361,
+    "play": "As You Like It",
+    "word": "Rosalind"
+  },
+  {
+    "lines": 354,
+    "play": "Titus Andronicus",
+    "word": "Aaron"
+  },
+  {
+    "lines": 339,
+    "play": "Cymbeline",
+    "word": "Belarius"
+  },
+  {
+    "lines": 333,
+    "play": "The Winter's Tale",
+    "word": "Paulina"
+  },
+  {
+    "lines": 333,
+    "play": "Hamlet",
+    "word": "Polonius"
+  },
+  {
+    "lines": 327,
+    "play": "King Lear",
+    "word": "Edgar"
+  },
+  {
+    "lines": 322,
+    "play": "The Merchant of Venice",
+    "word": "Bassanio"
+  },
+  {
+    "lines": 320,
+    "play": "The Two Gentlemen of Verona",
+    "word": "Julia"
+  },
+  {
+    "lines": 317,
+    "play": "Double Falsehood",
+    "word": "Julio"
+  },
+  {
+    "lines": 312,
+    "play": "Measure for Measure",
+    "word": "Angelo"
+  },
+  {
+    "lines": 307,
+    "play": "Pericles",
+    "word": "Gower"
+  },
+  {
+    "lines": 289,
+    "play": "The Taming of the Shrew",
+    "word": "Tranio"
+  },
+  {
+    "lines": 287,
+    "play": "The Merchant of Venice",
+    "word": "Shylock"
+  },
+  {
+    "lines": 287,
+    "play": "Twelfth Night",
+    "word": "Viola"
+  },
+  {
+    "lines": 284,
+    "play": "Double Falsehood",
+    "word": "Leonora"
+  },
+  {
+    "lines": 276,
+    "play": "Coriolanus",
+    "word": "Cominius"
+  },
+  {
+    "lines": 275,
+    "play": "Coriolanus",
+    "word": "Volumnia"
+  },
+  {
+    "lines": 273,
+    "play": "Hamlet",
+    "word": "Horatio"
+  },
+  {
+    "lines": 272,
+    "play": "Twelfth Night",
+    "word": "Olivia"
+  },
+  {
+    "lines": 271,
+    "play": "Romeo and Juliet",
+    "word": "Capulet"
+  },
+  {
+    "lines": 265,
+    "play": "Much Ado About Nothing",
+    "word": "Leonato"
+  },
+  {
+    "lines": 264,
+    "play": "Troilus and Cressida",
+    "word": "Cressida"
+  },
+  {
+    "lines": 263,
+    "play": "The Comedy of Errors",
+    "word": "Adriana"
+  },
+  {
+    "lines": 263,
+    "play": "The Winter's Tale",
+    "word": "Camillo"
+  },
+  {
+    "lines": 258,
+    "play": "Titus Andronicus",
+    "word": "Tamora"
+  },
+  {
+    "lines": 251,
+    "play": "Double Falsehood",
+    "word": "Violante"
+  },
+  {
+    "lines": 241,
+    "play": "Romeo and Juliet",
+    "word": "Nurse"
+  },
+  {
+    "lines": 240,
+    "play": "King Lear",
+    "word": "Edmund"
+  },
+  {
+    "lines": 236,
+    "play": "Othello",
+    "word": "Emilia"
+  },
+  {
+    "lines": 229,
+    "play": "A Midsummer Night's Dream",
+    "word": "Helena"
+  },
+  {
+    "lines": 225,
+    "play": "A Midsummer Night's Dream",
+    "word": "Oberon"
+  },
+  {
+    "lines": 224,
+    "play": "Othello",
+    "word": "Cassio"
+  },
+  {
+    "lines": 223,
+    "play": "Henry V",
+    "word": "Chorus"
+  },
+  {
+    "lines": 221,
+    "play": "Much Ado About Nothing",
+    "word": "Claudio"
+  },
+  {
+    "lines": 217,
+    "play": "Cymbeline",
+    "word": "Pisanio"
+  },
+  {
+    "lines": 215,
+    "play": "Twelfth Night",
+    "word": "Orsino"
+  },
+  {
+    "lines": 213,
+    "play": "Troilus and Cressida",
+    "word": "Hector"
+  },
+  {
+    "lines": 211,
+    "play": "The Winter's Tale",
+    "word": "Hermione"
+  },
+  {
+    "lines": 210,
+    "play": "Macbeth",
+    "word": "Malcolm"
+  },
+  {
+    "lines": 210,
+    "play": "Double Falsehood",
+    "word": "Roderick"
+  },
+  {
+    "lines": 208,
+    "play": "Hamlet",
+    "word": "Laertes"
+  },
+  {
+    "lines": 205,
+    "play": "The Winter's Tale",
+    "word": "Florizel"
+  },
+  {
+    "lines": 204,
+    "play": "Timon of Athens",
+    "word": "Flavius"
+  },
+  {
+    "lines": 202,
+    "play": "Love's Labour's Lost",
+    "word": "Boyet"
+  },
+  {
+    "lines": 195,
+    "play": "Troilus and Cressida",
+    "word": "Pandarus"
+  },
+  {
+    "lines": 190,
+    "play": "As You Like It",
+    "word": "Orlando"
+  },
+  {
+    "lines": 189,
+    "play": "The Merchant of Venice",
+    "word": "Antonio"
+  },
+  {
+    "lines": 188,
+    "play": "King Lear",
+    "word": "Regan"
+  },
+  {
+    "lines": 187,
+    "play": "King Lear",
+    "word": "Goneril"
+  },
+  {
+    "lines": 184,
+    "play": "As You Like It",
+    "word": "Celia"
+  },
+  {
+    "lines": 184,
+    "play": "All's Well That Ends Well",
+    "word": "Parolles"
+  },
+  {
+    "lines": 182,
+    "play": "The Taming of the Shrew",
+    "word": "Lucentio"
+  },
+  {
+    "lines": 182,
+    "play": "Pericles",
+    "word": "Marina"
+  },
+  {
+    "lines": 181,
+    "play": "Titus Andronicus",
+    "word": "Lucius"
+  },
+  {
+    "lines": 179,
+    "play": "Troilus and Cressida",
+    "word": "Achilles"
+  },
+  {
+    "lines": 179,
+    "play": "Macbeth",
+    "word": "Macduff"
+  },
+  {
+    "lines": 178,
+    "play": "Measure for Measure",
+    "word": "Lucio"
+  },
+  {
+    "lines": 176,
+    "play": "A Midsummer Night's Dream",
+    "word": "Lysander"
+  },
+  {
+    "lines": 175,
+    "play": "The Merchant of Venice",
+    "word": "Gratiano"
+  },
+  {
+    "lines": 175,
+    "play": "Romeo and Juliet",
+    "word": "Mercutio"
+  },
+  {
+    "lines": 174,
+    "play": "The Tempest",
+    "word": "Ariel"
+  },
+  {
+    "lines": 174,
+    "play": "Love's Labour's Lost",
+    "word": "Rosaline"
+  },
+  {
+    "lines": 170,
+    "play": "The Tempest",
+    "word": "Caliban"
+  },
+  {
+    "lines": 169,
+    "play": "Cymbeline",
+    "word": "Queen"
+  },
+  {
+    "lines": 168,
+    "play": "The Taming of the Shrew",
+    "word": "Baptista"
+  },
+  {
+    "lines": 168,
+    "play": "As You Like It",
+    "word": "Jaques"
+  },
+  {
+    "lines": 168,
+    "play": "The Merchant of Venice",
+    "word": "Lorenzo"
+  },
+  {
+    "lines": 165,
+    "play": "A Midsummer Night's Dream",
+    "word": "Hermia"
+  },
+  {
+    "lines": 163,
+    "play": "Twelfth Night",
+    "word": "Feste"
+  },
+  {
+    "lines": 161,
+    "play": "Much Ado About Nothing",
+    "word": "Benedick"
+  },
+  {
+    "lines": 158,
+    "play": "Henry V",
+    "word": "Pistol"
+  },
+  {
+    "lines": 157,
+    "play": "Romeo and Juliet",
+    "word": "Benvolio"
+  },
+  {
+    "lines": 155,
+    "play": "The Two Gentlemen of Verona",
+    "word": "Silvia"
+  },
+  {
+    "lines": 154,
+    "play": "Cymbeline",
+    "word": "Cloten"
+  },
+  {
+    "lines": 154,
+    "play": "The Tempest",
+    "word": "Miranda"
+  },
+  {
+    "lines": 154,
+    "play": "Hamlet",
+    "word": "Ophelia"
+  },
+  {
+    "lines": 152,
+    "play": "Troilus and Cressida",
+    "word": "Nestor"
+  },
+  {
+    "lines": 146,
+    "play": "The Taming of the Shrew",
+    "word": "Gremio"
+  },
+  {
+    "lines": 146,
+    "play": "All's Well That Ends Well",
+    "word": "Lafew"
+  },
+  {
+    "lines": 143,
+    "play": "The Comedy of Errors",
+    "word": "Egeon"
+  },
+  {
+    "lines": 142,
+    "play": "The Tempest",
+    "word": "Antonio"
+  },
+  {
+    "lines": 141,
+    "play": "A Midsummer Night's Dream",
+    "word": "Titania"
+  },
+  {
+    "lines": 139,
+    "play": "Troilus and Cressida",
+    "word": "Aeneas"
+  },
+  {
+    "lines": 137,
+    "play": "All's Well That Ends Well",
+    "word": "Diana"
+  },
+  {
+    "lines": 135,
+    "play": "The Tempest",
+    "word": "Gonzalo"
+  },
+  {
+    "lines": 135,
+    "play": "Macbeth",
+    "word": "Rosse"
+  },
+  {
+    "lines": 131,
+    "play": "The Two Gentlemen of Verona",
+    "word": "Speed"
+  },
+  {
+    "lines": 128,
+    "play": "The Winter's Tale",
+    "word": "Perdita"
+  },
+  {
+    "lines": 126,
+    "play": "Measure for Measure",
+    "word": "Escalus"
+  },
+  {
+    "lines": 123,
+    "play": "A Midsummer Night's Dream",
+    "word": "Bottom"
+  },
+  {
+    "lines": 123,
+    "play": "Measure for Measure",
+    "word": "Provost"
+  },
+  {
+    "lines": 122,
+    "play": "Double Falsehood",
+    "word": "Camillo"
+  },
+  {
+    "lines": 120,
+    "play": "King John",
+    "word": "Arthur"
+  },
+  {
+    "lines": 119,
+    "play": "Much Ado About Nothing",
+    "word": "Beatrice"
+  },
+  {
+    "lines": 117,
+    "play": "King Lear",
+    "word": "Cordelia"
+  },
+  {
+    "lines": 115,
+    "play": "Twelfth Night",
+    "word": "Malvolio"
+  },
+  {
+    "lines": 114,
+    "play": "Love's Labour's Lost",
+    "word": "Costard"
+  },
+  {
+    "lines": 113,
+    "play": "Macbeth",
+    "word": "Banquo"
+  },
+  {
+    "lines": 112,
+    "play": "Measure for Measure",
+    "word": "Claudio"
+  },
+  {
+    "lines": 110,
+    "play": "Pericles",
+    "word": "Cleon"
+  },
+  {
+    "lines": 109,
+    "play": "Pericles",
+    "word": "Cerimon"
+  },
+  {
+    "lines": 108,
+    "play": "The Tempest",
+    "word": "Alonso"
+  },
+  {
+    "lines": 107,
+    "play": "The Two Noble Kinsmen",
+    "word": "Gerrold"
+  },
+  {
+    "lines": 105,
+    "play": "Twelfth Night",
+    "word": "Antonio"
+  },
+  {
+    "lines": 105,
+    "play": "Henry VI, Part 3",
+    "word": "George"
+  },
+  {
+    "lines": 104,
+    "play": "The Merchant of Venice",
+    "word": "Salerio"
+  },
+  {
+    "lines": 103,
+    "play": "Troilus and Cressida",
+    "word": "Diomedes"
+  },
+  {
+    "lines": 101,
+    "play": "As You Like It",
+    "word": "Oliver"
+  }
+]
