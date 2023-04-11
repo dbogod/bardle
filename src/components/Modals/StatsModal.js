@@ -138,10 +138,15 @@ const StatsModal = ({ isGameOver, isOpen, modalRef, shareableResult, solution })
           <>
             <div className={style['solution-wrapper']}>
               <span>Today&apos;s {solutionTitle} was:</span>
-              <a href={`https://www.google.com/search?q=${solution}+definition`}>
-                <span className={style.solution}>{solution}</span>
+              <a href={`https://www.google.com/search?q=${solution.word}+definition`}>
+                <span className={style.solution}>{solution.word}</span>
               </a>
-
+              {
+                solution.definition &&
+                <p>
+                  {solution.definition}
+                </p>
+              }
             </div>
             <div className={style['clock-and-share-wrapper']}>
               <div>
@@ -181,7 +186,7 @@ StatsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   modalRef: PropTypes.object.isRequired,
   shareableResult: PropTypes.string.isRequired,
-  solution: PropTypes.string.isRequired
+  solution: PropTypes.object.isRequired
 };
 
 export default StatsModal;

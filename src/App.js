@@ -11,7 +11,7 @@ import StatsModal from './components/Modals/StatsModal';
 import { ThemeContext } from './context/Theme';
 import { ModalContext } from './context/Modal';
 
-import { getSolutionDefinition, getGameNumber, getWordOfTheDay } from './lib/dictionary';
+import { getGameNumber, getWordOfTheDay } from './lib/dictionary';
 import { initialiseGoogleAnalytics } from './lib/analytics';
 
 import './styles/main.scss';
@@ -24,7 +24,6 @@ const App = () => {
   const statsModalRef = useRef();
   const [gameNumber, setGameNumber] = useState(null);
   const [solution, setSolution] = useState(null);
-  const [solutionDefinition, setSolutionDefinition] = useState(null);
   const [shareableResult, setShareableResult] = useState('');
   const [isGameOver, setIsGameOver] = useState(false);
   const [isSmScreen, setIsSmScreen] = useState(false);
@@ -51,18 +50,14 @@ const App = () => {
   useEffect(() => {
     const gameNum = getGameNumber(Date.now());
     setGameNumber(gameNum);
-    setSolution(getWordOfTheDay(gameNum));
-  }, []);
 
-  useEffect(() => {
-    (async () => {
-      const res = await getSolutionDefinition(solution);
-      if (res && res.title !== 'Null' && res.snippet) {
-        const { snippet, title } = res;
-        setSolutionDefinition({ snippet, title });
-      }
-    })();
-  }, [solution]);
+    const updateSolution = async (wordIndex) => {
+      const data = await getWordOfTheDay(wordIndex);
+      setSolution(data);
+    };
+
+    updateSolution(gameNum);
+  }, []);
 
   useEffect(() => {
     const removeKbNavClass = () => document.body.classList.remove('is-kb-nav');
@@ -100,7 +95,7 @@ const App = () => {
             aboutModalRef={aboutModalRef}
             statsModalRef={statsModalRef}/>
           <Game
-            solution={solution}
+            solution={solution.word}
             gameNumber={gameNumber}
             statsModalRef={statsModalRef}
             setShareableResult={setShareableResult}
@@ -117,8 +112,7 @@ const App = () => {
             isOpen={currentModal === 'stats-modal'}
             shareableResult={shareableResult}
             isGameOver={isGameOver}
-            solution={solution}
-            definition={solutionDefinition}/>
+            solution={solution} />
         </>
       }
     </>

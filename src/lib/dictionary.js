@@ -38,9 +38,21 @@ export const getSolutionDefinition = word => {
 };
 
 export const getGameNumber = date => {
-  const epoch = new Date(2022, 2, 11).valueOf();
+  const epoch = new Date(2023, 3, 10).valueOf();
   // Divide by ms per day to get number of days since epoch
   return Math.floor((date - epoch) / 86400000);
 };
 
-export const getWordOfTheDay = index => DAILY_WORD_ARRAY[index];
+export const _getWordOfTheDay = (index) => DAILY_WORD_ARRAY[index];
+
+export const getWordOfTheDay = async (id) => {
+  const url = `http://shakespeareswords.matous.eu/api/bardle/word-of-the-day?id=${id}`;
+  return axios.get(url).then(({ data }) => {
+    const solutionData = {};
+    Object.keys(data).forEach(key => {
+      solutionData[key.toLowerCase()] = data[key];
+    });
+
+    return solutionData;
+  });
+};
